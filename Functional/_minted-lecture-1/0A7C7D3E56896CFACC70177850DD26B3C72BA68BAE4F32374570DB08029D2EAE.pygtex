@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{;;Number \PYGZhy{}\PYGZgt{} Number}
+\PYG{p}{(}\PYG{k}{define }\PYG{p}{(}\PYG{n+nf}{square} \PYG{n+nv}{x}\PYG{p}{)} \PYG{p}{(}\PYG{n+nb}{* }\PYG{n+nv}{x} \PYG{n+nv}{x}\PYG{p}{))}
+
+\PYG{c+c1}{;;Number List \PYGZhy{}\PYGZgt{} Number List}
+\PYG{p}{(}\PYG{k}{define }\PYG{p}{(}\PYG{n+nf}{sum\PYGZhy{}of\PYGZhy{}squares} \PYG{n+nv}{lst}\PYG{p}{)}
+  \PYG{p}{(}\PYG{n+nf}{sum} \PYG{p}{(}\PYG{n+nb}{map }\PYG{n+nv}{square} \PYG{n+nv}{lst}\PYG{p}{))}
+\end{Verbatim}

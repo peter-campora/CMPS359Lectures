@@ -1,0 +1,19 @@
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
+
+\documentclass{beamer}
+\usetheme{Boadilla}
+\title{Functional Programming}
+\subtitle{in Racket}
+\author{Peter Campora}
+\institute{University of Louisiana at Lafayette}
+\date{\today}
+
+\begin{document}
+\begin{frame}
+\titlepage
+\end{frame}
+\end{document}
