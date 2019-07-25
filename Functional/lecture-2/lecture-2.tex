@@ -9,7 +9,7 @@
 \usepackage{minted}
 \usepackage[labelformat=simple]{subcaption}
 
-\usetheme{Boadilla}
+\usetheme{Singapore}
 \title{Lecture 2}
 %\subtitle{in Racket}
 %\author{Peter Campora}
@@ -21,6 +21,8 @@
 \begin{frame}
 \titlepage
 \end{frame}
+
+\section{Intro}
 
 \begin{frame}
   \frametitle{Dr. Racket}
@@ -85,6 +87,7 @@
 \end{minted}
 }
 
+\section{Syntax}
 \begin{frame}
   \frametitle{Syntax Primer}
   Functional Programming is about \emph{functions}
@@ -97,20 +100,44 @@
 \end{frame}
 
 \begin{frame}
+  \frametitle{Ewww Gross Syntax!}
+  \begin{center}
+    \includegraphics[width=0.45\textwidth]{images/syntax-yoda.jpg}
+    \begin{itemize}
+    \item<2-> Racket (Lisps in general) use prefix (polish) notation
+    \item<3-> Tons of advantages:
+      \begin{enumerate}
+      \item<4-> Easy to fit the grammar in your head (unlike C++)
+      \item<5-> Racket is \emph{homoiconic}
+      \item<6-> Makes the language extensible
+      \item<7-> Allows for structured editing
+      \end{enumerate}
+    \item<8-> However one large disadvantage is that it is \emph{different}
+    \item<9-> You'll get used to it
+    \end{itemize}
+  \end{center}
+\end{frame}
+
+
+\section{First Program}
+\begin{frame}
   \frametitle{Let's Write a Program!}
   We're going to write a program to make a rocket land, SpaceX style.
+  \begin{center}
+    \includegraphics[width=0.3\textwidth]{images/SpaceX.jpg}
+  \end{center}
   \begin{itemize}
-  \item<1-> First, let's post an image of a rocket into Dr. Racket
-  \item<2-> \includegraphics[width=0.05\textwidth]{images/rocket.png}
-  \item<3-> \includegraphics[width=0.4\textwidth]{images/rocket-in-interactions.png}
-  \item<4-> \includegraphics[width=0.3\textwidth]{images/function-image.png}
+  \item<2-> First, let's post an image of a rocket into Dr. Racket
+  \item<3-> \includegraphics[width=0.05\textwidth]{images/rocket.png}
+  \item<4-> \includegraphics[width=0.4\textwidth]{images/rocket-in-interactions.png}
+  %\item<4-> \includegraphics[width=0.3\textwidth]{images/function-image.png}
   \end{itemize}
 \end{frame}
 
 \defverbatim[colored]\rocketSize{
 \begin{minted}{Scheme} 
-(define rocket-size 
-  (* (image-width rocket) (image-height rocket)))
+  (define rocket-size 
+    (* (image-width rocket) (image-height rocket)))
 \end{minted}
 }
 
@@ -128,11 +155,13 @@
 
 \begin{frame}
   \frametitle{Messing With Images}
+  Let's play around with our rocket:
   \begin{itemize}
   \item \includegraphics[width=0.4\textwidth]{images/define-rocket.png}
-  \item<1-> \rocketSize
-  \item<2-> We can define circles: \circle
-  \item<3-> Or rectangles: \rectangle
+  \item<2-> Now let's create a function to calculate its size:
+  \item[]<3-> \rocketSize
+  \item<4-> We can define circles: \mintinline{Scheme}{(circle 20 "solid" "red")}
+  \item<4-> Or rectangles: \mintinline{Scheme}{(rectangle 30  20 "outline" "blue")}
   \end{itemize}
 \end{frame}
 
@@ -154,27 +183,27 @@
   \frametitle{Drawing a Scene}
   We'll start by drawing an empty scene.
   \begin{itemize}
-  \item \emptyScene
-  \item<1-> \emph{Boring!} Let's add something to it.
-  \item<2-> \initialScene
-  \item<3-> \includegraphics[width=0.1\textwidth]{images/initial-scene.png}
+  \item \mintinline{Scheme}{(empty-scene 100 100)}
+  \item<2-> \emph{Boring!} Let's add something to it:
+  \item[]<3-> \initialScene
+  \item<4->Here's what our new scene looks like: \includegraphics[width=0.1\textwidth]{images/initial-scene.png}
   \end{itemize}
 \end{frame}
 
 \defverbatim[colored]\placeRocket{
 \begin{minted}{Scheme} 
-(place-image rocket 50 20 (empty-scene 100 60))
+  (place-image rocket 50 20 (empty-scene 100 60))
 \end{minted}
 }
 
 \begin{frame}
   \frametitle{Rocket Fun}
-  Let's consider placing the rocket in the scene.
+  Let's consider placing the rocket in the scene:
   \begin{itemize}
-  \item \placeRocket
-  \item<1-> \includegraphics[width=0.1\textwidth]{images/placed_rocket.png}
-  \item<2-> Let's open Dr. Racket and try moving the rocket up and down.
-  \item<3-> As you can see, higher numbers for y move it lower
+  \item<2->[] \placeRocket
+  \item<3-> \includegraphics[width=0.1\textwidth]{images/placed_rocket.png}
+  \item<4-> Let's open Dr. Racket and try moving the rocket up and down.
+  \item<5-> As you can see, higher numbers for y move it lower
   \end{itemize}
 \end{frame}
 
@@ -207,13 +236,13 @@
   Here's a first attempt at a function that places the rocket at a height.
   \begin{itemize}
   \item \placeRocket
-  \item<1-> Now let's mess with the \emph{animate} function
-  \item<2-> \mintinline{Scheme}{(animate picture-of-rocket)}
-  \item<3-> Anything weird about this expression?
-  \item<4-> This is our first example of using \emph{higher-order} function,
+  \item<2-> Now let's mess with the \emph{animate} function
+  \item<3-> \mintinline{Scheme}{(animate picture-of-rocket)}
+  \item<4-> Anything weird about this expression?
+  \item<5-> This is our first example of using \emph{higher-order} function,
     a function that takes another function as input or produces another function
     as output.
-  \item<5-> One example of a famous higher order function is $\frac{d}{dx}$
+  \item<6-> One example of a famous higher order function is $\frac{d}{dx}$
   \end{itemize}
 \end{frame}
 
@@ -240,6 +269,7 @@
 \end{minted}
 }
 
+\section{Refactoring}
 \begin{frame}
   \frametitle{Was Our Animation Good?}
   \begin{itemize}
@@ -267,14 +297,14 @@
   \frametitle{Fix the Landing}
   Let's try out a new version of the function:
   \begin{itemize}
-  \item<1-> \versionTwo
-  \item<2-> Is there anything wrong with this code?
+  \item<2-> \versionTwo
+  \item<3-> Is there anything wrong with this code?
     \begin{enumerate}
-    \item<3-> Magic numbers
-    \item<4-> repeated empty-scene call
+    \item<4-> Magic numbers
+    \item<5-> Repeated empty-scene call
     \end{enumerate}
-  \item<5-> What about the landing?
-  \item<6-> Let's clean it up a bit
+  \item<6-> What about the landing?
+  \item<7-> Let's clean it up a bit.
   \end{itemize}
 \end{frame}
 
@@ -323,7 +353,7 @@
 }
       
 \begin{frame}
-  \frametitle{Good now?}
+  \frametitle{Good Now?}
   \rocketThree
   \begin{itemize}
   \item<1-> Looks a lot better to me, in animation and code.
@@ -405,6 +435,7 @@
   \versionFive
 \end{frame}
 
+\section{Are We Functional Programmers Now?}
 \begin{frame}
   \frametitle{Congratulations!}
   You're a functional programmer now! ...
@@ -413,7 +444,7 @@
   \item<2-> Of course not!
   \item<3-> Many other courses might try to continue introducing features in this manner...
   \item<4-> But this lecture was messy and barely motivated the need for novel
-    things like higher order functions
+    things like higher order functions, that I glossed over.
   \item<5-> So, next lecture we're going to \emph{slow down} and take a systematic
     approach.
   \end{itemize}
@@ -425,9 +456,12 @@
     \includegraphics[width=0.4\textwidth]{images/design-recipes.png}
   \end{center}
   \begin{itemize}
-  \item We'll start with a slow paced introduction to arithmetic
-  \item Then we'll move onto how to create functions
-  \item Then finally, how to \emph{design} functions
+  \item We'll start with a slow paced introduction to the basic building blocks
+    of programs.
+  \item Then we'll move onto how to create and call functions.
+  \item Then we'll discuss the two fundamental kinds of programs, batch programs
+    (scripts) and big bang programs (event driven).
+  \item Then finally, how to \emph{design} these kinds of programs.
   \end{itemize}
 \end{frame}
 
