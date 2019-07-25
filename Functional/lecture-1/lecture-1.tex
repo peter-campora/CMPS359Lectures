@@ -1,16 +1,15 @@
-
 %%% Local Variables:
+%%% TeX-command-extra-options: "-shell-escape"
 %%% mode: latex
 %%% TeX-master: t
 %%% End:
-
 \documentclass{beamer}
-\usepackage{listings}
+%\usepackage{listings}
 \usepackage{caption}
 \usepackage{minted}
 \usepackage[labelformat=simple]{subcaption}
 
-\usetheme{Boadilla}
+\usetheme{Singapore}
 \title{Functional Programming}
 \subtitle{in Racket}
 \author{Peter Campora}
@@ -21,9 +20,6 @@
 \begin{frame}
 \titlepage
 \end{frame}
-
-\section{Section 1}
-\subsection{sub a}
  
 \begin{frame}
   \frametitle{What Things are Beautiful?}
@@ -110,23 +106,25 @@ public class SumSquares
 \end{frame}
 
 \begin{frame}
-  \frametitle{What \emph{is} Code Beauty?}
-  Let's consider some philosophic views.
+  \frametitle{What \emph{Is} Code Beauty?}
+  First let's hear from you!
+  \pause
+  Let's consider some other views.
   \begin{itemize}
-  \item<1-> Utilitarian Program Beauty (a more scientific view)
+  \item<2-> Utilitarian Program Beauty 
     \begin{itemize}
-    \item<2-> The programming language that maximizes the utility of writing my program is the best. Minimize bugs, execution time, and time until production
-    \item<3-> Critique: Hard to measure which features objectively help the process of writing programs.
+    \item<3-> The programming language that maximizes the utility of writing my program is the best. Minimize bugs, execution time, and time until production.
+    \item<4-> Critique: Hard to measure which features objectively help the process of writing programs.
     \end{itemize}
-  \item<4-> Egoist Program Beauty (how most of us actually do it)
+  \item<5-> Egoist Program Beauty 
     \begin{itemize}
-    \item<5-> The programming language that allows me to write clever, expressive programs is best. \emph{The Haskell programmer viewpoint} ;p
-    \item<6-> Critique: Engineering is largely a social endeavor. Other people need to be able to read your programs and understand abstractions.
+    \item<6-> The programming language that allows me to write clever, expressive programs is best. 
+    \item<7-> Critique: Engineering is largely a social endeavor. Other people need to be able to read your programs and understand abstractions.
     \end{itemize}
-  \item<7-> Aesthetic Program Beauty (an unfortunately ignored perspective)
+  \item<8-> Aesthetic Program Beauty 
     \begin{itemize}
-    \item<8-> Programming languages provide a framework for creating beautiful programs according to the idioms of some paradigm (i.e. cubism in art)
-    \item<9-> Critique: Disconnected from the empirical or mathematical viewpoints we typically employ to measure the value of scientific contributions. 
+    \item<9-> Beauty is subjective according to appreciation of the idioms of some paradigm (i.e. cubism in art).
+    \item<10-> Critique: Disconnected from the empirical or mathematical viewpoints we typically employ to measure the value of scientific contributions. 
     \end{itemize}
   \end{itemize}
 \end{frame}
@@ -149,7 +147,7 @@ public class SumSquares
 \end{frame}
 
 \begin{frame}
-  \frametitle{How do We Write Programs?}
+  \frametitle{How Do We Write Programs?}
   \begin{figure}
     \begin{subfigure}[b]{0.4\textwidth}
       \includegraphics[width=0.9\textwidth]{images/staring-at-a-blank-wall.jpg}
@@ -199,15 +197,15 @@ public class SumSquares
 \end{frame}
 
 \begin{frame}
-  \frametitle{How Programming is Taught}
+  \frametitle{How Programming Is Taught}
   \begin{figure}[t]
     \centering \includegraphics[width=0.3\textwidth]{images/pattern-recognition.jpg}
   \end{figure}
   \begin{itemize}
-  \item<1-> Programming courses typically start by motivating new features with concrete programs.
-  \item<2-> Given enough examples, students begin to match problem descriptions to using features.
-  \item<3-> From there, programming becomes gluing together recognized patterns.
-  \item<4-> \textbf{There has to be a better way!}
+  \item<2-> Programming courses typically start by motivating new features with concrete programs.
+  \item<3-> Given enough examples, students begin to match problem descriptions to using features.
+  \item<4-> From there, programming becomes gluing together recognized patterns.
+  \item<5-> \textbf{There has to be a better way!}
   \end{itemize}
 \end{frame}
 
@@ -217,13 +215,13 @@ public class SumSquares
     \centering \includegraphics[width=0.3\textwidth]{images/htdp.jpeg}    
   \end{figure}
   \begin{itemize}
-  \item<1-> This book (and course) will teach systematic program design.
-  \item<2-> It presents recipes for designing two different types of programs.
+  \item<2-> This book (and course) will teach systematic program design.
+  \item<3-> It presents recipes for designing two different types of programs.
     \begin{itemize}
-    \item<3-> Big bang (event driven) programs
-    \item<4-> Batch programs (effectful scripts)
+    \item<4-> Big bang (event driven) programs
+    \item<5-> Batch programs (effectful scripts)
     \end{itemize}
-  \item<5-> Isn't this a course on functional programming?    
+  \item<6-> Isn't this a course on functional programming?    
   \end{itemize}
 \end{frame}
 
@@ -233,19 +231,35 @@ public class SumSquares
     \centering \includegraphics[width=0.3\textwidth]{images/pool-baby.jpeg}
   \end{figure}
   \begin{itemize}
-  \item<1-> Why HDTP?
-  \item<2-> When I first tried to learn functional programming, I failed.
+  \item<2-> Why How to Design Programs?
+  \item<3-> When I first tried to learn functional programming, I failed.
   \item<4-> \includegraphics[width=0.2\textwidth]{images/little-schemer.jpg}
-  \item<5-> We will learn functional programming and systematic design
+  \item<5-> We will learn functional programming and systematic design, together!
   \end{itemize}  
 \end{frame}
 
 \begin{frame}
-  \frametitle{Why Racket and Not X?}
+  \frametitle{Why Functional Programming?}
+  \begin{figure}[t]
+    \centering \includegraphics[width=0.3\textwidth]{images/referential-transparency.png}
+  \end{figure}
   \begin{itemize}
-    \item<1-> Teaching functional programming in an imperative-first language is awkward
-    \item<2-> Other functional languages have additional complexity
-    \item<3-> It's focused on being a good language for education
+  \item<2-> The function above isn't \emph{referentially transparent}
+  \item<3-> Which means it really isn't even a function in the \emph{mathematical} sense.
+  \item<4-> This makes it hard to create reproducible behavior or prove code correctness
+  \item<5-> Concurrent programming is made difficult since order of evaluation matters.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Why Racket and Not X?}
+  \begin{figure}[t]
+    \centering \includegraphics[width=0.3\textwidth]{images/pedagogy.jpg}
+  \end{figure}
+  \begin{itemize}
+    \item<2-> Teaching functional programming in an imperative-first language is awkward
+    \item<3-> Other functional languages have additional complexity
+    \item<4-> It's focused on being a good language for education
   \end{itemize}
 \end{frame}
 
@@ -253,18 +267,35 @@ public class SumSquares
   \frametitle{Course Structure}
   Grades will come from:
   \begin{itemize}
-  \item<1-> Bi-weekly programming assignments
-  \item<2-> 4-6 projects (1 or 2 as a team)    
+  \item<1-> Programming assignments (can be done as a team of up to 5 people)
+  \item<2-> 4-6 projects (individual but last project as a team)    
   \item<3-> An easy test and final    
-  \item<4-> \emph{Try not to stress about grades}
+  \item<4-> \emph{Try not to stress about grades and \emph{don't cheat}}
+  \item<5-> I don't want to use this:
+    \begin{figure}[t]
+      \includegraphics[width=0.6\textwidth]{images/moss.png}
+    \end{figure}
   \end{itemize}
 \end{frame}
 
 \begin{frame}
-  \frametitle{The Main Thing I Want}
+  \frametitle{The Main Things I Want}
   \begin{figure}[t]
-    \centering \includegraphics[width=0.3\textwidth]{images/think-different.jpg}    
+    \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=0.9\textwidth]{images/think-different.jpg}
+    \end{subfigure}
+    %
+    \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=0.95\textwidth]{images/brain.jpg}
+    \end{subfigure}
   \end{figure}
+  
+\end{frame}
+
+\begin{frame}
+  \begin{center}
+    \huge What do you want?
+  \end{center}
 \end{frame}
 
 % \begin{frame}
@@ -278,3 +309,8 @@ public class SumSquares
 %   \item<6-> 
 %   \end{itemize}
 \end{document}
+%%% Local Variables:
+%%% TeX-command-extra-options: "-shell-escape"
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

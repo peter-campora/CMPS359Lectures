@@ -1,0 +1,52 @@
+%%% Local Variables:
+%%% TeX-command-extra-options: "-shell-escape"
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
+\documentclass{beamer}
+\usepackage{caption}
+\usepackage{minted}
+\usepackage[labelformat=simple]{subcaption}
+
+\usetheme{Singapore}
+\title{Lecture 3}
+%\subtitle{in Racket}
+%\author{Peter Campora}
+%\institute{ULL}
+%\date{\today}
+
+%This lectures introduces Racket basics and the right way to program
+\begin{document}
+\begin{frame}
+\titlepage
+\end{frame}
+
+\section{Intro}
+\begin{frame}
+  \frametitle{Arithmetic Revisited}
+  Let's look at some basic arithmetic:
+  \begin{itemize}
+  \item<2-> \mintinline{Scheme}{(+ 1 1)}
+  \item<3-> Evaluate inner parentheses first: \mintinline{Scheme}{(+ 1 (+ 1 (+ 1 1) 2) 3 4 5)}
+  \item<4-> == \mintinline{Scheme}{(+ 1 (+ 1 2 2) 3 4 5)}
+  \item<5-> == \mintinline{Scheme}{(+ 1 5 3 4 5)}
+  \item<6-> == \mintinline{Scheme}{(+ 1 5 3 4 5)}
+  \item<7-> == \mintinline{Scheme}{(+ 1 (+ 1 2 2) 3 4 5)}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Arithmetic Revisited (cont)}
+  \begin{itemize}
+  \item<1-> Primitive form is \mintinline{Scheme}{(operator [number...])}
+  \item<2-> A list of useful operators:  +, -, *, /, abs, add1, ceiling, denominator, expt, floor, gcd, log, max, numerator, quotient, random, remainder, sqr, and tan
+  \item<3-> Racket has an extensive \emph{numeric tower}.
+  \item<4-> What would \mintinline{Scheme}{(/ 4 3)} produce in Java?
+  \item<5-> Instead of producing a float, it produces $\frac{4}{3}$.
+  \item<6-> To get a float, you need to use \mintinline{Scheme}{(exact->inexact (/ 4 3))}
+  \item<7-> Let's play around with this a bit!
+  \end{itemize}
+\end{frame}
+
+\end{document}
+
