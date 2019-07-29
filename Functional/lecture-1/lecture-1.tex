@@ -20,8 +20,23 @@
 \begin{frame}
 \titlepage
 \end{frame}
- 
+
 \begin{frame}
+  \frametitle{Why Functional Programming?}
+  \begin{figure}[t]
+    \centering \includegraphics[width=0.3\textwidth]{images/referential-transparency.png}
+  \end{figure}
+  \begin{itemize}
+  \item<2-> The function above isn't \emph{referentially transparent}
+  \item<3-> Which means it really isn't even a function in the \emph{mathematical} sense.
+  \item<4-> This makes it hard to create reproducible behavior or prove code correctness
+  \item<5-> Concurrent programming is made difficult since order of evaluation matters.
+  \item<6-> Functional idioms creep into imperative languages. Lambda and streams
+    were added to Java, and JavaScript code becomes increasingly functional.
+  \end{itemize}
+\end{frame}
+ 
+\begin{frame}  
   \frametitle{What Things are Beautiful?}
   \begin{figure}[t]
     \begin{subfigure}[b]{.3\textwidth}
@@ -236,19 +251,6 @@ public class SumSquares
   \item<4-> \includegraphics[width=0.2\textwidth]{images/little-schemer.jpg}
   \item<5-> We will learn functional programming and systematic design, together!
   \end{itemize}  
-\end{frame}
-
-\begin{frame}
-  \frametitle{Why Functional Programming?}
-  \begin{figure}[t]
-    \centering \includegraphics[width=0.3\textwidth]{images/referential-transparency.png}
-  \end{figure}
-  \begin{itemize}
-  \item<2-> The function above isn't \emph{referentially transparent}
-  \item<3-> Which means it really isn't even a function in the \emph{mathematical} sense.
-  \item<4-> This makes it hard to create reproducible behavior or prove code correctness
-  \item<5-> Concurrent programming is made difficult since order of evaluation matters.
-  \end{itemize}
 \end{frame}
 
 \begin{frame}

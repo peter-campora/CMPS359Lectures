@@ -20,6 +20,7 @@
     "beamer10"
     "caption"
     "minted"
+    "tikz"
     "subcaption"))
  :latex)
 
