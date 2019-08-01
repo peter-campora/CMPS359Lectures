@@ -656,7 +656,14 @@ class Main {
 \end{frame}
 
 \begin{frame}
-  \frametitle{Event Structure}
+  \frametitle{Event Structure In General}
+  \begin{center}
+    \includegraphics[width=0.7\textwidth]{images/Event_Driven.jpg}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Big Bang Event Structure}
   \begin{center}
     \begin{tikzpicture}[node distance=1.9cm]
       % \node (start) [startstop] {Start};
@@ -692,6 +699,22 @@ class Main {
       \draw [arrow] (out1) -- (out3);
     \end{tikzpicture}
   \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Our First Event Driven Program}
+  With the big bang structure in mind, we can start writing our first big-bang
+  program in Racket. It'll draw a square that starts by taking up the whole
+  window and will shrink until it disappears.
+
+  \begin{itemize}
+  \item<2-> To start with this, we need a function
+    that draws a square based on a numerical input.
+  \item<3-> \mintinline{Scheme}{(define (number->square s) (square s "solid" "red")}
+  \item<4-> In order to animate the square shrinking, we want to continually
+    call \mintinline{Scheme}{number->square} with smaller values.
+  \end{itemize}
+
 \end{frame}
 \end{document}
 
