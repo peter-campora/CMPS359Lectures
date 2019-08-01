@@ -7,6 +7,7 @@
 \usepackage{caption}
 \usepackage{minted}
 \usepackage{tikz}
+\usepackage{xcolor}
 \usetikzlibrary{shapes.geometric, arrows}
 \tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
 \tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=1.5cm, minimum height=0.6cm, text centered, draw=black, fill=blue!30]
@@ -663,6 +664,22 @@ class Main {
 \end{frame}
 
 \begin{frame}
+  \frametitle{The Big Bang}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{images/big-bang.jpg}
+  \end{center}
+  \begin{itemize}
+  \item<2->A Big Bang event structure starts with an initial \emph{state of the universe}
+  and as time progresses, creates new states of the universe.
+  
+  \item<3-> Some sort of functionality is displayed based on the ever changing states of the
+  universe.
+  
+\item<4-> And finally, IO actions are \emph{godlike} extra-physical events that can trigger  changes in the state of the universe
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
   \frametitle{Big Bang Event Structure}
   \begin{center}
     \begin{tikzpicture}[node distance=1.9cm]
@@ -713,8 +730,162 @@ class Main {
   \item<3-> \mintinline{Scheme}{(define (number->square s) (square s "solid" "red")}
   \item<4-> In order to animate the square shrinking, we want to continually
     call \mintinline{Scheme}{number->square} with smaller values.
+  \item<5-> \mintinline{Scheme}{(number->square 10)},  \mintinline{Scheme}{(number->square 5)}, \mintinline{Scheme}{(number->square 1)}
+  \item<6-> Let's put it in Dr. Racket
   \end{itemize}
-
 \end{frame}
+
+\defverbatim[colored]\firstBigBang{
+\begin{minted}{Scheme}
+    (big-bang 100
+        [to-draw number->square]
+        [on-tick sub1]
+        [stop-when zero?])
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Using big-bang}
+  Let's start with a very rough start to our program:
+  \begin{itemize}
+  \item<2-> \mintinline{Scheme}{(big-bang 100 [to-draw number->square])}
+  \item<3-> When we close the program, Racket produces 100, the final state
+    of our program
+  \item<4-> Having a red square fill a frame until we close it isn't very interesting.
+  \item<5-> In order to make a more interesting program, we need to write code
+    that \emph{produces a new world state} based on clock ticks.
+  \item<6-> There's a lot to unpack here:
+    \firstBigBang
+  \item<7-> First, note that the effectful code for checking system time, etc.
+    is abstracted away by big-bang
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Unpacking This Program}
+  Let's start from the top:
+  \begin{itemize}
+  \item<2-> \mintinline{Scheme}{(big-bang 100}
+  \item<3-> \emph{And God said, ``Let there be \textcolor{red}{\underline{100}}``}
+  \item<4-> \mintinline{Scheme}{[to-draw number->square]}
+  \item<5-> The action taken by the universe is to draw a square, dependent upon
+    the current state
+  \item<6-> \mintinline{Scheme}{[on-tick sub1]}
+  \item<7-> At each step of the universe's development, we subtract 1 from
+    the current state of the universe. 100, 99, ..., 1, 0
+  \item<8-> \mintinline{Scheme}{[stop-when zero?]}
+  \item<9-> The actions taken by the universe end when the state of the universe
+    is 0.
+  \item<10-> And then Racket shuffles off this mortal coil.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Action, Inaction, and Interaction}
+  The last program was a simple start to event-driven program, but the only
+  event it handled was the flow of time!
+  \begin{itemize}
+  \item<2-> So let's get a program with some (inter)action!
+  \item<3-> We will want to reset the universe to 100, every time you (the god of this universe) presses a key. (action!)
+  \item<4-> Otherwise, the universe decrements as usual. (inaction!)
+  \item<5-> So, we will need to use the \mintinline{Scheme}{on-key} event handler.
+  \item<6-> But how do we reset the state of the universe?
+  \item<7-> Notice that our other handlers like in \mintinline{Scheme}{[on-tick sub1]} take a \emph{function} to create the new universe state.
+  \item<8-> Help me write a reset function!
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Endgame}
+  Ok, so (hopefully) the function we came up with looked something like this:
+  \begin{itemize}
+  \item<2-> \mintinline{Scheme}{(define (reset state key-event) 100)}
+  \item<3-> Yay time travel!
+  \item<4-> Our function doesn't actually care about the current state of the
+    universe or the specific key that was pressed
+  \item<5-> But obviously, we can think of situations where that would matter...
+  \item<6-> Name some!
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Briefly Sidetracked}
+  Alright, so now we realize we can write Doom as a big-bang program, right?
+  \\\\
+  %\begin{center}
+  \includegraphics[width=\textwidth]{images/Carmack.png}
+  %\end{center}
+\end{frame}
+
+\defverbatim[colored]\squareReset{
+\begin{minted}{Scheme}
+(big-bang 100
+    [to-draw number->square]
+    [on-tick sub1]
+    [stop-when zero?]
+    [on-key reset])
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Back to the Future}
+  With our reset function defined, we can finish our new big-bang
+  program as:
+  \pause
+  \squareReset
+  \begin{itemize}
+  \item<2-> Basically, when the state of the universe is reset, the state
+    passed to the to-draw event handler is 100, and so a large square is
+    drawn again.
+  \item<3-> From here, normal clock ticks make sure that the state of the universe
+    is decremented.
+  \item<4-> Any key press resets the state.
+  \item<5-> Unless we the state of the universe reaches 0 and ends.
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\generalForm{
+\begin{minted}{Scheme}
+(big-bang cw0
+  [on-tick tock]
+  [on-key ke-h]
+  [on-mouse me-h]
+  [to-draw render]
+  [stop-when end?]
+  ...)
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Analyzing big-bang}
+  In some sense, we can think of a big-bang program as a \emph{stream}
+  of function calls that produce world states which are threaded into the next
+  function call. Here's a general form of big-bang:
+  \pause
+  \generalForm
+  \begin{itemize}
+    \item<2-> This defines 3 event handlers:
+      \begin{enumerate}
+      \item<3-> Clock events for every tick are handled by: tock
+      \item<4-> Key events are handled by: ke-h
+      \item<5-> Mouse events are handled by: me-h
+      \end{enumerate}
+    \item<6-> The programs stops when end? returns true
+    \item<7-> Our render function draws something (or produces a gui)
+      at the end of each tick as a result of the current state. tock
+      produces the next world state.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Analyzing big-bang (cont.)}
+  \begin{itemize}
+  \item<1-> Our event handling functions tock, ke-h, and me-h will supercede tick events and produce the next world states.
+  \item<2-> If two events happen in simultaneously, Racket will arbitrarily order them.
+  \item<3-> Here's a visualization of the event pipeline:
+  \item<4-> \includegraphics[width=0.7\textwidth]{images/event-pipeline.png}
+  \end{itemize}
+\end{frame}
+
 \end{document}
 

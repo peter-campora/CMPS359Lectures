@@ -21,6 +21,7 @@
     "caption"
     "minted"
     "tikz"
+    "xcolor"
     "subcaption"))
  :latex)
 
