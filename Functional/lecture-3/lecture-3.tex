@@ -887,5 +887,36 @@ class Main {
   \end{itemize}
 \end{frame}
 
+\defverbatim[colored]\threading{
+\begin{minted}{Scheme}
+(define cw1 (ke-h cw0 "a"))
+(define cw2 (tock cw1))
+(define cw3 (me-h cw2 90 100 "button-down"))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Analyzing big-bang (cont.)}
+  Let’s interpret this table with the specific sequence of events: the user presses the “a” key, then the clock ticks, and finally the user clicks the mouse to trigger a “button down” event at position (90,100).
+  \begin{enumerate}
+  \item<2-> cw1 is the result of (ke-h cw0 "a");
+  \item<3-> cw2 is the result of (tock cw1); and
+  \item<4-> cw3 is the result of (me-h cw2 90 100 "button-down").
+  \end{enumerate}
+  \pause
+  And a sequence of clock ticks is simply:
+  \mintinline{Scheme}{(tock (tock (tock cw0)))}
+  \pause
+  \\\\
+  To inspect the state at a certain point, you can add a stop function that
+  produces 0 and ends the program. You can then look at the last point animated:
+  \mintinline{Scheme}{(define (stop state key) 0)}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Take a Breath}
+  \huge We covered a lot. It'll take a while and some practice  for it all to sink in. Next we move on to laws governing program design. This will make it easier
+  to think about writing the types of programs covered.
+\end{frame}
 \end{document}
 
