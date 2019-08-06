@@ -17,13 +17,13 @@
 \usepackage[labelformat=simple]{subcaption}
 
 \usetheme{Singapore}
-\title{Lecture 3}
+\title{Getting Started in Racket}
 %\subtitle{in Racket}
 %\author{Peter Campora}
 %\institute{ULL}
 %\date{\today}
 
-%This lectures introduces Racket basics and the right way to program
+%This lectures introduces Racket basics at a slow pace
 \begin{document}
 \begin{frame}
 \titlepage
@@ -834,13 +834,13 @@ class Main {
   \pause
   \squareReset
   \begin{itemize}
-  \item<2-> Basically, when the state of the universe is reset, the state
+  \item<3-> Basically, when the state of the universe is reset, the state
     passed to the to-draw event handler is 100, and so a large square is
     drawn again.
-  \item<3-> From here, normal clock ticks make sure that the state of the universe
+  \item<4-> From here, normal clock ticks make sure that the state of the universe
     is decremented.
-  \item<4-> Any key press resets the state.
-  \item<5-> Unless we the state of the universe reaches 0 and ends.
+  \item<5-> Any key press resets the state.
+  \item<6-> Unless we the state of the universe reaches 0 and ends.
   \end{itemize}
 \end{frame}
 
@@ -864,14 +864,14 @@ class Main {
   \pause
   \generalForm
   \begin{itemize}
-    \item<2-> This defines 3 event handlers:
+    \item<3-> This defines 3 event handlers:
       \begin{enumerate}
-      \item<3-> Clock events for every tick are handled by: tock
-      \item<4-> Key events are handled by: ke-h
-      \item<5-> Mouse events are handled by: me-h
+      \item<4-> Clock events for every tick are handled by: tock
+      \item<5-> Key events are handled by: ke-h
+      \item<6-> Mouse events are handled by: me-h
       \end{enumerate}
-    \item<6-> The programs stops when end? returns true
-    \item<7-> Our render function draws something (or produces a gui)
+    \item<7-> The programs stops when end? returns true
+    \item<8-> Our render function draws something (or produces a gui)
       at the end of each tick as a result of the current state. tock
       produces the next world state.
   \end{itemize}
@@ -920,3 +920,8 @@ class Main {
 \end{frame}
 \end{document}
 
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
