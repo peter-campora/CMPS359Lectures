@@ -53,7 +53,7 @@
 \end{frame}
 
 % \defverbatim[colored]\lstR{
-% \begin{minted}{Scheme}
+% \begin{minted}{racket}
 % ;;Number -> Number
 % (define (square x) (* x x))
 
@@ -64,25 +64,25 @@
 % }
 
 \defverbatim[colored]\syntaxOne{
-\begin{minted}{Scheme} 
+\begin{minted}{racket} 
     (f 1)  
 \end{minted}
 }
 
 \defverbatim[colored]\syntaxTwo{
-\begin{minted}{Scheme} 
+\begin{minted}{racket} 
     (+ 1 2)
 \end{minted}
 }
 
 \defverbatim[colored]\syntaxThree{
-\begin{minted}{Scheme} 
+\begin{minted}{racket} 
     (+ 1 (* 2 3))
 \end{minted}
 }
 
 \defverbatim[colored]\syntaxFour{
-\begin{minted}{Scheme} 
+\begin{minted}{racket} 
     (define (double x) (* x 2))
 \end{minted}
 }
@@ -135,20 +135,20 @@
 \end{frame}
 
 \defverbatim[colored]\rocketSize{
-\begin{minted}{Scheme} 
+\begin{minted}{racket} 
   (define rocket-size 
     (* (image-width rocket) (image-height rocket)))
 \end{minted}
 }
 
 \defverbatim[colored]\circle{
-\begin{minted}{Scheme} 
+\begin{minted}{racket} 
 (circle 20 "solid" "red")
 \end{minted}
 }
 
 \defverbatim[colored]\rectangle{
-\begin{minted}{Scheme} 
+\begin{minted}{racket} 
 (rectangle 30  20 "outline" "blue")
 \end{minted}
 }
@@ -160,19 +160,19 @@
   \item \includegraphics[width=0.4\textwidth]{images/define-rocket.png}
   \item<2-> Now let's create a function to calculate its size:
   \item[]<3-> \rocketSize
-  \item<4-> We can define circles: \mintinline{Scheme}{(circle 20 "solid" "red")}
-  \item<4-> Or rectangles: \mintinline{Scheme}{(rectangle 30  20 "outline" "blue")}
+  \item<4-> We can define circles: \mintinline{racket}{(circle 20 "solid" "red")}
+  \item<4-> Or rectangles: \mintinline{racket}{(rectangle 30  20 "outline" "blue")}
   \end{itemize}
 \end{frame}
 
 \defverbatim[colored]\emptyScene{
-\begin{minted}{Scheme} 
+\begin{minted}{racket} 
   (empty-scene 100 100)
 \end{minted}
 }
 
 \defverbatim[colored]\initialScene{
-\begin{minted}{Scheme} 
+\begin{minted}{racket} 
   (place-image (circle 10 "solid" "green")
              50 80
              (empty-scene 100 100))
@@ -183,7 +183,7 @@
   \frametitle{Drawing a Scene}
   We'll start by drawing an empty scene.
   \begin{itemize}
-  \item \mintinline{Scheme}{(empty-scene 100 100)}
+  \item \mintinline{racket}{(empty-scene 100 100)}
   \item<2-> \emph{Boring!} Let's add something to it:
   \item[]<3-> \initialScene
   \item<4->Here's what our new scene looks like: \includegraphics[width=0.1\textwidth]{images/initial-scene.png}
@@ -191,7 +191,7 @@
 \end{frame}
 
 \defverbatim[colored]\placeRocket{
-\begin{minted}{Scheme} 
+\begin{minted}{racket} 
   (place-image rocket 50 20 (empty-scene 100 60))
 \end{minted}
 }
@@ -219,14 +219,14 @@
 % \end{frame}
 
 \defverbatim[colored]\placeRocket{
-\begin{minted}{Scheme} 
+\begin{minted}{racket} 
   (define (picture-of-rocket height)
     (place-image  50 height (empty-scene 100 60)))
 \end{minted}
 }
 
 \defverbatim[colored]\animate{
-\begin{minted}{Scheme} 
+\begin{minted}{racket} 
   (animate picture-of-rocket)
 \end{minted}
 }
@@ -237,7 +237,7 @@
   \begin{itemize}
   \item \placeRocket
   \item<2-> Now let's mess with the \emph{animate} function
-  \item<3-> \mintinline{Scheme}{(animate picture-of-rocket)}
+  \item<3-> \mintinline{racket}{(animate picture-of-rocket)}
   \item<4-> Anything weird about this expression?
   \item<5-> This is our first example of using \emph{higher-order} function,
     a function that takes another function as input or produces another function
@@ -247,7 +247,7 @@
 \end{frame}
 
 \defverbatim[colored]\sign{
-\begin{minted}{Scheme}
+\begin{minted}{racket}
   (define (sign x)
     (cond
       [(< x 0) -1]
@@ -283,7 +283,7 @@
 \end{frame}
 
 \defverbatim[colored]\versionTwo{
-\begin{minted}{Scheme}
+\begin{minted}{racket}
 (define (picture-of-rocket.v2 height)
   (cond 
     [(<= height 60) 
@@ -309,7 +309,7 @@
 \end{frame}
 
 \defverbatim[colored]\rocketCenter{
-\begin{minted}{Scheme}
+\begin{minted}{racket}
   (define rocket-center-to-top 
     (- canvas-height (/ rocket-height 2)))
 \end{minted}
@@ -320,7 +320,7 @@
   The landing should take into account the midpoint of the rocket and the canvas-height.
   \begin{itemize}
   \item<1-> No more magic numbers!
-  \item<2-> \mintinline{Scheme}{(define canvas-height 60)}
+  \item<2-> \mintinline{racket}{(define canvas-height 60)}
   \item<3-> Now let's get the center point:
   \item<4-> \rocketCenter
   \item<5-> Let's look at our new version.
@@ -328,7 +328,7 @@
 \end{frame}
 
 \defverbatim[colored]\rocketThree{
-\begin{minted}[fontsize=\footnotesize]{Scheme}
+\begin{minted}[fontsize=\footnotesize]{racket}
 (define (picture-of-rocket.v3 height)
   (cond
     [(<= height rocket-center-to-top) 
@@ -340,13 +340,13 @@
 
       
 \defverbatim[colored]\rockBed{
-\begin{minted}{Scheme}
+\begin{minted}{racket}
   (define rock-bed
     (rectangle canvas-width 10 "solid" "grey"))
 \end{minted}
 }
 \defverbatim[colored]\blueCanvas{
-\begin{minted}{Scheme}
+\begin{minted}{racket}
   (define blue-canvas 
     (empty-scene canvas-width canvas-height "blue"))
 \end{minted}
@@ -364,7 +364,7 @@
 \end{frame}
 
 \defverbatim[colored]\versionFour{
-\begin{minted}[fontsize=\footnotesize]{Scheme}
+\begin{minted}[fontsize=\footnotesize]{racket}
 (define (picture-of-rocket.v4 height)
   (cond
    [(<= height rocket-center-to-top) 
@@ -399,20 +399,20 @@
 \end{frame}
 
 \defverbatim[colored]\velocity{
-\begin{minted}[fontsize=\footnotesize]{Scheme}
+\begin{minted}[fontsize=\footnotesize]{racket}
 (define velocity 3)
 \end{minted}
 }
 
 \defverbatim[colored]\distance{
-\begin{minted}[fontsize=\footnotesize]{Scheme}
+\begin{minted}[fontsize=\footnotesize]{racket}
 ;;move at three units per second
 (define (distance time) (* time velocity))
 \end{minted}
 }
 
 \defverbatim[colored]\versionFive{
-\begin{minted}[fontsize=\footnotesize]{Scheme}
+\begin{minted}[fontsize=\footnotesize]{racket}
 (define (picture-of-rocket.v5 time)
   (cond
    ((<= (distance time) rocket-center-to-top) 
@@ -428,8 +428,8 @@
   \frametitle{Last Fix}
   Fix:
   \begin{enumerate}
-  \item<1-> \mintinline{Scheme}{(define velocity 3)}
-  \item<2-> \mintinline{Scheme}{(define (distance time) (* time velocity))}
+  \item<1-> \mintinline{racket}{(define velocity 3)}
+  \item<2-> \mintinline{racket}{(define (distance time) (* time velocity))}
   \end{enumerate}
   \pause
   \versionFive

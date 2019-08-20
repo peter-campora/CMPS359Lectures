@@ -35,25 +35,25 @@
   Warning! The start of this lecture will be a bit boring since it introduces
   the basic elements of Racket--starting with how to do arithmetic.
   \begin{itemize}
-  \item<2-> \mintinline{Scheme}{(+ 1 1)}
-  \item<3-> Evaluate inner parentheses first: \mintinline{Scheme}{(+ 1 (+ 1 (+ 1 1) 2) 3 4 5)}
-  \item<4-> == \mintinline{Scheme}{(+ 1 (+ 1 2 2) 3 4 5)}
-  \item<5-> == \mintinline{Scheme}{(+ 1 5 3 4 5)}
-  \item<6-> == \mintinline{Scheme}{(+ 1 5 3 4 5)}
-  \item<7-> == \mintinline{Scheme}{(+ 1 (+ 1 2 2) 3 4 5)}
+  \item<2-> \mintinline{racket}{(+ 1 1)}
+  \item<3-> Evaluate inner parentheses first: \mintinline{racket}{(+ 1 (+ 1 (+ 1 1) 2) 3 4 5)}
+  \item<4-> == \mintinline{racket}{(+ 1 (+ 1 2 2) 3 4 5)}
+  \item<5-> == \mintinline{racket}{(+ 1 5 3 4 5)}
+  \item<6-> == \mintinline{racket}{(+ 1 5 3 4 5)}
+  \item<7-> == \mintinline{racket}{(+ 1 (+ 1 2 2) 3 4 5)}
   \end{itemize}
 \end{frame}
 
 \begin{frame}
   \frametitle{Arithmetic Revisited (cont)}
   \begin{itemize}
-  \item<1-> Primitive form is \mintinline{Scheme}{(operator [number...])}
+  \item<1-> Primitive form is \mintinline{racket}{(operator [number...])}
   \item<2-> A list of useful operators:  +, -, *, /, abs, add1, ceiling, denominator, expt, floor, gcd, log, max, numerator, quotient, random, remainder, sqr, and tan
   \item<3-> Racket has an extensive \emph{numeric tower}.
-  \item<4-> What would \mintinline{Scheme}{(/ 4 3)} produce in Java?
+  \item<4-> What would \mintinline{racket}{(/ 4 3)} produce in Java?
   \item<5-> Instead of producing a float, it produces $\frac{4}{3}$.
-  \item<6-> To get a float, you need to use \mintinline{Scheme}{(exact->inexact (/ 4 3))}
-  \item<7-> Other operations like \mintinline{Scheme}{(sqrt 2)} immediately produce floats.
+  \item<6-> To get a float, you need to use \mintinline{racket}{(exact->inexact (/ 4 3))}
+  \item<7-> Other operations like \mintinline{racket}{(sqrt 2)} immediately produce floats.
   \item<8-> Let's play around with this a bit!
   \end{itemize}
 \end{frame}
@@ -63,14 +63,14 @@
   You may think of arithmetic involving integers or real numbers, but
   we can also have arithmetic on strings!
   \begin{itemize}
-  \item<2-> String concatenation is our basic operation: \mintinline{Scheme}{(string-append "Hello " "World")}
-  \item<3-> We can give it multiple arguments: \mintinline{Scheme}{(string-append "What a " "lovely " "day" " for Racket!")}
+  \item<2-> String concatenation is our basic operation: \mintinline{racket}{(string-append "Hello " "World")}
+  \item<3-> We can give it multiple arguments: \mintinline{racket}{(string-append "What a " "lovely " "day" " for Racket!")}
   \item<4-> The identity element for string-append is "":
-    \mintinline{Scheme}{(string-append "foo" "")}
-  \item<5-> We can get the length of strings: \mintinline{Scheme}{(string-length "abc")}
-  \item<6-> We can extract a specific character: \mintinline{Scheme}{(string-ref "abc" 0)}
-  \item<7-> We can take a substring of a string: \mintinline{Scheme}{(substring "foobar" 0 3)}
-  \item<8-> Can convert numbers to strings: \mintinline{Scheme}{(number->string 42)}
+    \mintinline{racket}{(string-append "foo" "")}
+  \item<5-> We can get the length of strings: \mintinline{racket}{(string-length "abc")}
+  \item<6-> We can extract a specific character: \mintinline{racket}{(string-ref "abc" 0)}
+  \item<7-> We can take a substring of a string: \mintinline{racket}{(substring "foobar" 0 3)}
+  \item<8-> Can convert numbers to strings: \mintinline{racket}{(number->string 42)}
   \end{itemize}
 \end{frame}
 
@@ -78,12 +78,12 @@
   \frametitle{Arithmetic of Images}
   A lot of functions are available for manipulating images:
   \begin{itemize}
-  \item<2-> Circles: \mintinline{Scheme}{(define my-circle (circle 10 "outline" "green"))}
-  \item<3-> Rectangles: \mintinline{Scheme}{(define my-rectangle (rectangle 10 20 "solid" "red"))}
-  \item<4-> Get the height of an image: \mintinline{Scheme}{(image-height my-rectangle))}
-  \item<5-> Or the width: \mintinline{Scheme}{(image-height my-rectangle))}
-  \item<6-> You can layer images with overlay: \mintinline{Scheme}{(overlay my-circle my-rectangle)}
-  \item<7-> See also \mintinline{Scheme}{overlay/xy} and \mintinline{Scheme}{overlay/align}
+  \item<2-> Circles: \mintinline{racket}{(define my-circle (circle 10 "outline" "green"))}
+  \item<3-> Rectangles: \mintinline{racket}{(define my-rectangle (rectangle 10 20 "solid" "red"))}
+  \item<4-> Get the height of an image: \mintinline{racket}{(image-height my-rectangle))}
+  \item<5-> Or the width: \mintinline{racket}{(image-height my-rectangle))}
+  \item<6-> You can layer images with overlay: \mintinline{racket}{(overlay my-circle my-rectangle)}
+  \item<7-> See also \mintinline{racket}{overlay/xy} and \mintinline{racket}{overlay/align}
   \end{itemize}
 \end{frame}
 
@@ -91,12 +91,12 @@
   \frametitle{Arithmetic of Images (cont.)}
   The starting points for drawing images typically involves the functions below:
   \begin{itemize}
-  \item<2-> \mintinline{Scheme}{empty-scene}, \mintinline{Scheme}{place-image},
-    and \mintinline{Scheme}{scene+line}
+  \item<2-> \mintinline{racket}{empty-scene}, \mintinline{racket}{place-image},
+    and \mintinline{racket}{scene+line}
   \item<3-> To create an empty-scene:
-    \mintinline{Scheme}{(define canvas (empty-scene 100 100 "white"))}
+    \mintinline{racket}{(define canvas (empty-scene 100 100 "white"))}
   \item<4-> To place an image into the scene:
-    \mintinline{Scheme}{(place-image my-rectangle 50 50 canvas)}  
+    \mintinline{racket}{(place-image my-rectangle 50 50 canvas)}  
   \item<5-> Copy this image into Dr. Racket: \includegraphics[width=0.05\textwidth]{images/cat.png}    
   \end{itemize}
 \end{frame}
@@ -109,13 +109,13 @@
 \end{frame}
 
 % \defverbatim[colored]\schemeTrue{
-% \begin{minted}{Scheme}
+% \begin{minted}{racket}
 %   #t
 % \end{minted}
 % }
 
 \defverbatim[colored]\cond{
-\begin{minted}{Scheme}
+\begin{minted}{racket}
     (cond 
       [(> x 0) 1]
       [(= x 0) 0]
@@ -129,19 +129,19 @@
   \begin{itemize}
   \item<2-> The primitive boolean values are: 
     \text{\#t} and \text{\#f}
-  \item<3-> The functions \mintinline{Scheme}{and}, \mintinline{Scheme}{or}, and
-    \mintinline{Scheme}{not} do exactly what you expect
+  \item<3-> The functions \mintinline{racket}{and}, \mintinline{racket}{or}, and
+    \mintinline{racket}{not} do exactly what you expect
   \item<4-> We can write conditional expressions with the form:
-    \mintinline{Scheme}{(if test-exp true-branch else-branch)}
+    \mintinline{racket}{(if test-exp true-branch else-branch)}
   \item<5-> What does the following expression evaluate to?
-    \mintinline{Scheme}{(+ 1 (if (< 0 1) 1 2))}
-  \item<6-> When we have more conditions we use \mintinline{Scheme}{cond}:
+    \mintinline{racket}{(+ 1 (if (< 0 1) 1 2))}
+  \item<6-> When we have more conditions we use \mintinline{racket}{cond}:
     \cond
   \end{itemize}  
 \end{frame}
 
 \defverbatim[colored]\catProgram{
-\begin{minted}{Scheme}
+\begin{minted}{racket}
     (define cat-height (image-height cat))
     (define cat-width (image-width cat))
     
@@ -162,7 +162,7 @@
   \item<2-> It should be a long cat if its height (tail height counts) is higher
     than its width.
   \item<3-> Help me write it! We're going to need
-    \mintinline{Scheme}{image-height} and \mintinline{Scheme}{image-width}.
+    \mintinline{racket}{image-height} and \mintinline{racket}{image-width}.
   \item<4-> Here it is: \catProgram
   \end{itemize}
 \end{frame}
@@ -172,19 +172,19 @@
   Predicates are a short way of saying boolean valued function. Let's take
   a look at some important predicates in Racket.
   \begin{itemize}
-  \item<2-> We can check if something is a number with \mintinline{Scheme}{number?}
-  \item<3-> \mintinline{Scheme}{(number? 2)}, \mintinline{Scheme}{(number? 2.3)}, and \mintinline{Scheme}{(number? 2/3)} all return true
-  \item<4-> Surprisingly \mintinline{Scheme}{(rational? 2)}, \mintinline{Scheme}{(rational? (sqrt 2))}, and \mintinline{Scheme}{(rational? 2/3)} all return true too.
+  \item<2-> We can check if something is a number with \mintinline{racket}{number?}
+  \item<3-> \mintinline{racket}{(number? 2)}, \mintinline{racket}{(number? 2.3)}, and \mintinline{racket}{(number? 2/3)} all return true
+  \item<4-> Surprisingly \mintinline{racket}{(rational? 2)}, \mintinline{racket}{(rational? (sqrt 2))}, and \mintinline{racket}{(rational? 2/3)} all return true too.
   \item<5-> \includegraphics[width=0.3\textwidth]{images/science-liar.jpg}
-  \item<6-> Use \mintinline{Scheme}{(exact? (sqrt 2))} or \mintinline{Scheme}{(inexact? (sqrt 2))}
-  %\item<7-> There are many other predicates: \mintinline{Scheme}{real?},
-  %  \mintinline{Scheme}{boolean?}, \mintinline{Scheme}{image?},
-  %  \mintinline{Scheme}{string?}, \mintinline{Scheme}{complex?}, ...
+  \item<6-> Use \mintinline{racket}{(exact? (sqrt 2))} or \mintinline{racket}{(inexact? (sqrt 2))}
+  %\item<7-> There are many other predicates: \mintinline{racket}{real?},
+  %  \mintinline{racket}{boolean?}, \mintinline{racket}{image?},
+  %  \mintinline{racket}{string?}, \mintinline{racket}{complex?}, ...
   \end{itemize}
 \end{frame}
 
 \defverbatim[colored]\predicateSkeleton{
-\begin{minted}{Scheme}
+\begin{minted}{racket}
     (cond
       [(... in) ...]
       ...)
@@ -192,14 +192,14 @@
 }
 
 \defverbatim[colored]\predicatePartial{
-\begin{minted}{Scheme}
+\begin{minted}{racket}
     (cond
       [(string? in) ...]
       ...)
 \end{minted}
 }
 \defverbatim[colored]\predicateFinal{
-\begin{minted}[fontsize=\footnotesize]{Scheme}
+\begin{minted}[fontsize=\footnotesize]{racket}
     (cond 
         [(string? in) (string-length in)]
     	[(and (number? in) (> in 0)) (sub1 in)]
@@ -209,7 +209,7 @@
 }
 \begin{frame}
   \frametitle{Programming With Predicates}
-  Create an expression that converts the value of \mintinline{Scheme}{in} to a positive number. For a String, it determines how long the String is; for an Image, it uses the area; for a Number, it decrements the number by 1, unless it is already 0 or negative; for true it uses 10 and for false 20.
+  Create an expression that converts the value of \mintinline{racket}{in} to a positive number. For a String, it determines how long the String is; for an Image, it uses the area; for a Number, it decrements the number by 1, unless it is already 0 or negative; for true it uses 10 and for false 20.
 \begin{itemize}
 \item<2-> Let's diagram this out.
 \item<3-> Here is our skeleton: \predicateSkeleton
@@ -223,13 +223,13 @@
 %   \frametitle{Booleans and Conditionals}
 %   \begin{itemize}
 %   \item<2-> The structure of basic conditional statements:
-%     \mintinline{Scheme}{(if test-exp true-branch else-branch)}
-%   \item<3-> \mintinline{Scheme}{(if #t 1 2) ;;produces 1}
+%     \mintinline{racket}{(if test-exp true-branch else-branch)}
+%   \item<3-> \mintinline{racket}{(if #t 1 2) ;;produces 1}
 %   \item<4-> Can use it as an argument to other operations:
-%     \mintinline{Scheme}{(+ 1 (if #t 1 2))}
+%     \mintinline{racket}{(+ 1 (if #t 1 2))}
 %   \item<5-> This means that conditionals in Racket are expressions.
-%   \item<6-> If we don't want to nest if-expressions, we use \mintinline{Scheme}{cond}
-%   \item<7-> \mintinline{Scheme}{(cond [test-1 result-1] ...[test-n result-n])}
+%   \item<6-> If we don't want to nest if-expressions, we use \mintinline{racket}{cond}
+%   \item<7-> \mintinline{racket}{(cond [test-1 result-1] ...[test-n result-n])}
 %   \item<8-> Let's record the sign of some integer x: \cond
 %   \end{itemize}
 % \end{frame}
@@ -357,22 +357,22 @@ class Main {
 \begin{frame}
   \frametitle{Getting Our Hands Dirty}
   When we defined constants in Racket, we used the form:
-  \mintinline{Scheme}{(define constant exp)}
+  \mintinline{racket}{(define constant exp)}
   \begin{itemize}
-  \item<2-> To define functions: \mintinline{Scheme}{(define (fun-name params...) fun-body)}
+  \item<2-> To define functions: \mintinline{racket}{(define (fun-name params...) fun-body)}
   \item<3-> To define $square(x) = x^2$:
-    \mintinline{Scheme}{(define (square x) (* x x))}
+    \mintinline{racket}{(define (square x) (* x x))}
   \item<4-> For a function of two parameters:
-    \mintinline{Scheme}{(define (add x y) (+ x y))}
+    \mintinline{racket}{(define (add x y) (+ x y))}
   \end{itemize}
 \end{frame}
 
 \begin{frame}
   \frametitle{Debugging Incorrect Code}
   Consider the following function:
-  \mintinline{Scheme}{(define (my-not b) (not b 1))}
+  \mintinline{racket}{(define (my-not b) (not b 1))}
   \begin{itemize}
-  \item<2-> What happens when we make the following call? \mintinline{Scheme}{(my-not t)}
+  \item<2-> What happens when we make the following call? \mintinline{racket}{(my-not t)}
   \item<3-> \includegraphics[width=0.4\textwidth]{images/debugger.png}
   \item<4-> Let's play around with the debugger.
   \end{itemize}
@@ -382,10 +382,10 @@ class Main {
   \frametitle{Defining Basic Functions}
   Defining the distance to the origin $f(x, y) = \sqrt{x^2 + y^2}$ is simple:
   \begin{itemize}
-  \item<2-> \mintinline{Scheme}{(define (distance x y) (sqrt (+ (sqr x) (sqr y))))}
+  \item<2-> \mintinline{racket}{(define (distance x y) (sqrt (+ (sqr x) (sqr y))))}
   \item<3-> Defining implication $p \Rightarrow q$ as a function is straightforward.
-  \item<4-> \mintinline{Scheme}{(define (==> p q) (or (not p) q))}
-  \item<5-> Here is a secret: \mintinline{Scheme}{(f . ==> . t)}
+  \item<4-> \mintinline{racket}{(define (==> p q) (or (not p) q))}
+  \item<5-> Here is a secret: \mintinline{racket}{(f . ==> . t)}
   \item<6-> Place dots around a function to use it infix.    
   \end{itemize}
 \end{frame}
@@ -402,26 +402,26 @@ class Main {
   \item<3-> The anatomy of a letter consists of opening, body, and closing that
     need to be parameterized by names.
   \item<4-> Let's start with the opening:
-    \mintinline{Scheme}{(define (opening fst) (string-append "Dear " fst ","))}
+    \mintinline{racket}{(define (opening fst) (string-append "Dear " fst ","))}
   \end{itemize}
 \end{frame}
 
 \defverbatim[colored]\body{
-\begin{minted}[fontsize=\footnotesize]{Scheme}
+\begin{minted}[fontsize=\footnotesize]{racket}
 (define (body company)
   (string-append "I am applying for a job at " company "..."))
 \end{minted}
 }
 
 \defverbatim[colored]\closing{
-\begin{minted}[fontsize=\footnotesize]{Scheme}
+\begin{minted}[fontsize=\footnotesize]{racket}
 (define (closing signature-name)
   (string-append "Sincerely," "\n\n" signature-name "\n"))
 \end{minted}
 }
 
 \defverbatim[colored]\letter{
-\begin{minted}[fontsize=\footnotesize]{Scheme}
+\begin{minted}[fontsize=\footnotesize]{racket}
 (define (letter recipient company signature-name)
   (string-append
     (opening recipient)
@@ -450,8 +450,8 @@ class Main {
   how to print the letter.
   \begin{itemize}
   \item<2-> To use IO we must first add this to our program:
-    \mintinline{Scheme}{(require 2htdp/batch-io)}
-  \item<3-> \mintinline{Scheme}{(write-file 'stdout (letter "Mr. Campora" "WPI" "Bob Trufant"))}
+    \mintinline{racket}{(require 2htdp/batch-io)}
+  \item<3-> \mintinline{racket}{(write-file 'stdout (letter "Mr. Campora" "WPI" "Bob Trufant"))}
   \item<4-> So in this since, our program is a call to one impure procedure after
     the composition of multiple pure functions did all of the work.
   \item<5-> One of the main goals of functional programming is to separate the
@@ -504,14 +504,14 @@ class Main {
 \end{frame}
 
 \defverbatim[colored]\cost{
-\begin{minted}[fontsize=\footnotesize]{Scheme}
+\begin{minted}[fontsize=\footnotesize]{racket}
      (define (cost ticket-price)
        (+ 180 (* 0.04 (attendees ticket-price))))
 \end{minted}
 }
 
 \defverbatim[colored]\attendees{
-\begin{minted}[fontsize=\footnotesize]{Scheme}
+\begin{minted}[fontsize=\footnotesize]{racket}
      (define (attendees ticket-price)
        (- 120 (* (- ticket-price 5.0) (/ 15 0.1))))
 \end{minted}
@@ -530,14 +530,14 @@ class Main {
 \end{frame}
 
 \defverbatim[colored]\revenue{
-\begin{minted}{Scheme}
+\begin{minted}{racket}
      (define (revenue ticket-price)
        (* ticket-price (attendees ticket-price)))
 \end{minted}
 }
 
 \defverbatim[colored]\profit{
-\begin{minted}{Scheme}
+\begin{minted}{racket}
      (define (profit ticket-price)
        (- (revenue ticket-price)
           (cost ticket-price)))
@@ -556,7 +556,7 @@ class Main {
 \end{frame}
 
 \defverbatim[colored]\badProgram{
-\begin{minted}{Scheme}
+\begin{minted}{racket}
   (define (profit price)
    (- (* (+ 120
            (* (/ 15 0.1)
@@ -604,15 +604,15 @@ class Main {
   A common type involves File I/O, so I'll give a program that reads from and
   writes to a file.
   \begin{itemize}
-  \item<2-> To read from ``foo.txt'' use: \mintinline{Scheme}{(read-file "foo.txt")}
-  \item<3-> To write ``bar'' into ``foo.txt'' use: \mintinline{Scheme}{(read-file "bar" "foo.txt")}
+  \item<2-> To read from ``foo.txt'' use: \mintinline{racket}{(read-file "foo.txt")}
+  \item<3-> To write ``bar'' into ``foo.txt'' use: \mintinline{racket}{(read-file "bar" "foo.txt")}
   \item<4-> Let's write a quick program that reads a temperature in Celsius
     from ``C.txt'' and writes the converted temperature in Fahrenheit to ``F.txt''
   \end{itemize}  
 \end{frame}
 
 \defverbatim[colored]\convert{
-\begin{minted}[fontsize=\footnotesize]{Scheme}
+\begin{minted}[fontsize=\footnotesize]{racket}
      (define (convert in out)
       (write-file out
         (string-append
@@ -628,7 +628,7 @@ class Main {
   \frametitle{A Quick Batch Program}
   First let's define the Celsius to Fahrenheit function:
   \begin{itemize}
-  \item<2-> \mintinline{Scheme}{(define (C-to-F temp) (+ (* 9/5 temp) 32))}
+  \item<2-> \mintinline{racket}{(define (C-to-F temp) (+ (* 9/5 temp) 32))}
   \item<3-> Unfortunately, with the current languages features we've introduced,
     the following definition isn't that elegant: \convert
   \item<4-> The most important things to note here are the converting between
@@ -728,16 +728,16 @@ class Main {
   \begin{itemize}
   \item<2-> To start with this, we need a function
     that draws a square based on a numerical input.
-  \item<3-> \mintinline{Scheme}{(define (number->square s) (square s "solid" "red")}
+  \item<3-> \mintinline{racket}{(define (number->square s) (square s "solid" "red")}
   \item<4-> In order to animate the square shrinking, we want to continually
-    call \mintinline{Scheme}{number->square} with smaller values.
-  \item<5-> \mintinline{Scheme}{(number->square 10)},  \mintinline{Scheme}{(number->square 5)}, \mintinline{Scheme}{(number->square 1)}
+    call \mintinline{racket}{number->square} with smaller values.
+  \item<5-> \mintinline{racket}{(number->square 10)},  \mintinline{racket}{(number->square 5)}, \mintinline{racket}{(number->square 1)}
   \item<6-> Let's put it in Dr. Racket
   \end{itemize}
 \end{frame}
 
 \defverbatim[colored]\firstBigBang{
-\begin{minted}{Scheme}
+\begin{minted}{racket}
     (big-bang 100
         [to-draw number->square]
         [on-tick sub1]
@@ -749,7 +749,7 @@ class Main {
   \frametitle{Using big-bang}
   Let's start with a very rough start to our program:
   \begin{itemize}
-  \item<2-> \mintinline{Scheme}{(big-bang 100 [to-draw number->square])}
+  \item<2-> \mintinline{racket}{(big-bang 100 [to-draw number->square])}
   \item<3-> When we close the program, Racket produces 100, the final state
     of our program
   \item<4-> Having a red square fill a frame until we close it isn't very interesting.
@@ -766,15 +766,15 @@ class Main {
   \frametitle{Unpacking This Program}
   Let's start from the top:
   \begin{itemize}
-  \item<2-> \mintinline{Scheme}{(big-bang 100}
+  \item<2-> \mintinline{racket}{(big-bang 100}
   \item<3-> \emph{And God said, ``Let there be \textcolor{red}{\underline{100}}``}
-  \item<4-> \mintinline{Scheme}{[to-draw number->square]}
+  \item<4-> \mintinline{racket}{[to-draw number->square]}
   \item<5-> The action taken by the universe is to draw a square, dependent upon
     the current state
-  \item<6-> \mintinline{Scheme}{[on-tick sub1]}
+  \item<6-> \mintinline{racket}{[on-tick sub1]}
   \item<7-> At each step of the universe's development, we subtract 1 from
     the current state of the universe. 100, 99, ..., 1, 0
-  \item<8-> \mintinline{Scheme}{[stop-when zero?]}
+  \item<8-> \mintinline{racket}{[stop-when zero?]}
   \item<9-> The actions taken by the universe end when the state of the universe
     is 0.
   \item<10-> And then Racket shuffles off this mortal coil.
@@ -789,9 +789,9 @@ class Main {
   \item<2-> So let's get a program with some (inter)action!
   \item<3-> We will want to reset the universe to 100, every time you (the god of this universe) presses a key. (action!)
   \item<4-> Otherwise, the universe decrements as usual. (inaction!)
-  \item<5-> So, we will need to use the \mintinline{Scheme}{on-key} event handler.
+  \item<5-> So, we will need to use the \mintinline{racket}{on-key} event handler.
   \item<6-> But how do we reset the state of the universe?
-  \item<7-> Notice that our other handlers like in \mintinline{Scheme}{[on-tick sub1]} take a \emph{function} to create the new universe state.
+  \item<7-> Notice that our other handlers like in \mintinline{racket}{[on-tick sub1]} take a \emph{function} to create the new universe state.
   \item<8-> Help me write a reset function!
   \end{itemize}
 \end{frame}
@@ -800,7 +800,7 @@ class Main {
   \frametitle{Endgame}
   Ok, so (hopefully) the function we came up with looked something like this:
   \begin{itemize}
-  \item<2-> \mintinline{Scheme}{(define (reset state key-event) 100)}
+  \item<2-> \mintinline{racket}{(define (reset state key-event) 100)}
   \item<3-> Yay time travel!
   \item<4-> Our function doesn't actually care about the current state of the
     universe or the specific key that was pressed
@@ -819,7 +819,7 @@ class Main {
 \end{frame}
 
 \defverbatim[colored]\squareReset{
-\begin{minted}{Scheme}
+\begin{minted}{racket}
 (big-bang 100
     [to-draw number->square]
     [on-tick sub1]
@@ -846,7 +846,7 @@ class Main {
 \end{frame}
 
 \defverbatim[colored]\generalForm{
-\begin{minted}{Scheme}
+\begin{minted}{racket}
 (big-bang cw0
   [on-tick tock]
   [on-key ke-h]
@@ -889,7 +889,7 @@ class Main {
 \end{frame}
 
 \defverbatim[colored]\threading{
-\begin{minted}{Scheme}
+\begin{minted}{racket}
 (define cw1 (ke-h cw0 "a"))
 (define cw2 (tock cw1))
 (define cw3 (me-h cw2 90 100 "button-down"))
@@ -906,12 +906,12 @@ class Main {
   \end{enumerate}
   \pause
   And a sequence of clock ticks is simply:
-  \mintinline{Scheme}{(tock (tock (tock cw0)))}
+  \mintinline{racket}{(tock (tock (tock cw0)))}
   \pause
   \\\\
   To inspect the state at a certain point, you can add a stop function that
   produces 0 and ends the program. You can then look at the last point animated:
-  \mintinline{Scheme}{(define (stop state key) 0)}
+  \mintinline{racket}{(define (stop state key) 0)}
 \end{frame}
 
 \begin{frame}

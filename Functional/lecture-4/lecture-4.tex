@@ -75,7 +75,7 @@
 \end{frame}
 
 \defverbatim[colored]\dataDef{
-\begin{minted}{Scheme}
+\begin{minted}{racket}
   ; A Temperature is a Number. 
   ; interpretation represents Celsius degrees
 \end{minted}
@@ -100,15 +100,15 @@
   \item<2-> Express how you wish to represent information as data. A one-line comment for specifying \emph{data interpretations} suffices.
   \item<3-> Write down a signature, a statement of purpose, and a function header.
     \begin{itemize}
-    \item<4-> A \emph{signature} communicates the domain and codomain of your function. For example: \mintinline{Scheme}{; Number Number -> Number}
+    \item<4-> A \emph{signature} communicates the domain and codomain of your function. For example: \mintinline{racket}{; Number Number -> Number}
     \item<5-> A \emph{statement of purpose} communicates what the function produces and how it produces the answer
-    \item<6-> A \emph{function header} is merely a stub definition for the function with a name, parameters, and a trivial body: \mintinline{Scheme}{(define (add x y) 0)}
+    \item<6-> A \emph{function header} is merely a stub definition for the function with a name, parameters, and a trivial body: \mintinline{racket}{(define (add x y) 0)}
     \end{itemize}    
   \end{enumerate}
 \end{frame}
 
 \defverbatim[colored]\squareExample{
-\begin{minted}{Scheme}
+\begin{minted}{racket}
     ; Number -> Number
     ; computes the area of a square with side len 
     ; given: 2, expect: 4
@@ -118,7 +118,7 @@
 }
 
 \defverbatim[colored]\squareTests{
-\begin{minted}{Scheme}
+\begin{minted}{racket}
     (sqr 2); gives: 4
     (sqr 7); gives: 49
 \end{minted}
@@ -132,7 +132,7 @@
   \item<2-> \emph{Take inventory} for the program. See what is given and what needs to be computed. Basically, each function header indicates
     what is needed and then we start to skeleton the body based on the parameters:
     \begin{itemize}
-    \item<3-> \mintinline{Scheme}{(define (area-of-square len) (... len ...))}
+    \item<3-> \mintinline{racket}{(define (area-of-square len) (... len ...))}
     \item<4-> The dots indicate where the function needs to be fleshed out.    
     \end{itemize}
   \end{enumerate}
@@ -143,7 +143,7 @@
   \begin{enumerate}
     \setcounter{enumi}{4}
   \item<2-> Now we finally \emph{code}. Based on our inventory and functional examples, we should have some idea of what to replace the ... with.
-    For the program we've been discussing, our function body becomes \mintinline{Scheme}{(sqr len)}, where the second ... is removed.
+    For the program we've been discussing, our function body becomes \mintinline{racket}{(sqr len)}, where the second ... is removed.
   \item<3-> The final step is \emph{testing} the definition based on our functional examples.
     We'll first verify the correctness of this definition in Racket. But if we made a mistake it could be one of three kinds:
     \begin{itemize}
@@ -209,7 +209,7 @@
 \end{frame}
 
 \defverbatim[colored]\testProgram{
-\begin{minted}{Scheme}
+\begin{minted}{racket}
   ; Number -> Number 
   ; converts Fahrenheit temperatures to Celsius
   ; given 32, expect 0
@@ -221,7 +221,7 @@
 }
 
 \defverbatim[colored]\tests{
-\begin{minted}{Scheme}
+\begin{minted}{racket}
     (check-expect (f2c -40) -40)
     (check-expect (f2c 32) 0)
     (check-expect (f2c 212) 100)
@@ -234,7 +234,7 @@
   \testProgram
   \begin{itemize}
   \item<2-> Our tests should be created from our functional examples.
-  \item<3-> Using rackets \mintinline{Scheme}{check-expect} form, we can write the appropriate tests:
+  \item<3-> Using rackets \mintinline{racket}{check-expect} form, we can write the appropriate tests:
     \tests
   \end{itemize}
 \end{frame}
@@ -242,9 +242,9 @@
 \begin{frame}
   \frametitle{Testing (cont.)}
   \begin{itemize}
-  \item  The general expression \mintinline{Scheme}{(check-expect exp-to-test expected-value)} says that the expression \mintinline{Scheme}{exp-to-test}
-    should evaluate to \mintinline{Scheme}{expected-value}, and otherwise the test fails.
-  \item<2-> To run tests under Racket, we add the expression \mintinline{Scheme}{(test)} to our file.
+  \item  The general expression \mintinline{racket}{(check-expect exp-to-test expected-value)} says that the expression \mintinline{racket}{exp-to-test}
+    should evaluate to \mintinline{racket}{expected-value}, and otherwise the test fails.
+  \item<2-> To run tests under Racket, we add the expression \mintinline{racket}{(test)} to our file.
   \item<3-> You can add test expressions before a function is even defined, and it will be fine.
   \item<4-> You can also test images in Dr Racket:
     \includegraphics[width=0.4\textwidth]{images/test-image.png}
@@ -271,7 +271,7 @@
 \end{frame}
 
 \defverbatim[colored]\constants{
-\begin{minted}{Scheme}
+\begin{minted}{racket}
     (define WIDTH-OF-WORLD 200) ;physical constant
     ...
     (define WHEEL
@@ -280,7 +280,7 @@
 }
 
 \defverbatim[colored]\worldState{
-\begin{minted}{Scheme}
+\begin{minted}{racket}
       ; A WorldState is a Number.
       ; interpretation the number of pixels between
       ; the left border of the scene and the car
@@ -321,7 +321,7 @@
 \end{frame}
 
 \defverbatim[colored]\tock{
-\begin{minted}{Scheme}
+\begin{minted}{racket}
   ; WorldState -> WorldState
   ; adds 3 to x to move the car right 
   (define (tock x) x)
@@ -329,7 +329,7 @@
 }
 
 \defverbatim[colored]\render{
-\begin{minted}{Scheme}
+\begin{minted}{racket}
   ; WorldState -> Image
   ; places the image of the car x pixels from 
   ; the left margin of the BACKGROUND image 
@@ -342,8 +342,8 @@
   Since the problem description doesn't specify anything about user
   input, we only have to handle clock events. Moreover, we don't have a specification that the car should stop at the right edge of the screen, so no termination function is needed. So what functions are on our wishlist that we need to apply our design process to?
   \begin{enumerate}
-  \item<2-> We need a function \mintinline{Scheme}{tock} for handling clock ticks
-  \item<3-> We need a function \mintinline{Scheme}{render} to draw the scene.
+  \item<2-> We need a function \mintinline{racket}{tock} for handling clock ticks
+  \item<3-> We need a function \mintinline{racket}{render} to draw the scene.
   \end{enumerate}
   \begin{itemize}
   \item<4-> Skeletoning out our tock function:
@@ -354,7 +354,7 @@
 \end{frame}
 
 \defverbatim[colored]\mainProg{
-\begin{minted}{Scheme}
+\begin{minted}{racket}
 ; WorldState -> WorldState
 ; launches the program from some initial state 
 (define (main ws)
@@ -380,7 +380,7 @@
 \end{frame}
 
 \defverbatim[colored]\tockSkeleton{
-\begin{minted}{Scheme}
+\begin{minted}{racket}
   ;   given: 20, expect 23
   ;   given: 78, expect 81
   (define (tock ws) (... ws ...))
@@ -394,16 +394,16 @@
   \begin{itemize}
   \item<2-> \tockSkeleton
   \item<3-> After this, we finish the body of the function as
-    \mintinline{Scheme}{(define (tock ws) (+ ws 3))}
+    \mintinline{racket}{(define (tock ws) (+ ws 3))}
   \item<4-> Finally, we can add tests to verify the correctness of the function:
-    \mintinline{Scheme}{(check-expect (tock 20) 23)} and \mintinline{Scheme}{(check-expect (tock 78) 81)}.
+    \mintinline{racket}{(check-expect (tock 20) 23)} and \mintinline{racket}{(check-expect (tock 78) 81)}.
   \item<5-> And similarly we can use our process to finish the render function.
     For now, we move on to making an interesting modification to the program.
   \end{itemize}  
 \end{frame}
 
 \defverbatim[colored]\moveCar{
-\begin{minted}[fontsize=\footnotesize]{Scheme}
+\begin{minted}[fontsize=\footnotesize]{racket}
   ; Number Number Number String -> Number
   ; If the mouse event is a click down,
   ; move the x-coordinate of the world state
@@ -431,7 +431,7 @@
 \end{frame}
 
 \defverbatim[colored]\moveCar{
-\begin{minted}[fontsize=\footnotesize]{Scheme}
+\begin{minted}[fontsize=\footnotesize]{racket}
   (define (move-car car-position x-click y-click click-kind) 
     (cond
       [(string=? click-kind "button-down") x-click]
@@ -446,7 +446,7 @@
   \begin{itemize}
   \item<2-> \moveCar
   \item<3-> Then the last thing we need to do is add:
-    \mintinline{Scheme}{[on-click move-car]} to the big-bang expression.
+    \mintinline{racket}{[on-click move-car]} to the big-bang expression.
   \item<4-> So, our modifications to this program was relatively simple. Why?
     Two reasons:
     \begin{enumerate}
@@ -459,9 +459,137 @@
   \end{itemize}
 \end{frame}
 
+\defverbatim[colored]\mouseEnum{
+\begin{minted}{racket}
+  ; A MouseEvt is one of these Strings:
+  ; – "button-down"
+  ; – "button-up"
+  ; – "drag"
+  ; – "move"
+  ; – "enter"
+  ; – "leave"
+\end{minted}
+}
+
 \begin{frame}
   \frametitle{Intervals, Enumerations, and Itemizations}
-  
+  So far our programs haven't had a lot of different states that they could
+  be in that complicate the conditional logic of the program.
+  \begin{itemize}
+  \item<2-> We've already discussed \mintinline{racket}{cond} expressions.
+  \item<3-> Now we will consider \emph{enumerations} which represent the alternative states our data can be in.
+  \item<4-> Remember in previous programs that we have to inspect strings
+    to discover if the correct mouse or key event happened
+  \item<5-> \mouseEnum
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\trafficEnum{
+\begin{minted}{racket}
+  ; A TrafficLight is one of the following Strings:
+  ; – "red"
+  ; – "green"
+  ; – "yellow"
+  ; interpretation the three strings represent the three 
+  ; possible states that a traffic light may assume 
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Enumerations}
+  We sometimes need to define our own enumerations to describe
+  the state of our application. For example, we can describe
+  the state of a traffic light as follows:
+  \begin{itemize}
+  \item<2-> \trafficEnum
+  \item<3-> So, let's say that now we want a program to animate the changing
+    of a traffic light, starting from a red light
+  \item<4-> Although I'm pretty sure we all know how traffic lights transition,
+    I'll draw a state machine on the board.
+  \item<5-> How does this state machine translate to code?    
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\trafficTransition{
+\begin{minted}{racket}
+  ; TrafficLight -> TrafficLight
+  ; yields the next state given current state s
+  (check-expect (traffic-light-next "red") "green")
+  (define (traffic-light-next s)
+    (cond
+      [(string=? "red" s) "green"]
+      [(string=? "green" s) "yellow"]
+      [(string=? "yellow" s) "red"]))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Enumerations (cont.)}
+  The conditional nature of state and transitions in a state machine
+  directly translate to a function with a conditional expression.
+  \begin{itemize}
+  \item<2-> \trafficTransition
+  \item<3-> We should probably add more tests to verify that our definition
+    works, but we will skip this for now.
+  \item<4-> Homework: Write a big bang program to animate a continuous
+    traffic light transition sequence (don't worry if it flashes through the
+    colors far too rapidly).
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\keyEnum{
+\begin{minted}{racket}
+  ; A KeyEvent is one of: 
+  ; – 1String
+  ; – "left"
+  ; – "right"
+  ; – "up"
+  ; – ...
+\end{minted}
+}
+
+
+
+\begin{frame}
+  \frametitle{Enumerations (cont.)}
+  An important thing about enumerations to remember is that there are
+  only a finite amount of alternatives to consider. 
+  \begin{itemize}
+  \item<2-> The bad thing about our approach so far is that
+    we have to specify our data alternatives in comments and then
+    when encountering a function taking an enumeration as input, we
+    write a cond expression handling each alternative.
+  \item<3-> Consider key events as an enumeration:
+    \keyEnum
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\keHandler{
+\begin{minted}{racket}
+  ; WorldState KeyEvent -> ...
+  (define (handle-key-events w ke)
+    (cond
+      [(= (string-length ke) 1) ...]
+      [(string=? "left" ke) ...]
+      [(string=? "right" ke) ...]
+      [(string=? "up" ke) ...]
+      [(string=? "down" ke) ...]
+      ...))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Handling Enumerations Systematically}
+  The specification of our enumeration \emph{directly} gives rise
+  to the structure of our handler.
+  \begin{itemize}
+  \item<2-> Cond handles each key input:
+    \keHandler
+  \item<3-> It's like \emph{algebra}. If you need to solve a quadratic
+    equation, use the quadratic formula...
+  \item<4-> If data is represented as an enumeration, write a function
+    that matches against the alternatives of the enumeration.
+  \end{itemize}
 \end{frame}
 
 \end{document}
