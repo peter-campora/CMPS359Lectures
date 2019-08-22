@@ -592,6 +592,481 @@
   \end{itemize}
 \end{frame}
 
+\begin{frame}
+  \frametitle{Enumerations By Example}
+  It's pretty common that we only have to consider a subset of the
+  overall set of possible enumerations for some state. Let's illustrate
+  this by considering a program that only uses a subset of the key events:
+  \begin{itemize}
+  \item<2-> Design a key-event handler that moves a red dot left or right on a horizontal line in response to pressing the left and right arrow keys.
+  \item<3-> We must differentiate the left and right arrow keys from
+    other key presses.
+  \item<4-> Let's employ our design process!
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\keInterp{
+\begin{minted}[fontsize=\footnotesize]{racket}
+  ;; A Position is a natural number
+  ;; whose interpretation measures distance from the left axis.  
+\end{minted}
+}
+
+\defverbatim[colored]\keHeader{
+\begin{minted}{racket}
+  ; Position KeyEvent -> Position
+  ; computes the next location of the ball 
+  (define (key-handler position key-event) ...)
+\end{minted}
+}
+
+\defverbatim[colored]\keTests{
+\begin{minted}{racket}
+  (check-expect (key-handler 13 "left") 8)
+  (check-expect (key-handler 13 "right") 18)
+  (check-expect (key-handler 13 "a") 13)
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Designing a Key Handler}
+  What's the first step to designing this function
+  \begin{itemize}
+  \item<2->That's right, design a data interpretation for our world state.
+  \item<3-> \keInterp
+  \item<4-> Now, we write a signature, a statement of purpose, and a 
+    function header.
+  \item<5-> \keHeader
+  \item<6-> Now we need to give an example of some expected input and output pairs.
+  \item<7-> \keTests
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\keDef{
+\begin{minted}{racket}
+  (define (key-handler p k)
+    (cond
+      [(= (string-length k) 1)
+       p]
+      [(string=? "left" k)
+       (- p 5)]
+      [(string=? "right" k)
+       (+ p 5)]
+      [else p]))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Designing a Key Handler (cont.)}
+  Now we can start fleshing out the definition of \mintinline{racket}{key-handler}.
+  \begin{itemize}
+  \item<2-> Based on our examples, and specification of
+    the KeyEvent enumeration we need a cond expression.
+  \item<3-> \keDef
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\keNew{
+\begin{minted}{racket}
+  (define (key-handler p k)
+    (cond
+      [(string=? "left" k)
+       (- p 5)]
+      [(string=? "right" k)
+       (+ p 5)]
+      [else p]))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Designing a Key Handler (cont.)}
+  The previous program was designed based on the idea that we
+  consider each case of our enumeration and add a cond clause.
+  Is there anything wrong with it?
+  \mintinline{racket}{key-handler}.
+  \begin{itemize}
+  \item<2-> We didn't need the first clause for checking for Characters
+    and can refactor it as follows:
+  \item<3-> \keNew
+  \item<4-> In general, we should program in such a matter, writing
+    a working version first and refactoring to a cleaner definition later.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Intervals and Itemizations}
+  Most of you should be familiar with the idea of an interval. It is simply
+  a range of numbers that should be considered, without a need for
+  explicit enumeration.
+  Writing conditions to deal
+  with different ranges should not be difficult to you by now. So, I will
+  focus more on \emph{itemizations} which generalize enumerations and intervals.
+  \begin{itemize}
+  \item<2-> An itemization can contain enumerations and intervals or any
+    combination of data possibilities from separate domains.
+  \item<3-> An example of a function whose signature uses an
+    itemization is \mintinline{racket}{string->number}, with
+    the signature \mintinline{racket}{String -> NorF}
+  \item<4-> A \mintinline{racket}{NorF} is either \mintinline{racket}{false}
+    or an element of type \mintinline{racket}{Number}
+  \item<5-> Let's start writing some function that uses the \mintinline{racket}{NorF} itemization to illustrate how it's done.
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\condAdd{
+\begin{minted}{racket} 
+  (cond
+    [(false? x) ...]
+    [else ...])
+\end{minted}
+}
+
+\defverbatim[colored]\addThree{
+\begin{minted}{racket}
+; NorF -> Number
+; adds 3 to the given number; 3 otherwise
+(check-expect (add3 #false) 3)
+(check-expect (add3 0.12) 3.12)
+(define (add3 x)
+  (cond
+    [(false? x) 3]
+    [else (+ x 3)]))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Using Itemizations}
+  Let's consider writing a program that adds three to an input
+  of type \mintinline{racket}{NorF}. It should treat \mintinline{racket}{false}
+  as 0, similar to many languages (like Python).
+  \begin{itemize}
+  \item<2-> What does my signature look like?
+  \item<3-> \mintinline{racket}{; NorF -> Number}
+  \item<4-> What should we replace ''...'' with in this test?
+    \mintinline{racket}{(check-expect (add3 false) ...)}
+  \item<5-> \mintinline{racket}{(check-expect (add3 false) 3)}
+  \item<6-> A test for checking numbers is straightforward:
+    \mintinline{racket}{(check-expect (add3 0.12) 3.12)}
+  \item<7-> The body of our function will have to check what the type
+    of the data we received is:
+  \item<8-> \condAdd
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Using Itemizations (cont.)}
+  It should be straightforward to define the rest of the program after this:
+  \pause
+  \addThree
+  \pause
+  There's something a bit deeper going on with Itemizations that we'll
+  get into later...but for now we should just write more programs!
+\end{frame}
+
+\defverbatim[colored]\LRCD{
+\begin{minted}{racket}
+    ; An LRCD (for launching rocket countdown) is one of:
+    ; – "resting"
+    ; – a Number between -3 and -1
+    ; – a NonnegativeNumber 
+    ; interpretation a grounded rocket, in countdown mode,
+    ; a number denotes the number of pixels between the
+    ; top of the canvas and the rocket (its height)
+\end{minted}
+}
+
+\defverbatim[colored]\rocketConstants{
+\begin{minted}[fontsize=\footnotesize]{racket}
+    (define SCENE-HEIGHT 300) ; distances in pixels 
+    (define SCENE-WIDTH  100)
+    (define YDELTA 3)
+ 
+    (define BACKGROUND  (empty-scene SCENE-WIDTH SCENE-HEIGHT))
+    (define ROCKET (rectangle 5 30 "solid" "red"))
+ 
+    (define CENTER (/ (image-height ROCKET) 2))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Return to NASA}
+  Let's write a program to launch a Rocket with a countdown!
+  The countdown starts when the space bar is pressed and counts down from
+  3. After reaching 0, liftoff is achieved and the rocket flies 3 pixels
+  per clock tick upwards.
+  \begin{itemize}
+  \item<2-> This program is more involved than previous ones we wrote.
+  \item<3-> Let us start by following our program design recipe and
+    defining our global constants.
+  \item<4-> \rocketConstants
+  \item<5-> Our next step is to give our data interpretation for the program,
+    which is more involved.
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\rocketWish{
+\begin{minted}[fontsize=\footnotesize]{racket}
+  ; LRCD -> Image
+  ; renders the state as a resting or flying rocket 
+  (define (show x)
+    BACKGROUND)
+ 
+  ; LRCD KeyEvent -> LRCD
+  ; starts the countdown when space bar is pressed, 
+  ; if the rocket is still resting 
+  (define (launch x ke)
+    x)
+ 
+  ; LRCD -> LRCD
+  ; raises the rocket by YDELTA,
+  ;  if it is moving already 
+  (define (fly x)
+    x)
+\end{minted}
+}
+
+\defverbatim[colored]\showTestOne{
+\begin{minted}{racket}
+  (check-expect (show "resting")
+    (place-image ROCKET 10 SCENE-HEIGHT BACKGROUND))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Return to NASA (cont.)}
+  So position is obviously part of the state, but the state
+  should also indicate if the space bar has not been pressed. And we also
+  need state for representing the countdown, an interval. What does this look like?
+  \begin{itemize}
+  \item<2-> \LRCD
+  \end{itemize}  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Return to NASA (cont.)}
+  Since this is a big-bang program, we create a wishlist of functions for
+  handling key presses, handling clock ticks, and rendering an image. It should
+  look something like the following:
+  \pause
+ \rocketWish    
+\end{frame}
+
+\defverbatim[colored]\showTestTwo{
+\begin{minted}[fontsize=\footnotesize]{racket}
+  (check-expect
+   (show -2)
+   (place-image (text "-2" 20 "red")
+                10 (* 3/4 WIDTH)
+                (place-image ROCKET 10 SCENE-HEIGHT BACKGROUND)))
+\end{minted}
+}
+
+\defverbatim[colored]\showTestThree{
+\begin{minted}{racket}
+  (check-expect
+   (show 53)
+   (place-image ROCKET 10 53 BACKGROUND))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Show the Rocket!}
+  Before we start developing our rendering function, we must provide some
+  functional examples.
+  \begin{itemize}
+  \item<2-> \showTestOne
+  \item<3-> This test is straightforward, the rocket should remain at the
+    bottom of the screen
+  \item<4-> Let's make a test for when the countdown is happening. We will
+    assume that the countdown is drawn at (10, 3/4*width).
+  \item<5-> \showTestTwo
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Show the Rocket! (cont.)}
+  We need one last test to illustrate what the rocket should do once
+  it has launched.
+  \begin{itemize}
+  \item<2-> \showTestThree
+  \item<3-> Quickly evaluating our expected results in DrRacket
+    shows that our rocket is halfway into the ground...
+  \item<4-> Always try to specify your tests correctly, or it
+    is hard to debug programs. Let's fix our tests.
+  \item<5-> These input and output examples illustrate that our
+    \mintinline{racket}{show} function must have a cond expression
+    handling the different types of data in our LRCD itemization.
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\showSkeleton{
+\begin{minted}{racket}
+    (define (show x)
+      (cond
+        [(string? x) ...]
+        [(<= -3 x -1) ...]
+        [(>= x 0) ...]))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Show the Rocket! (cont.)}
+  So, let's make a skeleton for show:
+  \begin{itemize}
+  \item<2-> \showSkeleton
+  \item<3-> Recall that each cond clause corresponds to some part of the
+    itemization, as did our tests.
+  \item<4-> By looking at our first test, we can easily finish the first
+    cond clause
+  \item<5-> \mintinline{racket}{(place-image ROCKET 10 SCENE-HEIGHT BACKGROUND)}
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\countDown{
+\begin{minted}[fontsize=\footnotesize]{racket}
+    (place-image 
+      (text (number->string x) 20 "red") 10 (* 3/4 SCENE-WIDTH) 
+        (place-image ROCKET 10 SCENE-HEIGHT BACKGROUND))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Show the Rocket! (cont.)}
+  Now we need to finish the last two clauses. Notice that between -3 and -1,
+  we want to display a  number in the countdown, and so we need some way of
+  converting these values to strings.
+  \begin{itemize}
+  \item<2-> Anyone recall how to get a string from a number in Racket?
+  \item<3-> With \mintinline{racket}{number->string}, we can now produce
+    the countdown text and place the rocket at the bottom of the image.
+  \item<4-> \countDown
+  \item<5-> The last clause is nice and simple and places the rocket at $\mintinline{racket}{x} - \mintinline{racket}{CENTER}$ when $\mintinline{racket}{x} \ge 0$.
+  \item<6-> \mintinline{racket}{(place-image ROCKET 10 (- x CENTER) BACKGROUND)}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Launch!}
+  Whew finishing fly took a while! And we still have two more functions
+  to develop! Let's develop our key-event handling function
+  \mintinline{racket}{launch} first.
+  \begin{itemize}
+  \item<2-> As usual let's start developing our functional examples.
+  \item<3-> \mintinline{racket}{(check-expect (launch "resting" " ") -3)}
+  \item<4-> \mintinline{racket}{(check-expect (launch "resting" "a") "resting")}
+  \item<5-> \mintinline{racket}{(check-expect (launch -3 " ") -3)}
+  \item<6-> \mintinline{racket}{(check-expect (launch 2 " ") 2)}
+  \item<7-> There are more cases that we can consider, but this is enough
+    for now.
+  \item<8-> Similar to designing \mintinline{racket}{show}, our tests and
+    used of an itemization tell us that we need a conditional expression.
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\launchSkeleton{
+\begin{minted}{racket}
+    (define (launch x ke)
+      (cond
+        [(string? x) ...]
+        [(<= -3 x -1) ...]
+        [(>= x 0) ...]))
+\end{minted}
+}
+
+\defverbatim[colored]\launchSimple{
+\begin{minted}{racket}
+    [(<= -3 x -1) x]
+    [(>= x 0) x]
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Launch! (cont.)}
+  So, let's skeleton out our definition:
+  \begin{itemize}
+  \item<2-> \launchSkeleton
+  \item<3-> Fleshing out the first condition based on the tests is simple:
+  \item<4-> \mintinline{racket}{(if (string=? ke " ") -3 x)}
+  \item<5-> The next two conditions are very simple:
+    \launchSimple
+  \item<6-> Filling in our skeleton with these three conditions,
+    finishes the definition of \mintinline{racket}{launch}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Pretty Fly for a Program}
+  The last function we need to define is our clock tick handling
+  function \mintinline{racket}{fly}.
+  \begin{itemize}
+  \item<2-> You know the drill...
+  \item<3-> \mintinline{racket}{(check-expect (fly "resting") "resting")}
+  \item<4-> \mintinline{racket}{(check-expect (fly -3) -2)}
+  \item<5-> \mintinline{racket}{(check-expect (fly -1) HEIGHT)}
+  \item<6-> \mintinline{racket}{(check-expect (fly 5) (- 5 YDELTA))}
+  \item<7-> So, resting rockets stay at rest, the count down
+    moves to the next number unless the current number is -1, and rockets descend by 3 points at a time.
+  \item<8-> Our only trouble lies in the transition function correct
+    for when the world state is -1.
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\flySkeleton{
+\begin{minted}{racket}
+    (define (fly x)
+      (cond
+        [(string? x) x]
+        [(<= -3 x -1) ...]
+        [(>= x 0) ...])
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Pretty Fly for a Program (cont.)}
+  You know the drill again...let's write the skeleton for
+  \mintinline{racket}{fly}. For simplicity, we'll complete the
+  first condition.
+  \begin{itemize}
+  \item<2-> \flySkeleton
+  \item<3-> Completing the countdown update is a bit tricky:
+  \item<4-> \mintinline{racket}{(if (= x -1) SCENE-HEIGHT (+ x 1))}
+  \item<5-> Why did we need the condition and why do we set
+    the state of the world to \mintinline{racket}{SCENE-HEIGHT}?
+  \item<6-> Finally, we move the racket upwards with:
+    \mintinline{racket}{(- x YDELTA)}
+  \end{itemize}  
+\end{frame}
+
+\defverbatim[colored]\main{
+\begin{minted}{racket}
+  (define (main ws)
+    (big-bang ws
+      [to-draw show]
+      [on-key launch]
+      [on-tick fly]))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Elon Musking It}
+  So let's put it all together and write the main function:
+  \pause
+  \main
+  \pause
+  Let's test it out!
+  \pause
+  What could have been improved about the code?
+  \pause
+  Even beyond that, using negative numbers for the countdown
+  was an odd solution. We'll address this later.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Itemization Design}
+  The introduction of itemizations necessitated that we alter
+  our design recipes.
+\end{frame}
+
 \end{document}
 %%% Local Variables:
 %%% mode: latex
