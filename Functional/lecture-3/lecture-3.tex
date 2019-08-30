@@ -29,32 +29,115 @@
 \titlepage
 \end{frame}
 
+
+
 \section{Arithmetic in Racket}
+\begin{frame}
+  \frametitle{Starting Dr. Racket}
+  To start writing a Racket Program, we first open Dr. Racket and save a file.
+  A fresh instance of Dr. Racket should look like:\\
+  \pause
+  \begin{center}
+    \includegraphics[width=0.8\textwidth]{images/Dr-Racket-Empty.png}
+  \end{center}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Handly Libraries to Include}
+  We will frequently be using packages that were designed for the book that this course is based on: How to Design Programs (2e). Some
+  handy packages include 2hdtp/image and 2htdp/universe.
+  \begin{itemize}
+  \item<2-> To include these, we use the \mintinline{racket}{require} expression as follows:
+  \item<3-> \mintinline{racket}{(require 2htdp/image 2htdp/universe)}
+  \item<4-> To load these packages so that we can play around in the interactions window, we hit the green run button at the top right.
+  \item<5-> \includegraphics[width=0.9\textwidth]{images/run-button.png}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Nifty Features}
+  Last time I mentioned that Dr. Racket has some nifty features like the fact that it can render images and you can copy and paste images
+  into it.
+  \begin{itemize}
+  \item<2-> Placing the cursor over an included function indicates what package it was included from.
+  \item<3-> \includegraphics[width=0.7\textwidth]{images/function-arrow.png}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Nifty Features (cont.)}
+  Highlighting a package shows all of the functions from this package that are used in the program.
+  \begin{itemize}
+  \item<2-> \includegraphics[width=0.7\textwidth]{images/package-arrows.png}    
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\script{
+\begin{minted}{racket}
+    #lang racket
+    (require 2htdp/image 2htdp/universe)
+    (circle 10 "solid" "blue")
+    (rectangle 40 60 "solid" "green")
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Dr. Racket for Scripting}
+  Consider the following program:
+  \begin{itemize}
+  \item<1->  \script
+  \item<2-> Hitting the run button gives us the following result in the interactions window
+  \item<3-> \includegraphics[width=0.5\textwidth]{images/script-output.png}
+  \item<4-> But enough about Dr. Racket, let's start talking about the Racket language!
+  \end{itemize}
+\end{frame}
+
+
+
 \begin{frame}
   \frametitle{Arithmetic Revisited}
   Warning! The start of this lecture will be a bit boring since it introduces
   the basic elements of Racket--starting with how to do arithmetic.
   \begin{itemize}
   \item<2-> \mintinline{racket}{(+ 1 1)}
-  \item<3-> Evaluate inner parentheses first: \mintinline{racket}{(+ 1 (+ 1 (+ 1 1) 2) 3 4 5)}
+  \item<3-> Evaluate left to right, and then inner parentheses naturally evaluate first: \mintinline{racket}{(+ 1 (+ 1 (+ 1 1) 2) 3 4 5)}
   \item<4-> == \mintinline{racket}{(+ 1 (+ 1 2 2) 3 4 5)}
   \item<5-> == \mintinline{racket}{(+ 1 5 3 4 5)}
-  \item<6-> == \mintinline{racket}{(+ 1 5 3 4 5)}
-  \item<7-> == \mintinline{racket}{(+ 1 (+ 1 2 2) 3 4 5)}
+  \item<6-> == \mintinline{racket}{18}
   \end{itemize}
 \end{frame}
 
 \begin{frame}
   \frametitle{Arithmetic Revisited (cont)}
   \begin{itemize}
-  \item<1-> Primitive form is \mintinline{racket}{(operator [number...])}
+  \item<1-> Primitive form is \mintinline{racket}{(operator number+)}
   \item<2-> A list of useful operators:  +, -, *, /, abs, add1, ceiling, denominator, expt, floor, gcd, log, max, numerator, quotient, random, remainder, sqr, and tan
   \item<3-> Racket has an extensive \emph{numeric tower}.
   \item<4-> What would \mintinline{racket}{(/ 4 3)} produce in Java?
-  \item<5-> Instead of producing a float, it produces $\frac{4}{3}$.
-  \item<6-> To get a float, you need to use \mintinline{racket}{(exact->inexact (/ 4 3))}
-  \item<7-> Other operations like \mintinline{racket}{(sqrt 2)} immediately produce floats.
-  \item<8-> Let's play around with this a bit!
+  \item<5-> 1.33... as a floating point value.
+  \item<6-> Instead of producing a float, Racket produces $\frac{4}{3}$.
+  \item<7-> To get a float, you need to use \mintinline{racket}{(exact->inexact (/ 4 3))}
+  \item<8-> Other operations like \mintinline{racket}{(sqrt 2)} immediately produce floats.
+  \item<9-> Let's play around with this a bit!
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Defining Constants}
+  Defining constants is an important part of many programs. Let's take
+  a look at how to define global constants.
+  \begin{itemize}
+  \item<2-> To define a constant, we simply write expressions of the form:
+    \mintinline{racket}{(define my-variable expression)}
+  \item<3-> To define my age we would write:
+    \mintinline{racket}{(define object-mass 20)}
+  \item<4-> But of course we can write more complicated expressions
+    to define constants: \mintinline{racket}{(define c (* 3 (expt 10 8)))}
+  \item<5-> The order of defining constants matters. To define the energy of
+    our object we put this constant definition last:
+    \mintinline{racket}{(define object-energy (* object-mass (sqr c))}
+  \item<6-> Let me demonstrate the error that arises otherwise.
   \end{itemize}
 \end{frame}
 
@@ -64,7 +147,7 @@
   we can also have arithmetic on strings!
   \begin{itemize}
   \item<2-> String concatenation is our basic operation: \mintinline{racket}{(string-append "Hello " "World")}
-  \item<3-> We can give it multiple arguments: \mintinline{racket}{(string-append "What a " "lovely " "day" " for Racket!")}
+  \item<3-> We can give it multiple arguments: \mintinline[fontsize=\footnotesize]{racket}{(string-append "What a " "lovely " "day" " for Racket!")}
   \item<4-> The identity element for string-append is "":
     \mintinline{racket}{(string-append "foo" "")}
   \item<5-> We can get the length of strings: \mintinline{racket}{(string-length "abc")}
@@ -80,10 +163,12 @@
   \begin{itemize}
   \item<2-> Circles: \mintinline{racket}{(define my-circle (circle 10 "outline" "green"))}
   \item<3-> Rectangles: \mintinline{racket}{(define my-rectangle (rectangle 10 20 "solid" "red"))}
-  \item<4-> Get the height of an image: \mintinline{racket}{(image-height my-rectangle))}
-  \item<5-> Or the width: \mintinline{racket}{(image-height my-rectangle))}
+  \item<4-> Get the height of an image: \mintinline{racket}{(image-height my-rectangle)}
+  \item<5-> Or the width: \mintinline{racket}{(image-width my-rectangle)}
   \item<6-> You can layer images with overlay: \mintinline{racket}{(overlay my-circle my-rectangle)}
   \item<7-> See also \mintinline{racket}{overlay/xy} and \mintinline{racket}{overlay/align}
+  \item<8-> And you can put images over each other (see \mintinline{racket}{above})
+    or next to each other (see \mintinline{racket}{beside})
   \end{itemize}
 \end{frame}
 
@@ -385,9 +470,31 @@ class Main {
   \item<2-> \mintinline{racket}{(define (distance x y) (sqrt (+ (sqr x) (sqr y))))}
   \item<3-> Defining implication $p \Rightarrow q$ as a function is straightforward.
   \item<4-> \mintinline{racket}{(define (==> p q) (or (not p) q))}
-  \item<5-> Here is a secret: \mintinline{racket}{(f . ==> . t)}
+  \item<5-> Here is a secret: \mintinline{racket}{(p . ==> . q)}
   \item<6-> Place dots around a function to use it infix.    
   \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Baby's First Homework}
+  Homework 1
+  \begin{enumerate}
+  \item Define the function cvolume, which accepts the length of a side of an equilateral cube and computes its volume. If you have time, consider defining csurface, too.
+  \item Define the function string-first, which extracts the first 1String from a non-empty string. 
+  \item Define the function string-last, which extracts the last 1String from a non-empty string. 
+  \item Define the function image-area, which counts the number of pixels in a given image.
+  \item Define the function image-classify, which consumes an image and conditionally produces "tall" if the image is taller than wide, "wide" if it is wider than tall, or "square" if its width and height are the same. (hint see cat chonker program)  
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Baby's First Homework (cont.)}
+  \begin{enumerate}
+    \setcounter{enumi}{5}
+ \item Define the function string-join, which consumes two strings and appends them with "\_" in between.
+  \item Define the function string-insert, which consumes a string str plus a number i and inserts "\_" at the ith position of str. Assume i is a number between 0 and the length of the given string (inclusive). Ponder how string-insert copes with "".
+  \item  Define the function string-delete, which consumes a string plus a number i and deletes the ith position from str. Assume i is a number between 0 (inclusive) and the length of the given string (exclusive). Can string-delete deal with empty strings? 
+  \end{enumerate}
 \end{frame}
 
 \begin{frame}
