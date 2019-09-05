@@ -8,6 +8,7 @@
 \usepackage{minted}
 \usepackage{tikz}
 \usepackage{xcolor}
+\usepackage{hyperref}
 \usetikzlibrary{shapes.geometric, arrows}
 \tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
 \tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=1.5cm, minimum height=0.6cm, text centered, draw=black, fill=blue!30]
@@ -29,7 +30,19 @@
 \titlepage
 \end{frame}
 
-
+\begin{frame}
+  \frametitle{Your Lecturer's Apology}
+  Before we start, a brief digression again. If something seems
+  strange I want to you to \emph{think} about why it is strange
+  or \emph{ask} about why it is strange. Same for if something is difficult.
+  If something is difficult and it seems like it shouldn't be, congratulations!
+  \textbf{You've found a research problem.}
+  \begin{center}
+    \includegraphics[width=0.35\textwidth]{images/GHH.jpg}
+  \end{center}
+  Also, I want you to think about whether aspects of programming are
+  aesthetic, as the late G. H. Hardy claimed mathematics was.  
+\end{frame}
 
 \section{Arithmetic in Racket}
 \begin{frame}
@@ -44,7 +57,7 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{Handly Libraries to Include}
+  \frametitle{Handy Libraries to Include}
   We will frequently be using packages that were designed for the book that this course is based on: How to Design Programs (2e). Some
   handy packages include 2hdtp/image and 2htdp/universe.
   \begin{itemize}
@@ -93,7 +106,12 @@
   \end{itemize}
 \end{frame}
 
-
+\begin{frame}
+  \frametitle{Relearning Arithmetic}
+  \begin{center}
+    \includegraphics[width=0.7\textwidth]{images/arithmetic.jpg}
+  \end{center}
+\end{frame}
 
 \begin{frame}
   \frametitle{Arithmetic Revisited}
@@ -101,10 +119,12 @@
   the basic elements of Racket--starting with how to do arithmetic.
   \begin{itemize}
   \item<2-> \mintinline{racket}{(+ 1 1)}
-  \item<3-> Evaluate left to right, and then inner parentheses naturally evaluate first: \mintinline{racket}{(+ 1 (+ 1 (+ 1 1) 2) 3 4 5)}
-  \item<4-> == \mintinline{racket}{(+ 1 (+ 1 2 2) 3 4 5)}
-  \item<5-> == \mintinline{racket}{(+ 1 5 3 4 5)}
-  \item<6-> == \mintinline{racket}{18}
+  \item<3-> Just imagine for each new pair of parentheses that you put the operator
+    between each spaced element.
+  \item<4-> Evaluate left to right, and then inner parentheses naturally evaluate first: \mintinline{racket}{(+ 1 (+ 1 (+ 1 1) 2) 3 4 5)}
+  \item<5-> == \mintinline{racket}{(+ 1 (+ 1 2 2) 3 4 5)}
+  \item<6-> == \mintinline{racket}{(+ 1 5 3 4 5)}
+  \item<7-> == \mintinline{racket}{18}
   \end{itemize}
 \end{frame}
 
@@ -129,7 +149,7 @@
   a look at how to define global constants.
   \begin{itemize}
   \item<2-> To define a constant, we simply write expressions of the form:
-    \mintinline{racket}{(define my-variable expression)}
+    \mintinline{racket}{(define my-variable expression)} 
   \item<3-> To define my age we would write:
     \mintinline{racket}{(define object-mass 20)}
   \item<4-> But of course we can write more complicated expressions
@@ -146,14 +166,16 @@
   You may think of arithmetic involving integers or real numbers, but
   we can also have arithmetic on strings!
   \begin{itemize}
-  \item<2-> String concatenation is our basic operation: \mintinline{racket}{(string-append "Hello " "World")}
-  \item<3-> We can give it multiple arguments: \mintinline[fontsize=\footnotesize]{racket}{(string-append "What a " "lovely " "day" " for Racket!")}
+  \item<2-> String concatenation is one fundamental operation: \mintinline{racket}{(string-append "Hello " "World")} $\hookrightarrow$
+    \mintinline{racket}{"Hello World"}
+  \item<3-> We can give it multiple arguments: \mintinline[fontsize=\footnotesize]{racket}{(string-append "What a " "lovely " "day" " for Racket!")} $\hookrightarrow$ \mintinline{racket}{"What a lovely day for Racket!"}
   \item<4-> The identity element for string-append is "":
-    \mintinline{racket}{(string-append "foo" "")}
-  \item<5-> We can get the length of strings: \mintinline{racket}{(string-length "abc")}
-  \item<6-> We can extract a specific character: \mintinline{racket}{(string-ref "abc" 0)}
-  \item<7-> We can take a substring of a string: \mintinline{racket}{(substring "foobar" 0 3)}
-  \item<8-> Can convert numbers to strings: \mintinline{racket}{(number->string 42)}
+    \mintinline{racket}{(string-append "foo" "")} $\hookrightarrow$
+    \mintinline{racket}{"foo"}
+  \item<5-> We can get the length of strings: \mintinline{racket}{(string-length "abc")} $\hookrightarrow$ \mintinline{racket}{3}
+  \item<6-> We can extract a specific character: \mintinline{racket}{(string-ref "abc" 0)} $\hookrightarrow$ \mintinline{racket}{"a"}
+  \item<7-> We can take a substring of a string: \mintinline{racket}{(substring "foobar" 0 3)} $\hookrightarrow$ \mintinline{racket}{"foo"}
+  \item<8-> Can convert numbers to strings: \mintinline{racket}{(number->string 42)} $\hookrightarrow$ \mintinline{racket}{"42"}
   \end{itemize}
 \end{frame}
 
@@ -182,7 +204,7 @@
     \mintinline{racket}{(define canvas (empty-scene 100 100 "white"))}
   \item<4-> To place an image into the scene:
     \mintinline{racket}{(place-image my-rectangle 50 50 canvas)}  
-  \item<5-> Copy this image into Dr. Racket: \includegraphics[width=0.05\textwidth]{images/cat.png}    
+  \item<5-> We can directly copy this image into Dr. Racket: \includegraphics[width=0.05\textwidth]{images/cat.png}    
   \end{itemize}
 \end{frame}
 
@@ -218,6 +240,8 @@
     \mintinline{racket}{not} do exactly what you expect
   \item<4-> We can write conditional expressions with the form:
     \mintinline{racket}{(if test-exp true-branch else-branch)}
+  \item<5-> \item<5-> Here's an example:
+    \mintinline{racket}{(if (< 0 1) 1 2)} $\hookrightarrow$ \mintinline{racket}{2}
   \item<5-> What does the following expression evaluate to?
     \mintinline{racket}{(+ 1 (if (< 0 1) 1 2))}
   \item<6-> When we have more conditions we use \mintinline{racket}{cond}:
@@ -469,20 +493,29 @@ class Main {
   \begin{itemize}
   \item<2-> \mintinline{racket}{(define (distance x y) (sqrt (+ (sqr x) (sqr y))))}
   \item<3-> Defining implication $p \Rightarrow q$ as a function is straightforward.
-  \item<4-> \mintinline{racket}{(define (==> p q) (or (not p) q))}
-  \item<5-> Here is a secret: \mintinline{racket}{(p . ==> . q)}
-  \item<6-> Place dots around a function to use it infix.    
+  \item<4-> Recall the truth table for implication:\\
+      \begin{tabular}{ l | l | l }
+      $p$ & $q$ & $p \Rightarrow q$ \\ \hline
+      f & f & t\\
+      t & f & f\\
+      f & t & t\\
+      t & t & t\\
+    \end{tabular}
+  \item<5-> \mintinline{racket}{(define (==> p q) (or (not p) q))}
+  \item<6-> Here is a secret: \mintinline{racket}{(p . ==> . q)}
+  \item<7-> Place dots around a function to use it infix.    
   \end{itemize}
 \end{frame}
 
+
 \begin{frame}
   \frametitle{Baby's First Homework}
-  Homework 1
+  Homework 1. Several programs involve string functions, so see the: \href{https://docs.racket-lang.org/reference/strings.html}{\textcolor{blue}{string documentation}}.
   \begin{enumerate}
   \item Define the function cvolume, which accepts the length of a side of an equilateral cube and computes its volume. If you have time, consider defining csurface, too.
-  \item Define the function string-first, which extracts the first 1String from a non-empty string. 
-  \item Define the function string-last, which extracts the last 1String from a non-empty string. 
-  \item Define the function image-area, which counts the number of pixels in a given image.
+  \item Define the function string-first, which extracts the first character from a non-empty string. (see \mintinline{racket}{string-ref})
+  \item Define the function string-last, which extracts the last character from a non-empty string. 
+  \item Define the function image-area, which counts the number of pixels in a given image. (see \mintinline{racket}{image-height} and \mintinline{racket}{image-width})
   \item Define the function image-classify, which consumes an image and conditionally produces "tall" if the image is taller than wide, "wide" if it is wider than tall, or "square" if its width and height are the same. (hint see cat chonker program)  
   \end{enumerate}
 \end{frame}
@@ -491,10 +524,15 @@ class Main {
   \frametitle{Baby's First Homework (cont.)}
   \begin{enumerate}
     \setcounter{enumi}{5}
- \item Define the function string-join, which consumes two strings and appends them with "\_" in between.
+ \item Define the function string-join, which consumes two strings and appends them with "\_" in between. (see \mintinline{racket}{substring})
   \item Define the function string-insert, which consumes a string str plus a number i and inserts "\_" at the ith position of str. Assume i is a number between 0 and the length of the given string (inclusive). Ponder how string-insert copes with "".
   \item  Define the function string-delete, which consumes a string plus a number i and deletes the ith position from str. Assume i is a number between 0 (inclusive) and the length of the given string (exclusive). Can string-delete deal with empty strings? 
   \end{enumerate}
+\end{frame}
+
+\begin{frame}
+  \frametitle{So, What About \emph{Real} Programs?}
+  By now, you guys are probably wanting to
 \end{frame}
 
 \begin{frame}
