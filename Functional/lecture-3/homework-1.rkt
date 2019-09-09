@@ -1,8 +1,6 @@
 #lang racket
 
-(require 2htdp/universe)
 (require 2htdp/image)
-(require 2htdp/batch-io)
 (require test-engine/racket-tests)
 
 ;;Number -> Number
@@ -80,5 +78,5 @@
 (check-expect (string-delete "hello_world" 5) "helloworld")
 
 
-;;(test)
+(test)
 

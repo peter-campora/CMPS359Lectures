@@ -532,22 +532,29 @@ class Main {
 
 \begin{frame}
   \frametitle{So, What About \emph{Real} Programs?}
-  By now, you guys are probably wanting to
+  By now, you guys are probably wanting to write more than just single
+  function definitions. So let's talk about writing \emph{scripts}, which
+  we'll refer to as batch programs.
+  \begin{itemize}
+  \item<2-> We can design batch programs as a bunch of composed functions
+    that are passed input data.
+  \item<3-> Typically this input data will come from the outside world, or
+    we will have certain functions interactions with the external world.
+  \item<4-> A lot of the times batch programs interact with a user to get
+    some basic input and read or write to files.
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
   \frametitle{Designing Batch Programs}
-  Often we need to write \emph{scripts} (batch program) that combine a bunch of
-  function definitions into the completion of a task. This is in contrast to
-  interactive or live applications that are built around some sort of event loop.
+  So let's take a look at how we can write scripts.
   \begin{itemize}
   \item<2-> Let's consider writing a program that fills a letter template with different names. I want to fill in the name of the person that I request the letter
     from, and the name of the company to send it to. While we're at it, let's
     make it so I can sign the letter with different names.
-  \item<3-> The anatomy of a letter consists of opening, body, and closing that
-    need to be parameterized by names.
-  \item<4-> Let's start with the opening:
-    \mintinline{racket}{(define (opening fst) (string-append "Dear " fst ","))}
+  \item<3-> \includegraphics[width=0.4\textwidth]{images/letter.jpg}
+  \item<4-> The anatomy of a letter consists of opening, body, and closing that
+    need to be parameterized by names.  
   \end{itemize}
 \end{frame}
 
@@ -578,11 +585,15 @@ class Main {
 }
 \begin{frame}
   \frametitle{Our First Batch Program}
+   Let's start with the opening:
+   \mintinline{racket}{(define (opening fst) (string-append "Dear " fst ","))}
+   \pause
   From here, let's move onto making a function to insert a company in the body:
   \body
   \pause
-  And finally, here's the closing:
+  Here's the closing:
   \closing
+  \pause
   Finally, the main ``script'' part of our program is:
   \letter
 \end{frame}
@@ -596,8 +607,8 @@ class Main {
   \begin{itemize}
   \item<2-> To use IO we must first add this to our program:
     \mintinline{racket}{(require 2htdp/batch-io)}
-  \item<3-> \mintinline{racket}{(write-file 'stdout (letter "Mr. Campora" "WPI" "Bob Trufant"))}
-  \item<4-> So in this since, our program is a call to one impure procedure after
+  \item<3-> \mintinline[fontsize=\footnotesize]{racket}{(write-file 'stdout (letter "Mr. Campora" "WPI" "Bob Trufant"))}
+  \item<4-> So, our program is structured as a call to one impure procedure after
     the composition of multiple pure functions did all of the work.
   \item<5-> One of the main goals of functional programming is to separate the
     pure core logic of the program from the effectful parts.    
@@ -743,6 +754,20 @@ class Main {
 \end{frame}
 
 \begin{frame}
+  \frametitle{Wishing For Metric Intuition}
+  \begin{center}
+    \includegraphics[width=0.55\textwidth]{images/metric-system.jpg}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{A Basic File IO Program}
+  We will consider writing a simple program that converts Celsius temperatures to Fahrenheit, by reading from a file ``C.txt''
+  and writing to a file ``F.txt''. Let's diagram out the structure of our application. What is the pure layer and what happens
+  in the IO layer?
+\end{frame}
+
+\begin{frame}
   \frametitle{Back to Batch Programs}
   As defined earlier, batch programs are scripts that consume input from the
   user and then use a series of composed functions to accomplish some task.
@@ -750,9 +775,8 @@ class Main {
   writes to a file.
   \begin{itemize}
   \item<2-> To read from ``foo.txt'' use: \mintinline{racket}{(read-file "foo.txt")}
-  \item<3-> To write ``bar'' into ``foo.txt'' use: \mintinline{racket}{(read-file "bar" "foo.txt")}
-  \item<4-> Let's write a quick program that reads a temperature in Celsius
-    from ``C.txt'' and writes the converted temperature in Fahrenheit to ``F.txt''
+  \item<3-> To write ``bar'' into ``foo.txt'' use: \mintinline{racket}{(write-file "bar" "foo.txt")}
+  \item<4-> Let's write our temperature converting program now. Where should we start? 
   \end{itemize}  
 \end{frame}
 
@@ -791,7 +815,7 @@ class Main {
   They take in current (or lack thereof) as input and produce current (ditto) as output.
   \\\\
   \pause
-  But CPUs allow for some more complicated behavior, and the first program (besides BIOS) usually installed is the operating system.
+  But CPUs allow for some more complicated behavior, and the first program  that is usually installed is the operating system (besides BIOS).
   \\\\
   \pause
   An operating system is essentially one big event driven program that is
@@ -805,7 +829,7 @@ class Main {
 \begin{frame}
   \frametitle{Event Structure In General}
   \begin{center}
-    \includegraphics[width=0.7\textwidth]{images/Event_Driven.jpg}
+    \includegraphics[width=0.75\textwidth]{images/Event_Driven.jpg}
   \end{center}
 \end{frame}
 

@@ -1,0 +1,57 @@
+\documentclass{article}
+
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage[labelformat=simple]{subcaption}
+\usepackage{graphicx}
+\title{Installing Racket}
+\begin{document}
+\maketitle
+
+\begin{enumerate}
+\item To start installing Racket, go to \url{https://download.racket-lang.org/}.
+\item \includegraphics[width=0.8\textwidth]{Functional/racket-download.png}
+\item Pick your system.
+\item On Windows, the installation should be straightforward. 
+\item On Ubuntu, you can use a PPA if preferred.
+\item We will now consider installing on Linux on your personal computer. If installing in OLVR 106, the instructions are the same except for at steps 10
+  and 11 where indicated.
+\item Navigate to where the shell script is downloaded and run (assuming 64 bit): \begin{verbatim}
+sh racket-7.4-x86_64-linux.sh
+\end{verbatim}
+\item \includegraphics[width=0.8\textwidth]{Functional/unix-style.png}
+\item Likely you will want to hit ``yes'' unless you want multiple versions of Racket
+\item After this, I recommend hitting 1 so that Racket is in your PATH.
+If in 106, you will want to hit 3 and install Racket in a specific
+directory
+\item \includegraphics[width=0.8\textwidth]{Functional/installation-directory.png}
+\item If you installed on your personal computer, you should be able
+to find Racket and Dr. Racket in your system. You can start Dr. Racket by typing "drracket" (sans quotes) in your terminal. You should be good to go! Skip to the  step 19.
+\item If you installed a local copy in 106, you will want probably want to add Dr. Racket to your PATH so that you can call it from any location.
+\item In the terminal type:
+\begin{verbatim}
+cd $HOME
+gedit .bashrc
+\end{verbatim}
+\item To your .bashrc add the line:
+\begin{verbatim}
+export PATH=~/(insert the path to racket installation):$PATH
+\end{verbatim}
+\item Save and exit
+\item In the terminal type:
+\begin{verbatim}
+source .bashrc
+\end{verbatim}
+\item After this, you should be good to go!
+\item Finally, in Dr. Racket set the language to Racket.
+\item Hit Language and then Choose Language in the menu bar
+\item \includegraphics[width=0.8\textwidth]{Functional/set-language.png}
+\item Choose The Racket Language at the top
+\item Then hit ok at the bottom
+\end{enumerate}
+
+\end{document}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
