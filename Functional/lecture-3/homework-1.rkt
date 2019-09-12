@@ -42,10 +42,10 @@
 
 ;;Image -> Area
 ;;Takes in an image and returns the area of the given rectangular image
-;;Given: (circle 10 "solid" "blue") expected: 100
+;;Given: (circle 10 "solid" "blue") expected: 400
 ;;Given: (empty-scene 10 20 ...) expected: 200
 (define (image-area image) -1)
-(check-expect (image-area  (circle 10 "solid" "blue")) 100)
+(check-expect (image-area  (circle 10 "solid" "blue")) 400)
 (check-expect (image-area (empty-scene 10 20 "white")) 200)
 
 
@@ -55,7 +55,7 @@
 ;;Given: "foo" "bar" expected: "foo_bar"
 ;;Given: "" "bar" expected: "_bar"
 ;;Given: "foo" "" expected: "foo"
-(define (string-join str) "")
+(define (string-join str1 str2) "")
 (check-expect (string-join "foo" "bar") "foo_bar")
 (check-expect (string-join "" "bar") "_bar")
 (check-expect (string-join "foo" "") "foo_")

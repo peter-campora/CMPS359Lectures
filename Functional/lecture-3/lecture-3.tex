@@ -775,7 +775,7 @@ class Main {
   writes to a file.
   \begin{itemize}
   \item<2-> To read from ``foo.txt'' use: \mintinline{racket}{(read-file "foo.txt")}
-  \item<3-> To write ``bar'' into ``foo.txt'' use: \mintinline{racket}{(write-file "bar" "foo.txt")}
+  \item<3-> To write ``bar'' into ``foo.txt'' use: \mintinline{racket}{(write-file "foo.txt" "bar")}
   \item<4-> Let's write our temperature converting program now. Where should we start? 
   \end{itemize}  
 \end{frame}
@@ -786,7 +786,7 @@ class Main {
       (write-file out
         (string-append
           (number->string
-            (C
+            (C->F
               (string->number
                 (read-file in))))
            "\n")))
@@ -797,7 +797,7 @@ class Main {
   \frametitle{A Quick Batch Program}
   First let's define the Celsius to Fahrenheit function:
   \begin{itemize}
-  \item<2-> \mintinline{racket}{(define (C-to-F temp) (+ (* 9/5 temp) 32))}
+  \item<2-> \mintinline{racket}{(define (C->F temp) (+ (* 9/5 temp) 32))}
   \item<3-> Unfortunately, with the current languages features we've introduced,
     the following definition isn't that elegant: \convert
   \item<4-> The most important things to note here are the converting between
@@ -1041,19 +1041,19 @@ class Main {
       \item<6-> Mouse events are handled by: me-h
       \end{enumerate}
     \item<7-> The programs stops when end? returns true
-    \item<8-> Our render function draws something (or produces a gui)
-      at the end of each tick as a result of the current state. tock
-      produces the next world state.
   \end{itemize}
 \end{frame}
 
 \begin{frame}
   \frametitle{Analyzing big-bang (cont.)}
+  Our render function draws something (or produces a gui)
+  at the end of each tick as a result of the current state. tock
+  produces the next world state.
   \begin{itemize}
-  \item<1-> Our event handling functions tock, ke-h, and me-h will supercede tick events and produce the next world states.
-  \item<2-> If two events happen in simultaneously, Racket will arbitrarily order them.
-  \item<3-> Here's a visualization of the event pipeline:
-  \item<4-> \includegraphics[width=0.7\textwidth]{images/event-pipeline.png}
+  \item<2-> Our event handling functions tock, ke-h, and me-h will supercede tick events and produce the next world states.
+  \item<3-> If two events happen in simultaneously, Racket will arbitrarily order them.
+  \item<4-> Here's a visualization of the event pipeline:
+  \item<5-> \includegraphics[width=0.7\textwidth]{images/event-pipeline.png}
   \end{itemize}
 \end{frame}
 

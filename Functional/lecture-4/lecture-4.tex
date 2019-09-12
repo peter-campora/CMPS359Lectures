@@ -1077,8 +1077,474 @@
 
 \begin{frame}
   \frametitle{Itemization Design}
-  The introduction of itemizations necessitated that we alter
-  our design recipes.
+  The introduction of itemizations necessitates that we alter
+  our design recipes.\\
+  \pause
+  Right now, carrying out step 5 of our program assumes that we simply need to
+  fill out the ...s in our skeleton with functions that call our parameter.\\
+  \pause
+  Although this remains in theory, our skeleton must now have a cond expression
+  that tests different aspects of our itemization parameter.\\
+  \pause
+  As usual, to illustrate how our design recipe must change, we will consider
+  \emph{designing} a program to calculate tax rates on objects with different
+  inherent value.   
+\end{frame}
+
+\begin{frame}
+  \frametitle{Itemization Design Problem}
+  \textbf{Sample Problem} The state of Tax Land has created a three-stage sales tax to cope with its budget deficit. Inexpensive items, those costing less than \$1,000, are not taxed. Luxury items, with a price of more than \$10,000, are taxed at the rate of eight percent (8.00\%). Everything in between comes with a five percent (5.00\%) markup.\\
+
+Design a function for a cash register that, given the price of an item, computes the sales tax.
+\end{frame}
+
+\defverbatim[colored]\itemizeInterpretation{
+\begin{minted}{racket}
+; A Price falls into one of three intervals: 
+; — 0 through 1000
+; — 1000 through 10000
+; — 10000 and above.
+; interpretation the price of an item
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{How the Design Process Changes}
+  Let us consider how the steps in our design process must change for programs like our sales tax calculator.
+  \begin{itemize}
+  \item<2-> (1) When a program statement distinguishes When the problem statement distinguishes different classes of input information, you need carefully formulated data definitions.
+    A data definition must use distinct clauses for each sub-class of data or in some cases just individual pieces of data. Each clause specifies a data representation for a particular sub-class of information. The key is that each sub-class of data is distinct from every other class, so that our function can proceed by analyzing disjoint cases.
+  \item<3-> To illustrate, consider our sales tax problem. The tax depends on which of three possible ranges, an item's price falls into. The price ranges are
+    between 0-1000, 1000-10000, and greater than 10000.       
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{How the Design Process Changes (cont.)}
+ Consequently, our data interpretation must be updated to clearly illustrate these ranges:
+ \itemizeInterpretation
+ \begin{itemize}
+ \item<2-> (2) As far as the signature, purpose statement, and function header are concerned, you proceed as before.
+ \item<3-> (3) For functional examples, however, it is imperative that you pick at least one example from each sub-class in the data definition. Also, if a sub-class is a finite range, be sure to pick examples from the boundaries of the range and from its interior.
+ \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\taxTests{
+\begin{minted}{racket}
+    (check-expect (sales-tax 537) 0)
+    (check-expect (sales-tax 1000) (* 0.05 1000))
+    (check-expect (sales-tax 12017) (* 0.08 12017))
+\end{minted}
+}
+
+
+
+\begin{frame}
+  \frametitle{How the Design Process Changes (cont.)}
+   Since our sample data definition involves three distinct intervals, let’s pick all boundary examples and one price from inside each interval and determine the amount of tax for each: 0, 537, 1000, 1282, 10000, and 12017.
+  \begin{itemize}
+ \item<2-> Assume the tax rate for \$1,000 is 5\% and the rate for \$10,000 is 8\%. Here's a table:
+   \begin{tabular}{ l | l | l | l | l | l }
+     0 & 537 & 1000 & 1282 & 10000 &  12017 \\ \hline
+     0 & 0 & 50 & 64 & 800 & 961
+   \end{tabular}
+ \item<3-> Let's try converting some of these functional examples into tests, now:
+   \taxTests
+ \item<4-> Do we get any advantage by formulating our expected results as an expression, like \mintinline{racket}{(* 0.05 1000)}, instead of the resulting value,
+   \mintinline{racket}{50}?
+ \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\taxSkeleton{
+\begin{minted}{racket}
+    (define (sales-tax p)
+      (cond
+        [(and (<= 0 p) (< p 1000)) ...]
+        [(and (<= 1000 p) (< p 10000)) ...]
+        [(>= p 10000) ...]))
+\end{minted}
+}
+
+\defverbatim[colored]\taxFull{
+\begin{minted}{racket}
+    (define (sales-tax p)
+      (cond
+        [(and (<= 0 p) (< p 1000)) 0]
+        [(and (<= 1000 p) (< p 10000)) (* p 0.05)]
+        [(>= p 10000) (* p 0.08)]))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{How the Design Process Changes (cont.)}
+  (4) The biggest change in our design process comes, here with the introduction of a conditional template that \emph{mirrors the definition
+    of the subclasses with a} \mintinline{racket}{cond} \emph{expression}.
+  \begin{itemize}
+  \item<2-> This slogan entails two concrete things. First, the function’s body must be a conditional expression with as many clauses as there are distinct sub-classes in the data definition.
+  \item<3->  Second, you must formulate one condition expression per cond clause. Each expression involves the function parameter and identifies one of the sub-classes of data in the data definition:
+  \item<4-> Let us consider a function with the following cond clause:
+    \taxSkeleton
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{How the Design Process Changes (cont.)}
+  (5) After our skeleton is designed, the biggest change in our coding routine comes in that we start with each of the conditions in the cond and assume
+  that the parameter meets the specified condition. Then we use this assumption to provide the logic for this branch, assuming that other branches properly
+  handle data that doesn't meet the specified condition.
+  \begin{itemize}
+  \item<2-> Let's fill in the ...s for our \mintinline{racket}{sales-tax} function.
+  \item<3-> \taxFull
+  \item<4-> Anything we could make better about this definition (hint: the use of 0.05 and 0.08)?
+  \item<5-> (6) For our final step's extension, we must ensure that our tests cover every single cond clause in our function.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Finite State Worlds}
+  After learning about designing programs with itemizations, we can now
+  consider writing many simple but interesting applications. A common
+  kind of program that we can now model is a finite state machine.
+  A common example is a traffic light, like the program we wrote earlier.
+  \pause
+  \begin{center}
+    \includegraphics[width=0.85\textwidth]{images/red-light-scene.jpg}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Slaves to the Lights}
+  Based on your experiences with red lights, we should be able to
+  design a finite state machine representing a red light, fairly quickly.
+  Let's draw it.
+  \begin{itemize}
+  \item<2-> \includegraphics[width=0.4\textwidth]{images/light-state-machine.png}
+  \item<3-> To create a world program for simulating a traffic light, we
+    must decide what the state of the world is, and what its representation
+    should be.
+  \item<4-> So, what's the state of the world that we want to track?    
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Slaves to the Lights (cont.)}
+  Right, we want to track which light is lit. How should we
+  indicate which one is lit, in Racket?
+  \begin{itemize}
+  \item<2-> You may remember that we already produced a TrafficLight enumeration, i.e.
+    \mintinline{racket}{``green''}, \mintinline{racket}{``yellow''}, \mintinline{racket}{``red''}.
+  \item<3-> This gives rise to the first step in our design process,
+    giving the data interpretation. Our data interpretation is that a TrafficLight
+    is the previously described enumeration.
+  \item<4-> Since our program description doesn't consider user input, our program
+    need only handle clock events.
+  \item<5-> So, according to our design process for big-bang programs,
+    what functions do we need to add to our wish list?
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\renderSkeleton{
+\begin{minted}{racket}
+  ; TrafficLight -> Image
+  ; renders the current state cs as an image
+  (define (light-render current-state)
+    (empty-scene 90 30))
+\end{minted}
+}
+
+\defverbatim[colored]\nextSkeleton{
+\begin{minted}{racket}
+  ; TrafficLight -> TrafficLight
+  ; yields the next state, given current state cs
+  (define (light-next cs) cs)
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Designing a Traffic Light}
+  With our data interpretation in hand, we can turn to filling out our
+  wish list and designing the functions.
+  \begin{itemize}
+  \item<2-> The first function we can add to our wish list and then
+    stub out, is a
+    light rendering function, since every big-bang program renders something.
+  \item<3-> \renderSkeleton
+  \item<4-> The other function we must design is a light transition function.
+  \item<5-> \nextSkeleton
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\mainLight{
+\begin{minted}{racket}
+  ; TrafficLight -> TrafficLight
+  ; simulates a clock-based American traffic light
+  (define (traffic-light-simulation initial-state)
+    (big-bang initial-state
+      [to-draw light-render]
+      [on-tick light-next 1]))
+\end{minted}
+}
+
+\defverbatim[colored]\lightBox{
+\begin{minted}{racket}
+    (define light-box (rectangle 25 65 "outline" "black"))
+\end{minted}
+}
+
+\defverbatim[colored]\lights{
+\begin{minted}{racket}
+    (define red-light-on (light-on "red"))
+    (define yellow-light-on (light-on "yellow"))
+    (define green-light-on (light-on "green"))   
+    (define red-light-off (light-off "red"))
+    (define yellow-light-off (light-off "yellow"))
+    (define green-light-off (light-off "green"))
+\end{minted}
+}
+
+\defverbatim[colored]\lightOff{
+\begin{minted}{racket}
+  ;;String -> Image
+  ;;Take in a string representing the color of the light in the traffic light
+  ;;, and produce an empty circle outlined with that color
+  ;;Given: (circle 10 "outline" "green") Expect: an image of a green traffic light lit.
+  (define (light-off color) ...)
+\end{minted}
+}
+
+\defverbatim[colored]\lightOn{
+\begin{minted}{racket}
+  ;;String -> Image
+  ;;Take in a string representing the color of the light in the traffic light
+  ;;, and produce a filled circle of that color
+  ;;Given: (circle 10 "solid" "green") Expect: A traffic light image with a green light lit
+  (define (light-on color) ...)
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Designing a Traffic Light (cont.)}
+  And of course, we always have a main function with our big bang expression:
+  \begin{itemize}
+  \item<2-> \mainLight
+  \item<3-> With this in mind, we must take a function off of our wish list and start designing, it--starting with functional examples.
+  \item<4-> Let's start with \mintinline{racket}{light-render}. In order to test this, we must come up with a design format for our lights.
+    I will specify that we use a vertical light as is common in Lafayette.    
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Designing a Traffic Light (cont.)}
+  This means that we need more functions for drawing lights and must add them to our wish list, and we must also design relevant constants:
+  \lightBox
+  \begin{itemize}
+    \item<2-> We also want to be able to draw a traffic light by drawing one light on, and two others off. This leads to more constants
+      and even a function definition.
+    \item<3-> Here's a start: \lights
+  \end{itemize}
+\end{frame}
+
+
+\defverbatim[colored]\lightOnHeader{
+\begin{minted}{racket}
+    ;;TrafficLight -> Image
+    ;;light-on takes in a traffic light state and produce an image
+    ;;where this light is turned on by filling a circle with
+    ;;the appropriate color
+\end{minted}
+}
+
+\defverbatim[colored]\lightOffHeader{
+\begin{minted}{racket}
+    ;;TrafficLight -> Image
+    ;;light-off takes in a traffic light state and produce an image
+    ;;where this light is turned off by outlining a circle with
+    ;;the appropriate color
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Designing a Traffic Light (cont.)}
+  From the look of our constants, it looks like we need to design the
+  functions \mintinline{racket}{light-on} and
+  \mintinline{racket}{light-off} that these constants' values are based on.
+  \begin{itemize}
+  \item<2-> Let's start with the signature and description for
+    \mintinline{racket}{light-on}:
+  \item<3-> \lightOnHeader
+  \item<4-> The header for \mintinline{racket}{light-off} is similar
+    and is omitted for brevity.
+  \item<5-> Let's talk about functional examples for
+    \mintinline{racket}{light-on}.
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\lightOnExamples{
+\begin{minted}{racket}
+;;Given: "red" Expect: (circle 10 "solid" "red")
+;;Given: "yellow" Expect: (circle 10 "solid" "yellow")
+;;Given: "green" Expect: (circle 10 "solid" "green")
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Designing a Traffic Light (cont.)}
+  \lightOnExamples
+  \begin{itemize}
+  \item<2->These functional examples are enough to ensure the
+    correctness of our definition for valid inputs, and should
+    help lead us to an implementation.
+  \item<3-> Let's now skeleton out our code.
+  \item<4-> \mintinline{racket}{(define (light-on color) (... color))}
+  \item<5-> Based on our examples, it should be easy to see part of
+    the code changes based on the input.
+  \item<6-> \mintinline{racket}{(define (light-on color) (circle 10 "solid" color))}
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\redLight{
+\begin{minted}[fontsize=\footnotesize]{racket}
+    (define light-on-red 
+      (overlay  light-box 
+        (above red-light-on yellow-light-off green-light-off)))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Designing a Traffic Light (cont.)}
+  Now we can draw a single light on, but we still can't draw an entire
+  traffic light. 
+  \begin{itemize}
+  \item<2-> This will require us to provide our many lights to
+    the function \mintinline{racket}{above}.
+  \item<3-> To define the light being on red, we can write:
+    \redLight
+  \item<4-> The definitions for yellow and green lights are similar
+    and are omitted for brevity (I will upload the entire program)
+  \item<5-> Phew! Now with these constants, we can design our
+    \mintinline{racket}{light-render} function.
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\lightRenderExamples{
+\begin{minted}{racket}
+    ;;Given: "red" Expect: light-on-red
+    ;;Given: "yellow" Expect: light-on-yellow
+    ;;Given: "green" Expect: light-on-green
+\end{minted}
+}
+
+\defverbatim[colored]\lightRenderSkeleton{
+\begin{minted}{racket}
+   (define (light-render light-state)
+     (cond
+      [(string=? light-state "red") ...]
+      [(string=? light-state "yellow") ...]
+      [else ...]))
+\end{minted}
+}
+
+\defverbatim[colored]\lightRenderFull{
+\begin{minted}{racket}
+    (define (light-render light-state)
+      (cond
+       [(string=? light-state "red") light-on-red]
+       [(string=? light-state "yellow") light-on-yellow]
+       [else light-on-green]))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Designing a Traffic Light (cont.)}
+  We need to start with our functional examples.
+  \begin{itemize}
+  \item<2-> \lightRenderExamples
+  \item<3-> Recall how our skeleton process changed for functions with
+    itemizations, and think about what the body of \mintinline{racket}{light-render}
+    looks like.
+  \item<4-> \lightRenderSkeleton
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Designing a Traffic Light (cont.)}
+  From here, it's pretty easy to finish step (5) of our design process
+  and finish the code.
+  \begin{itemize}
+  \item<2-> \lightRenderFull
+  \item<3-> Then finally, we add tests for step (6) and finish our design
+    of the rendering function.
+  \item<4-> For brevity, we will skip designing the light-transition
+    function and I will merely show the final version.
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\lightTransitionFull{
+\begin{minted}{racket}
+    ;;TrafficLight -> TrafficLight
+    ;;Depending on the current light lit, transition to the next light to be lit
+    ;;Given: "red" Expect: "green"
+    ;;Given: "yellow" Expect: "red"
+    ;;Given: "green" Expect: "yellow"
+    (define (light-transition light-state)
+      (cond
+       [(string=? light-state "red") "green"]
+       [(string=? light-state "green") "yellow"]
+       [else "red"]))
+\end{minted}
+}
+
+\defverbatim[colored]\lightNumbers{
+\begin{minted}{racket}
+    (define RED 0)
+    (define GREEN 1)
+    (define YELLOW 2)
+\end{minted}
+}
+
+\defverbatim[colored]\lightNumeric{
+\begin{minted}{racket}
+    (define (light-next-numeric cs)
+      (modulo (+ cs 1) 3))
+\end{minted}
+}
+
+\defverbatim[colored]\lightSymbolic{
+\begin{minted}{racket}
+    (define (light-next-symbolic cs)
+      (cond
+        [(equal? cs RED) GREEN]
+        [(equal? cs GREEN) YELLOW]
+        [(equal? cs YELLOW) RED]))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Designing a Traffic Light (cont.)}
+  \lightTransitionFull
+  \begin{itemize}
+  \item<2-> As a Brief Design consideration, consider if we
+    specified the light colors with numbers instead of strings,
+    and added the following constants:
+  \item<3-> \lightNumbers  
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Changing Representations}
+   Then we can define \mintinline{racket}{light-transition}
+   in the following two ways:
+   \begin{enumerate}
+   \item<2-> Numerically: \lightNumeric
+   \item<3-> Symbolically: \lightSymbolic
+   \end{enumerate}
+   %
+   \begin{itemize}
+   \item<4-> If we change our constants back to strings, which of
+     these two functions still works?
+   \item<5-> The latter. But keep in mind that equality is a troublesome
+     thing in the land of programming.
+   \end{itemize}
 \end{frame}
 
 \end{document}
