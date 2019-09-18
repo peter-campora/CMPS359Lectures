@@ -45,10 +45,10 @@
   \pause
   \huge \textbf{People will read your code later!}\\\\
   \pause
-  \large Ever heard of the Y2K problem? In the 20th century, digits were used to represent years...
+  \large Ever heard of the Y2K problem? In the 20th century, 2 digits were used to represent years...
   \begin{itemize}
   \item<4->  So, when the 21st century came, the years 1900 and 2000 would be handled identically.
-  \item<5-> A ton of applications had to be updated to avoid bugs. Consider if dates were stored in poorly named int variables.
+  \item<5-> A ton of applications had to be updated to avoid bugs. Consider if dates were still stored in poorly named int variables.
   \item<6-> Well documented code makes such refactorings easier.
   \end{itemize}
 \end{frame}
@@ -64,7 +64,7 @@
 
 \begin{frame}
   \frametitle{Domains and Data}
-  The two D's of software development are domains and data.
+  The two d's of software development are domains and data.
   \begin{itemize}
   \item<2-> The quantity, 5, means different things in different \emph{domains}. For a game, 4 might be the number of pixels an object should move per clock tick. For furniture website, 4 might represent the number of legs on a chair.
   \item<3-> Information in English is usually given to programmers to indicate the structure of the domain. Our job is to turn this information into \emph{data}
@@ -86,8 +86,8 @@
   \frametitle{Data Interpretation}
   For now, we will specify the interpretation of data in comments (later we will define data types).
   \begin{itemize}
-  \item<2-> We will call these data definitions. Here's an example:
-  \item<3-> \dataDef
+  \item<2-> We will call these data definitions. 
+  \item<3-> Here's an example: \dataDef
   \item<4-> This specifies that the numbers produced by our program (or function) represent Celsius degrees
   \item<5-> Such a specification rules out ``cold'' as a temperature but not -400 (which is not a real C temp)
   \item<6-> Later, we will learn to put such specifications on data, but for now our english descriptions suffice
@@ -96,7 +96,7 @@
 
 \begin{frame}
   \frametitle{The Design Process}
-  Keeping Data Interpretation in mind, let's turn to our program design process
+  Keeping Data Interpretation in mind, let's turn to our program design process.
   \begin{enumerate}
   \item<2-> Express how you wish to represent information as data. A one-line comment for specifying \emph{data interpretations} suffices.
   \item<3-> Write down a signature, a statement of purpose, and a function header.
@@ -148,37 +148,37 @@
   \item<3-> The final step is \emph{testing} the definition based on our functional examples.
     We'll first verify the correctness of this definition in Racket. But if we made a mistake it could be one of three kinds:
     \begin{itemize}
-    \item<4-> The functional examples were wrong.
-    \item<5-> The function definition was wrong and needs to be rewritten.
-    \item<6-> Both the examples and the definition were wrong.
+    \item<4-> (1) The functional examples were wrong.
+    \item<5-> (2) The function definition was wrong and needs to be rewritten.
+    \item<6-> (3) Both the examples and the definition were wrong.
     \item<7-> In any case, we have to back and verify that steps 3 was done correctly, and if it was, then we head back to step 5. Otherwise, fix the examples and retest.
     \end{itemize}    
   \end{enumerate}
 \end{frame}
 
-\begin{frame}
-  \frametitle{Homework 2}
-  For our second homework, I want you to repeat writing certain functions from the first homework but using the
-  design process.
-  \begin{enumerate}
-  \item Design the function string-first, which extracts the first character from a non-empty string. Don’t worry about empty strings.
-  \item Design the function string-last, which extracts the last character from a non-empty string.
-  \item Design the function image-area, which counts the number of pixels in a given image.
-  \item Design the function string-rest, which produces a string like the given one with the first character removed.
-  \item Design the function string-remove-last, which produces a string like the given one with the last character removed. 
-  \end{enumerate}
-\end{frame}
+% \begin{frame}
+%   \frametitle{Homework 2}
+%   For our second homework, I want you to repeat writing certain functions from the first homework but using the
+%   design process.
+%   \begin{enumerate}
+%   \item Design the function string-first, which extracts the first character from a non-empty string. Don’t worry about empty strings.
+%   \item Design the function string-last, which extracts the last character from a non-empty string.
+%   \item Design the function image-area, which counts the number of pixels in a given image.
+%   \item Design the function string-rest, which produces a string like the given one with the first character removed.
+%   \item Design the function string-remove-last, which produces a string like the given one with the last character removed. 
+%   \end{enumerate}
+% \end{frame}
 
 
 \begin{frame}
   \frametitle{Programming in Different Domains}
   There are two different kinds of domain knowledge that programmers typically deal with.
-  \begin{itemize}
+  \begin{enumerate}
   \item<2-> One is knowledge from external domains. In Lafayette alone, there are programmers working on programs dealing with pharmaceutical operations, food  delivery, ambulance services, jewelry, oil field technology, insurance claims, and more. So  how do programmers figure out how to write functions
     for dealing with these different domains? One necessary skill is to learn math, which is common to many domains. The other is to learn communication skills so that you can pick up necessary skills for new domains by communicating with experts in these fields.
   \item<3-> The other domain knowledge that is used is knowledge of library functions. Knowing what things are already written for you greatly speeds up development.
     Don't reinvent the wheel.
-  \end{itemize}  
+  \end{enumerate}  
 \end{frame}
 
 \begin{frame}
@@ -187,7 +187,7 @@
   \begin{itemize}
   \item<2-> When designing an interactive program, we need separate functions for handling different events, like handling a mouse click versus a keyboard press.
   \item<3-> For batch programs, auxiliarly functions are needed when solving some subpart of the overall problem. For example, we need a function to square numbers
-    when defining a batch program that computes the area of a circle when given its radius.
+    when defining a batch program that computes the area of a circle when given its radius and the area of a square when given a side length.
   \item<4-> Although not a necessity, often we encounter that the same computation is needed twice, and copying code is tedious and error-prone.
   \item<5-> For these reasons for needing functions, programmers should keep a \emph{wish list} of functions that they need to define.
   \end{itemize}
@@ -264,6 +264,14 @@
     \includegraphics[width=0.4\textwidth]{images/test-image.png}
   \item<5-> Write lots of tests so that you can be confident in the correctness of your programs as you develop them!
   \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Interactive Program Love}
+  These lectures will focus more on interactive programs for a while.
+  \begin{center}
+    \includegraphics[width=0.7\textwidth]{images/dan-arin-matt.png}
+  \end{center}
 \end{frame}
 
 \begin{frame}
@@ -1532,21 +1540,273 @@ Design a function for a cash register that, given the price of an item, computes
 
 \begin{frame}
   \frametitle{Changing Representations}
-   Then we can define \mintinline{racket}{light-transition}
-   in the following two ways:
-   \begin{enumerate}
-   \item<2-> Numerically: \lightNumeric
-   \item<3-> Symbolically: \lightSymbolic
-   \end{enumerate}
-   %
-   \begin{itemize}
-   \item<4-> If we change our constants back to strings, which of
-     these two functions still works?
-   \item<5-> The latter. But keep in mind that equality is a troublesome
-     thing in the land of programming.
-   \end{itemize}
+  Then we can define \mintinline{racket}{light-transition}
+  in the following two ways:
+  \begin{enumerate}
+  \item<2-> Numerically: \lightNumeric
+  \item<3-> Symbolically: \lightSymbolic
+  \end{enumerate}
+  % 
+  \begin{itemize}
+  \item<4-> If we change our constants back to strings, which of
+    these two functions still works?
+  \item<5-> The latter. But keep in mind that equality is a troublesome
+    thing in the land of programming.
+  \end{itemize}
 \end{frame}
 
+\begin{frame}
+  \frametitle{Some Doors Close and Others Open}
+  \textbf{Sample Problem} - Design a world program that simulates the working of a door with an automatic door closer. If this kind of door is locked, you can unlock it with a key. An unlocked door is closed, but someone pushing at the door opens it. Once the person has passed through the door and lets go, the automatic door takes over and closes the door again. When a door is closed, it can be locked again.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Door FSM}
+  The first things we need to do are think about the states the door can be in, and how they can transition:
+  \pause
+  \begin{figure}
+    \begin{subfigure}[b]{0.2\textwidth}
+      \includegraphics[width=0.9\textwidth]{images/door-fsm.png}
+    \end{subfigure}
+    \pause
+    \begin{subfigure}[b]{0.2\textwidth}
+      \includegraphics[width=0.96\textwidth]{images/door-big-bang.png}
+    \end{subfigure}
+  \end{figure}
+\end{frame}
+   
+\defverbatim[colored]\lockItemization{
+\begin{minted}{racket}
+; A DoorState is one of:
+; – LOCKED
+; – CLOSED
+; – OPEN
+
+(define LOCKED "locked")
+(define CLOSED "closed")
+(define OPEN "open")   
+\end{minted}
+}
+\begin{frame}
+  \frametitle{Defining Our Itemization}
+  Let's consider how we can define an itemization (or more simply an enumeration) to describe the states that our door opening program can be in.\\
+  \pause
+  \lockItemization
+  So, we defined our itemization constants for each piece of our itemization
+\end{frame}
+
+\defverbatim[colored]\doorCloseStub{
+\begin{minted}{racket}
+    ;; DoorState -> DoorState
+    ;; close open doors and leave 
+    ;;closed or locked doors as is
+    (define (door-closer door-state) door-state)
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Designing Our Door}
+  So, how do we start designing our door simulation?
+  \begin{itemize}
+  \item<2-> By adding functions to our wishlist, of course!
+  \item<3-> So, we need to add our event handling functions:    
+    \begin{enumerate}
+    \item<4-> \mintinline{racket}{door-closer} closes doors after a certain period of time
+    \item<5-> \mintinline{racket}{door-action} acts in response to certain key events
+    \item<6-> \mintinline{racket}{door-render} renders the door based on the current state
+    \end{enumerate}
+  \item<7-> Let's start design step 2 for each function, since our data interpretation is already developed.
+  \item<8-> For \mintinline{racket}{door-closer}, we might construct the following:
+    \doorCloseStub
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\closeExamples{
+\begin{minted}{racket}
+    ;;Given: LOCKED Expect: LOCKED
+    ;;Given: CLOSED Expect: CLOSED
+    ;;Given: OPEN   Expect: CLOSED
+\end{minted}
+}
+
+\defverbatim[colored]\closeSkeleton{
+\begin{minted}{racket}
+    (define (door-closer door-state)
+      (cond
+        [(string=? door-state LOCKED) ...]
+        [(string=? door-state CLOSED) ...]
+        [(string=? door-state OPEN) ...])
+\end{minted}
+}
+
+\defverbatim[colored]\closeFinal{
+\begin{minted}{racket}
+    (define (door-closer door-state)
+      (cond
+        [(string=? door-state LOCKED) LOCKED]
+        [(string=? door-state CLOSED) CLOSED]
+        [(string=? door-state OPEN) CLOSED])
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Closing Doors}
+  Based on the statement of purpose we gave for our function, it should
+  be easy to derive functional examples.
+  \begin{itemize}
+  \item<2-> \closeExamples
+  \item<3-> From here, we can easily convert these into tests
+  \item<4-> Taking inventory for this function demands skeletoning out
+    the cond branches.
+  \item<5-> \closeSkeleton
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Closing Doors (cont.)}
+  Finishing the function in the coding process is pretty straightforward
+  after looking at our functional examples.
+  \begin{itemize}
+  \item<2-> \closeFinal
+  \item<3-> Could we clean up this code?
+  \item<4-> Yes, we could rewrite the cond branches with an else
+  \item<5-> We also should turn our functional examples to tests and then test
+  \item<6-> Let's turn to designing our \mintinline{racket}{door-action}
+    function for now.
+  \item<7-> The next function on our wishlist is door action, which handles
+    key events. 
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Actions and Doors}
+  Defining \mintinline{racket}{door-action} is a little trickier than
+  previous functions involving itemizations as input. Why?
+  \begin{itemize}
+  \item<2-> Because we are getting 2 itemizations as input!
+  \item<3-> \includegraphics[width=0.4\textwidth]{images/two-itemizations.jpg}
+  \item<4-> This means we have two cond on both the input state and the
+    input key event at the same time!
+  \item<5-> With this in mind, let's look back at our diagram and start
+    step 2 of our design process for this function
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\actionStub{
+\begin{minted}{racket}
+;;DoorState KeyEvent -> DoorState
+;;Pressing u with a locked door unlocks it
+;;Pressing l with a closed door locks it
+;;Pressing the space bar with an closed door opens it
+;;Otherwise don't do anything
+(define (door-action door-state key-event)
+  door-state)
+\end{minted}
+}
+
+\defverbatim[colored]\actionExamples{
+\begin{minted}{racket}
+;;Given LOCKED "u" Expect: UNLOCKED
+;;Given CLOSED "l" Expect: LOCKED
+;;Given CLOSED " " Expect: OPEN
+;;Given OPEN " " Expect: OPEN
+\end{minted}
+}
+
+\defverbatim[colored]\actionSkeleton{
+\begin{minted}[fontsize=\footnotesize]{racket}
+(define (door-action door-state key-event)
+  (cond
+    [(and (string=? LOCKED door-state) (string=? "u" key-event))
+     ...]
+    [(and (string=? CLOSED door-state) (string=? "l" key-event))
+     ...]
+    [(and (string=? CLOSED door-state) (string=? " " key-event))
+     ...]
+    [else ...]))
+\end{minted}
+}
+
+\defverbatim[colored]\actionFinal{
+\begin{minted}[fontsize=\footnotesize]{racket}
+(define (door-action door-state key-event)
+  (cond
+    [(and (string=? LOCKED door-state) (string=? "u" key-event))
+     CLOSED]
+    [(and (string=? CLOSED door-state) (string=? "l" key-event))
+     LOCKED]
+    [(and (string=? CLOSED door-state) (string=? " " key-event))
+     OPEN]
+    [else door-state]))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Actions and Doors (cont.)}
+  We can start step 2 of our design process with the following
+  stub:
+  \pause
+  \actionStub
+  \pause
+  From here, we can easily add some functional examples and complete step 3:
+  \pause
+  \actionExamples
+\end{frame}
+
+\begin{frame}
+  \frametitle{Actions and Doors (cont.)}
+  Taking inventory and coming up with our skeleton is a bit harder:
+  \begin{itemize}
+  \item<2-> \actionSkeleton
+  \item<3-> We had to used \mintinline{racket}{and} to check that we received
+    a relevant key event for each possible state. If we didn't get a meaningful
+    key event then we can default to the else branch.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Actions and Doors (cont.)}
+  Finishing the coding step is straightforward, and we come up with the
+  following:
+  \pause
+  \actionFinal
+  \pause
+  Finishing the testing is straightforward from the functional examples.
+\end{frame}
+
+\defverbatim[colored]\doorRender{
+\begin{minted}{racket}
+; DoorState -> Image
+; translates the state s into a large text image
+(check-expect (door-render CLOSED)
+              (text CLOSED 40 "red"))
+(define (door-render s)
+  (text s 40 "red"))
+\end{minted}
+}
+
+\defverbatim[colored]\doorMain{
+\begin{minted}{racket}
+; DoorState -> DoorState
+; simulates a door with an automatic door closer
+(define (door-simulation initial-state)
+  (big-bang initial-state
+    [on-tick door-closer]
+    [on-key door-action]
+    [to-draw door-render]))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Rendering Doors and The Rest}
+  Rendering doors can have the following simple implementation:
+  \pause
+  \doorRender
+  Defining the main function is also uninteresting, so we just add the code
+  here:
+  \doorMain
+\end{frame}
 \end{document}
 %%% Local Variables:
 %%% mode: latex
