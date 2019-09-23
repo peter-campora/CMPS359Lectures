@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{def} \PYG{n+nf}{first\PYGZus{}name}\PYG{p}{(}\PYG{n}{tup}\PYG{p}{):}
+  \PYG{k}{return} \PYG{n}{tup}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}
+\end{Verbatim}
