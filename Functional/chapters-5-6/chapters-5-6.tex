@@ -138,9 +138,158 @@ def first_name(tup):
   \item<4-> We could obviously have the state of our our world be a pair
     \mintinline{racket}{'(x . y)} or a list \mintinline{racket}{'(x  y)}
   \item<5-> But it would be better if we had piece of compound data with two fields, one field named x to represent the x coordinate and similarly a y...
+  \item<6-> To define the struct: \mintinline{racket}{(struct point [x y])}
+  \item<7-> To make a new point: \mintinline{racket}{(define one-two (point 1 2))}
+  \item<8-> To get the x-coordinate: \mintinline{racket}{(point-x one-two)}
   \end{itemize}
 \end{frame}
+
+\defverbatim[colored]\distance{
+\begin{minted}{racket}
+    ;;Point -> Number
+    ;;Compute a point's distance from the origin
+    (define (distance-point posn) 0)
+\end{minted}
+}
+
+\defverbatim[colored]\distanceExamples{
+\begin{minted}{racket}
+    (check-expect (distance-to-0 (point 0 5)) 5)
+    (check-expect (distance-to-0 (point 7 0)) 7)
+\end{minted}
+}
+
+\defverbatim[colored]\distanceSkeleton{
+\begin{minted}{racket}
+    (define (distance-to-0 ap)
+      (... (posn-x ap) ...
+       ... (posn-y ap) ...))
+\end{minted}
+}
+
+\defverbatim[colored]\distanceFinal{
+\begin{minted}{racket}
+    (define (distance-to-0 ap)
+      (sqrt
+        (+ (sqr (posn-x ap))
+           (sqr (posn-y ap)))))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Writing Simple Programs With Structs}
+  Before we consider writing more complex applications involving structs,
+  let's consider writing a simple function.
+  \begin{itemize}
+  \item<2-> Let's consider computing the distance to the origin where we
+    take in one parameter that is a point, instead of taking two parameters
+    for an x-coordinate and y-coordinate.
+  \item<3-> As will happen many times in this course, we will introduce
+    the concept by examples before we cover how our design recipes change
+    to address this new feature
+  \item<4-> \distance
+  \item<5->Let's add functional examples as tests:
+  \item<6-> \distanceExamples
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Structs and Skeletons}
+  We now can take inventory (step 4) and add a skeleton for our function.
+  In this case we should know that we have to project out the x-coordinate
+  and the y-coordinate in our distance function.
+  \begin{itemize}
+  \item<2-> \distanceSkeleton
+  \item<3-> To code, we essentially have the same logic as when we had a previous
+    version of this function that took in two parameters. Now, we just use
+    the projected out x-coordinate and y-coordinate from our point.
+  \item<4-> \distanceFinal
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Structs in General}
+  Testing that function is simple, so let's just move on to talking about
+  structs in general.
+  \begin{itemize}
+  \item<2-> You can define a struct in general with:
+    \mintinline{racket}{(struct s-name [field-name-1 ...field-name-n])}
+  \item<3-> After creating a struct, 3 kinds of functions are automatically
+    made for you.
+    \begin{enumerate}
+    \item<4-> One constructor, a function that creates structure instances. It takes as many values as there are fields; as mentioned, structure is short for structure instance. The phrase structure type is a generic name for the collection of all possible instances;
+    \item<5-> One selector per field, which extracts the value of the field from a structure instance; and
+    \item<6-> One structure predicate, which, like ordinary predicates, distinguishes instances from all other kinds of values.
+    \end{enumerate}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Basic Struct Options}
+  Let's illustrate each of these three kinds of functions, with our point
+  struct.
+  \begin{enumerate}
+  \item<2-> The constructor is: \mintinline{racket}{(point x-val y-val)}
+    where x-val and y-val will be values passed to the x-field and y-field in
+    our point struct. The general form is \mintinline{racket}{(struct-name field-name-1-arg ... field-name-n-arg)}
+  \item<3-> The selectors per field are \mintinline{racket}{(point-x point-val)} and \mintinline{racket}{(point-y point-val)}. The general form
+    of a selector for a specific field is \mintinline{racket}{(struct-name-field-name val)}
+  \item<4-> A predicate for checking types is automatically created, for example:
+    \mintinline{racket}{(point? point-val)} and in general a predicate
+    \mintinline{racket}{struct?} is created.
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Examples of Structs}
+  Here are some basic examples of structs:
+  \begin{itemize}
+  \item<2-> \mintinline{racket}{(struct movie [title producer year])}
+  \item<3-> \mintinline{racket}{(struct person [name hair eyes phone])}
+  \item<4-> You guys should be able to think of many more examples.
+  \end{itemize}
+  \pause
+  \textbf{Sample Problem} Develop a structure type definition for a program that deals with “bouncing balls,”. The ball’s location is a single number, namely the distance of pixels from the top. Its constant speed is the number of pixels it moves per clock tick. Its velocity is the speed plus the direction in which it moves.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Designing Our Ball Struct}
+  Since we are talking about a ball that bounces up and down, our structure definition is pretty simple. We need a single number for the y position and single
+  number for the velocity in the y-axis.
+  \begin{itemize}
+  \item<2-> \mintinline{racket}{(struct ball [location vec])}
+  \item<3-> This is simple because our ball is moving in a single direction. But if we had a Brick Breaker esque game then we would have a bouncing ball that
+    travels along a 2D plane, then our definition is much more complicated.
+  \item<4-> Let's first consider defining a 2D vector struct as follows: \mintinline{racket}{(struct vector [delta-x delta-y])}
+  \item<5-> Now, we can represent a ball as a point (which only has positive components) and a vector (which can have negative components):
+    \mintinline{racket}{(struct 2D-ball position vec)}
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\pointDefinition{
+\begin{minted}[fontsize=\footnotesize]{racket}
+    (define-struct point [x y])
+    ; A Point is a structure: 
+    ;   (point Number Number)
+    ; interpretation a point x pixels from left, y from top
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Other Representations}
+  Our 2D Ball struct has nested occurrences of other structs. This is a natural thing, and even recursive descriptions of data are natural, i.e.
+  linked lists and binary trees. But we can also consider using a \emph{flat representation} for our 2D Ball, which doesn't nest structs.
+  \begin{itemize}
+  \item<2-> \mintinline{racket}{(struct 2D-ball [x y delta-x delta-y]}
+  \item<3-> Although valid, I think it's better to keep representations natural and just nest things, barring performance concerns.
+  \item<4-> Let's talk about defining data definitions for structs. We must specify the form of the struct and the types of its field and provide an interpretation of what
+    each of the fields represents. Here's how we do this for our point struct:
+  \item<5->\pointDefinition
+  \end{itemize}
+\end{frame}
+
 \end{document}
+
 
 
 %%% Local Variables:
