@@ -288,6 +288,184 @@ def first_name(tup):
   \end{itemize}
 \end{frame}
 
+\defverbatim[colored]\moveDotStart{
+\begin{minted}{racket}
+(define MTS (empty-scene 100 100))
+(define DOT (circle 3 "solid" "red"))
+ 
+; A Point represents the state of the world.
+ 
+; Point -> Point
+(define (main p0)
+  (big-bang p0
+    [on-tick x+]
+    [on-mouse reset-dot]
+    [to-draw scene+dot]))   
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Structs and Program Design}
+  Now we need to consider designing programs using structs.
+  \textbf{Sample Problem} Your team is designing an interactive game program that moves a red dot across a image canvas and allows players to use the mouse to reset the dot. Here is how far you got together: \pause
+  \moveDotStart
+\end{frame}
+
+\defverbatim[colored]\sceneDotHeader{
+\begin{minted}{racket}
+    ; Point -> Image
+    ; adds a red spot to MTS at p
+    (define (scene+dot p) MTS)
+\end{minted}
+}
+
+\defverbatim[colored]\sceneDotExamples{
+\begin{minted}{racket}
+    (check-expect (scene+dot (make-posn 10 20))
+                  (place-image DOT 10 20 MTS))
+    (check-expect (scene+dot (make-posn 88 73))
+                  (place-image DOT 88 73 MTS))
+
+\end{minted}
+}
+
+\defverbatim[colored]\sceneDotSkeleton{
+\begin{minted}{racket}
+    (define (scene+dot p)
+      (... (point-x p) ... (point-y p) ...))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Designing scene+dot}
+  Let us first assume that you're tasked with designing \mintinline{racket}{scene+dot}.
+  \begin{itemize}
+  \item<2-> Of course, we already have our data interpretation so we start
+    with step 2 and provide our signature, statement of purpose, and
+    function header.
+  \item<3-> \sceneDotHeader
+  \item<4-> Finishing step 3 and creating the following functional examples (as tests) is straightforward:
+  \item<5-> \sceneDotExamples
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\sceneDotFinal{
+\begin{minted}{racket}
+    (define (scene+dot p)
+      (place-image DOT (point-x p) (point-y p) MTS))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Designing scene+dot (cont.)}
+  We can now move on to carrying out step 4 and taking inventory:
+  \begin{itemize}
+  \item<2-> \sceneDotSkeleton
+  \item<3-> Finishing step 5 is easy, we simply need to place the
+    projected x and y coordinates as arguments to \mintinline{racket}{place-image}
+  \item<4-> \sceneDotFinal
+  \item<5-> Testing this is uninteresting, so let's consider if we were asked
+    to define the \mintinline{racket}{x+} function, which takes in a Point
+    and returns a new Point with an x-coordinate that is 3 units further to
+    the right of the old point.    
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\xPlusHeader{
+\begin{minted}{racket}
+    ;;Point -> Point
+    ;;Updates the position of our dot at each clock tick
+    (define (x+ p) p)
+\end{minted}
+}
+
+\defverbatim[colored]\xPlusExamples{
+\begin{minted}{racket}
+    (check-expect (x+ (point 0 0)) (point 3 0))
+    (check-expect (x+ (point 10 10)) (point 13 10))
+    (check-expect (x+ (point 0 10)) (point 3 10))
+\end{minted}
+}
+
+\defverbatim[colored]\xPlusSkeleton{
+\begin{minted}{racket}
+    (define (x+ p) (... (point-x p) ... (point-y p) ...)
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Designing x+}
+  Designing our  \mintinline{racket}{x+} function is a bit harder than
+  \mintinline{racket}{scene+dot}, because we are producing structures
+  as output.
+  \begin{itemize}
+  \item<2-> When carrying out step 2, recall that \mintinline{racket}{x+} handles clock ticks:
+    \xPlusHeader
+  \item<3-> Coming up with functional examples as tests is
+    straightforward:
+    \xPlusExamples
+  \item<4-> To take inventory we project out the x and y fields
+    from our point, as usual:
+    \xPlusSkeleton
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\xPlusFinal{
+\begin{minted}{racket}
+    (define (x+ p)
+      (point (+ (point-x p) 3) (point-y p)))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Designing x+ (cont.)}
+ To finish coding, we need to first add 3 to the x-coordinate
+ and then pack the result back into a new point structure.
+ \begin{itemize}
+ \item<2-> \xPlusFinal
+ \item<3-> This is a perfect example of the \emph{essence} of
+   functional programming. We are creating a \emph{new} point
+   whose x-coordinate is based on the old one, instead of modifying
+   the original point to store a new x-coordinate.
+ \item<4-> But there is something inelegant about this, right?
+ \item<5-> If we had more fields than y, we simply are projecting
+   out the old field as an argument when creating the new struct
+   value.
+ \item<6-> This adds a lot of boilerplate code...
+ \end{itemize}
+\end{frame}
+
+\defverbatim[color]\pointSet{
+\begin{minted}{racket}
+    (define (point-set-x p x)
+      (point x (point-y p))
+\end{minted}
+}
+
+\defverbatim[colored]\xPlusNew{
+\begin{minted}{racket}
+    (define (x+ p)
+      (point-set-x p (+ (point-x p) 3)))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Struct Boilerplate}
+  We might want to define a function, \mintinline{racket}{point-set-x} which takes in a point and a value
+  and produces a new point where the x-coordinate is the given value and the y-coordinate is taken from the old point.
+  \begin{itemize}
+  \item<2-> Here is the code: \pointSet
+  \item<3-> We can now redefine \mintinline{racket}{x+} with it:
+    \xPlusNew
+  \item<4-> \mintinline{racket}{point-set-x} is  known as
+    a \emph{functional setter}, similar to a more traditional setter
+    in languages like Java.
+  \item<5-> However, defining an update operation on a complicated
+    structure can get very complicated, and we can get around
+    this uses \emph{lenses} (we may discuss this later in the course).
+  \end{itemize}
+\end{frame}
+
 \end{document}
 
 
