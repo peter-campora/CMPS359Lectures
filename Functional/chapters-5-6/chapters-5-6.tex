@@ -29,7 +29,7 @@
 We can get you prepared for the 31st century\\
 With advanced programming and quad rendering\\
 And Java plus plus plus scripting language\\
-We offer advanced job placement assitance''\\
+We offer advanced job placement assistance''\\\\
 from Upgrade by Deltron 3030  
 \end{frame}
 
@@ -148,7 +148,7 @@ def first_name(tup):
 \begin{minted}{racket}
     ;;Point -> Number
     ;;Compute a point's distance from the origin
-    (define (distance-point posn) 0)
+    (define (distance-to-0 ap) 0)
 \end{minted}
 }
 
@@ -162,8 +162,8 @@ def first_name(tup):
 \defverbatim[colored]\distanceSkeleton{
 \begin{minted}{racket}
     (define (distance-to-0 ap)
-      (... (posn-x ap) ...
-       ... (posn-y ap) ...))
+      (... (point-x ap) ...
+       ... (point-y ap) ...))
 \end{minted}
 }
 
@@ -171,8 +171,8 @@ def first_name(tup):
 \begin{minted}{racket}
     (define (distance-to-0 ap)
       (sqrt
-        (+ (sqr (posn-x ap))
-           (sqr (posn-y ap)))))
+        (+ (sqr (point-x ap))
+           (sqr (point-y ap)))))
 \end{minted}
 }
 
@@ -321,9 +321,9 @@ def first_name(tup):
 
 \defverbatim[colored]\sceneDotExamples{
 \begin{minted}{racket}
-    (check-expect (scene+dot (make-posn 10 20))
+    (check-expect (scene+dot (point 10 20))
                   (place-image DOT 10 20 MTS))
-    (check-expect (scene+dot (make-posn 88 73))
+    (check-expect (scene+dot (point 88 73))
                   (place-image DOT 88 73 MTS))
 
 \end{minted}
@@ -435,7 +435,7 @@ def first_name(tup):
  \end{itemize}
 \end{frame}
 
-\defverbatim[color]\pointSet{
+\defverbatim[colored]\pointSet{
 \begin{minted}{racket}
     (define (point-set-x p x)
       (point x (point-y p))
