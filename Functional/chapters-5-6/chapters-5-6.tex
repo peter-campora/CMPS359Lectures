@@ -112,7 +112,7 @@ def first_name(tup):
   Similarly, we can define data using pairs and lists in Racket.
   \begin{itemize}
   \item<2-> We can write a pair $(1, 2)$ as \mintinline{racket}{(1 . 2)}.
-  \item<3-> We can write a linked list 1->2->3->4->empty as \mintinline{racket}{'(1 2 3 4)}
+  \item<3-> We can write a linked list 1$\rightarrow$2-$\rightarrow$3$\rightarrow$4$\rightarrow$empty as \mintinline{racket}{'(1 2 3 4)}
   \item<4-> To get the first element in the linked list, you can write:
     \mintinline{racket}{(first '(1 2 3 4))}$\hookrightarrow$ \mintinline{racket}{1}
   \item<5-> To get the rest of the linked list you can write
@@ -247,9 +247,10 @@ def first_name(tup):
   \item<2-> \mintinline{racket}{(struct movie [title producer year])}
   \item<3-> \mintinline{racket}{(struct person [name hair eyes phone])}
   \item<4-> You guys should be able to think of many more examples.
+    \item<5-> \textbf{Sample Problem} Develop a structure type definition for a program that deals with “bouncing balls,”. The ball’s location is a single number, namely the distance of pixels from the top. Its constant speed is the number of pixels it moves per clock tick. Its velocity is the speed plus the direction in which it moves.
   \end{itemize}
-  \pause
-  \textbf{Sample Problem} Develop a structure type definition for a program that deals with “bouncing balls,”. The ball’s location is a single number, namely the distance of pixels from the top. Its constant speed is the number of pixels it moves per clock tick. Its velocity is the speed plus the direction in which it moves.
+  
+  
 \end{frame}
 
 \begin{frame}
@@ -303,6 +304,116 @@ def first_name(tup):
     [to-draw scene+dot]))   
 \end{minted}
 }
+
+\begin{frame}
+  \frametitle{Computing With Structures}
+  As mentioned, we could have use tuples instead of structs to represent
+  compound data, but remembering to access the name field of a person
+  struct is a lot easier than remembering to project out the 7th element
+  in some n-tuple (assuming n>=7).
+  \begin{itemize}
+  \item<2-> How does \emph{computing} with structures become more natural than simply computing with tuples?  
+  \item<3-> We can provide  a natural data representation that simplifies the coding process by giving us easy to remember
+    field-names to select.
+  \item<4-> Let us consider how to relate a struct description
+    to a diagram that illustrates its ``structure''.
+  \item<5-> \mintinline{racket}{(struct centry [name home office cell])}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Struct Structure}
+  So, for cell phone entry structs we had three fields that can contain
+  possible values. Consider the following concrete one:
+  \begin{itemize}
+  \item<2->
+    \mintinline[fontsize=\footnotesize]{racket}{(define pl (centry "Al Abe" "666-7771" "lee@x.me"))}
+  \item<3-> This has the following visual representation:
+    \includegraphics[width=0.3\textwidth]{images/cell-struct.png}
+  \item<4-> In a sense, calling \mintinline{racket}{(centry-name pl)} is unlocking a box in the struct, with a specific key that
+    allows you to retrieve the underlying value. In general we can
+    think of field access as a kind of ``unboxing''.
+  \item<5-> Using a ``key'' to unlock the wrong box raises a runtime
+    error \mintinline{racket}{(centry-name (point 1 2))}$\hookrightarrow$ \textcolor{red}{entry-name:expects a centry, given (point 42 5)}    
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\BallInterp{
+\begin{minted}{racket}
+    (define-struct ball [location velocity])
+    ; A Ball-1d is a structure:  
+    ;   (ball Number Number)
+    ; interpretation 1 distance to top and velocity 
+    ; interpretation 2 distance to left and velocity 
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Interpreting Structure}
+  In general, we need to think about how we describe the
+  interpretation of structs.
+  \begin{itemize}
+  \item<2-> Defining a data interpretation for the ball with one dimensional  movement is simple. We can describe position and the
+    velocity in terms of numbers.
+  \item<3-> \BallInterp
+  \item<4-> Interestingly, we can give 2 interpretations, depending
+    on if the ball is moving vertically (interpretation 1) or
+    horizontally (interpretation 2)
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\NestedInterp{
+\begin{minted}{racket}
+    ; A Ball-2d is a structure: 
+    ;   (ball Point Vel)
+    ; interpretation a 2-dimensional position and velocity
+ 
+    (define-struct vel [deltax deltay])
+    ; A Vel is a structure: 
+    ;   (vel Number Number)
+    ; interpretation (make-vel dx dy) means a velocity of 
+    ; dx pixels [per tick] along the horizontal and
+    ; dy pixels [per tick] along the vertical direction
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Interpreting Structure (cont.)}
+  Interpretations become slightly more interesting with nested
+  structures.
+  \begin{itemize}
+  \item<2-> Consider the ball that can move in two dimensions.
+  \item<3-> Since the ball relies on a vector struct, it is important
+    to make sure that the vector also has an interpretation
+  \item<4-> \NestedInterp
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\LinkedListInterp{
+\begin{minted}{racket}
+    ; A LinkedList is a structure:
+    ; (linked-list T LinkedList)
+    ; interpretation a value contained in the current node
+    ; and a reference to the rest of the list
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Interpreting Structure (cont.)}
+  Recursively defined types don't add any problems
+  to writing data interpretations.
+  \begin{itemize}
+  \item<2-> What are some famous recursively defined types?
+  \item<3-> Let's consider a linked list.
+  \item<4-> \LinkedListInterp
+  \item<5-> We don't have to worry about the recursive instance of
+    the type, since we are currently interpreting it.
+  \item<6-> The T just communicates that we are defining linked lists
+    that work over any type (\emph{parametric polymorphism} otherwise
+    known as \emph{generics} in Java)
+  \end{itemize}
+\end{frame}
+
 
 \begin{frame}
   \frametitle{Structs and Program Design}
@@ -463,10 +574,233 @@ def first_name(tup):
   \item<5-> However, defining an update operation on a complicated
     structure can get very complicated, and we can get around
     this uses \emph{lenses} (we may discuss this later in the course).
+  \end{itemize}  
+\end{frame}
+
+\defverbatim[colored]\ResetDotHeader{
+\begin{minted}{racket}
+    ; Point Number Number MouseEvt -> Point 
+    ; for mouse clicks, (point x y); otherwise p
+    (define (reset-dot p x y me) p)
+\end{minted}
+}
+
+\defverbatim[colored]\ResetDotExamples{
+\begin{minted}{racket}
+    (check-expect
+      (reset-dot (point 10 20) 29 31 "button-down")
+      (point 29 31))
+    (check-expect
+      (reset-dot (point 10 20) 29 31 "button-up")
+      (point 10 20))
+\end{minted}
+}
+
+\defverbatim[colored]\ResetDotSkeleton{
+\begin{minted}{racket}
+    (define (reset-dot p x y me)
+      (cond
+        [(mouse=? "button-down" me) (... p ... x y ...)]
+        [else (... p ... x y ...)]))
+\end{minted}
+}
+
+\defverbatim[colored]\ResetDotFinal{
+\begin{minted}{racket}
+    (define (reset-dot p x y me)
+      (cond
+        [(mouse=? me "button-down") (point x y)]
+        [else p]))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Events Creating Structs}
+  We can consider designing a function \mintinline{racket}{reset-dot}
+  which places a dot where a mouse is clicked.
+  \begin{itemize}
+  \item<2-> We start with step 2 and create a signature, statement of
+    purpose, and stub for this function.
+  \item<3-> \ResetDotHeader
+  \item<4-> The statement of purpose and the signature should make
+    designing the functional examples easy.
+  \item<5-> \ResetDotExamples
   \end{itemize}
 \end{frame}
 
+\begin{frame}
+  \frametitle{Events Creating Structs (cont.)}
+  From here, writing the skeleton and finishing coding are easy.
+  \begin{itemize}
+  \item<2-> The Skeleton:    
+    \includegraphics[width=0.4\textwidth]{images/skeletor.jpeg}
+  \item<3-> For real this time:    \ResetDotSkeleton
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Events Creating Structs (cont.)}
+      Finally, though the skeleton looks complicated the final version
+    of the function is relatively simple.
+  \begin{itemize}
+  \item<2-> \ResetDotFinal
+  \item<3-> The takeaway here is that our skeletons can end up being
+    more complicated than the actual final version.
+  \item<4-> This is especially true when we consider skeletoning
+    out code for which a parameter is a struct.
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\ComplexSkeleton{
+\begin{minted}{racket}
+    (define (complex-skeleton ball)
+      (... (point-x (ball-position ball)) ...
+       ... (point-y (ball-position ball)) ...
+       ... (vec-delta-x (ball-vector ball)) ...
+       ... (vec-delta-y (ball-vector ball)) ...))
+\end{minted}
+}
+
+\defverbatim[colored]\SimplerSkeleton{
+\begin{minted}{racket}
+    (define (complex-skeleton ball)
+      (... (point-x (ball-position ball)) ...
+       ... (vec-delta-y (ball-vector ball)) ...))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Complex Skeletons}
+ Consider a skeleton for a function whose input
+ is a ball moving two dimensionally.
+ \begin{itemize}
+ \item<2-> We would have to write a field access for both of the
+   underlying point structure's fields, along with field accesses for the underlying vector structure's fields. 
+ \item<3-> It would look like the following:
+   \ComplexSkeleton
+ \item<4-> For some of the classes you see in Java, skeletoning
+   out code in such a manner is infeasible...   
+ \end{itemize}  
+\end{frame}
+
+\begin{frame}
+  \frametitle{So, What's a Feasible Way?}
+  So, how should we skeleton out functions with complex structs
+  as input?
+  \begin{itemize}
+  \item<2-> \textbf{If a function deals with nested structures, develop one function per level of nesting.}
+  \item<3-> For our previous example, we could have wrote:
+    \SimplerSkeleton
+  \item<4-> Of course, things are easier if we picked the write functions to add in our skeleton, but this keeps the structure of
+    the skeleton much simpler.
+  \item<5-> We will return to this point later in the course.    
+  \end{itemize}   
+\end{frame}
+
+\begin{frame}
+  \frametitle{A Digression About Signatures}
+  Signatures can tell us a lot about a function. I'll put
+  some signatures up, and what kind of functions could we write
+  for these signatures?
+  \begin{itemize}
+  \item<1-> Number Number $\rightarrow$ Number
+  \item<2-> Point Vec $\rightarrow$ Point
+  \item<3-> Point $\rightarrow$ Number
+  \item<4-> Vec $\rightarrow$ Number
+  \item<5-> T LinkedList $\rightarrow$ LinkedList
+  \item<6-> T $\rightarrow$ T
+  \item<7-> The idea that a function signature can tell you
+    about the behavior of the function is an extremely powerful idea.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Data and the Universe}
+  Here's a fun little experiment. Look at these two shapes:
+  \begin{center}
+    \includegraphics[width=0.7\textwidth]{images/bouba-kiki.png}
+  \end{center}
+  \begin{itemize}
+  \item<2-> Which of these shapes is named Bouba and which Kiki?
+  \item<3-> This is likely due to some physical attributes of sound, but
+    our strong preference for naming the round one Bouba and the
+    sharp one Kiki shows that humans have \textbf{innate preferences}
+    about the \emph{naming} and \emph{representation of things}.
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\BSData{
+\begin{minted}{racket}
+    ; A BS is one of: 
+    ; — "hello",
+    ; — "world", or
+    ; — pi.
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Data and the Universe}
+  Racket chose certain extremely powerful data types as primitives
+  that make up our initial \emph{data universe}.
+  \begin{itemize}
+  \item<2-> From here, we talked about enumerations, intervals,
+    and itemizations as a way to restrict the kind of values from
+    the universe that we want our function to consider.
+  \item<3-> For example, look at this data definition:
+    \BSData
+  \item<4-> If this is the domain of some function, we restricted
+    ourselves to needing to handle three values.  
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Expanding the Universe}
+With itemizations we specified subsets of the existing data universe.
+\begin{itemize}
+  \item<1-> \includegraphics[width=0.2\textwidth]{images/BS-universe.png}    
+  \item<2-> When we added structs, we actually provided the ability to
+  extend the universe of data.
+  \item<3-> We provided new data types describing points, balls, etc.
+  \item<4-> \includegraphics[width=0.45\textwidth]{images/struct-universe.png}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Respect Interpretations}
+  Notice that we specify our point struct as containing
+  two numbers.
+  \begin{itemize}
+  \item<2-> But when we added this struct, we really created a pair
+    that could contain \emph{any} two values.
+  \item<3-> Racket doesn't inherently stop us from writing:
+    \mintinline{racket}{(point "foo" "bar")}.
+  \item<4-> Typed Racket can add the exact kind of point to the universe we want and stop invalid data from being added to a point's
+    field at compile time.
+  \item<5-> Without that, it is up to us programmers to validate
+    that points are only constructed with valid arguments.
+  \item<6-> This might mean creating a function \mintinline{racket}{(define (make-point x y) ...)} that checks
+    that both \mintinline{racket}{x} and \mintinline{racket}{y} actually receive integers before calling the \mintinline{racket}{point} constructor. More on this later.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Respect Interpretations (cont.)}
+  Data definitions are a critical part of programming.
+  \begin{itemize}
+  \item<2-> In Java
+  when you define a class, you are saying that this class is an example
+  of data that was important enough to need modeling. Making a data definition specifies that this kind of data is integral to understanding the program.
+\item<4-> So, when adding a definition provide an example of realistic
+  data for what is being defined:
+\item<5-> For a built-in collection of data (number, string, Boolean, images), choose your favorite examples. (E.G. 1)
+\item<6-> For an enumeration, use several of the items of the enumeration. (For NorF use \#f)
+\item<7-> For intervals, use the end points (if they are included) and at least one interior point.
+\item<8-> For itemizations, deal with each part separately
+\item<9-> For data definitions for structures, follow the natural language description; that is, use the constructor and pick an example from the data collection named for each field.
+  \end{itemize}
+\end{frame}
 \end{document}
+
 
 
 
