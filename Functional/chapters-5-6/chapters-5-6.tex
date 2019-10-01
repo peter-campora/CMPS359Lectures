@@ -338,6 +338,53 @@ def first_name(tup):
   \end{itemize}
 \end{frame}
 
+\begin{frame}
+  \frametitle{Some Definitions}
+  \begin{itemize}
+  \item \textbf{Syntax} - the arrangement of words and phrases to create well-formed sentences in a language.
+  \item<2-> \textbf{Semantics} - the branch of linguistics and logic concerned with meaning. There are a number of branches and subbranches of semantics, including formal semantics, which studies the logical aspects of meaning, such as sense, reference, implication, and logical form, lexical semantics, which studies word meanings and word relations, and conceptual semantics, which studies the cognitive structure of meaning.
+  \item<3-> \textbf{Interpretation} - the action of explaining the meaning of something.
+  \item<4-> \textbf{Denotation} - the object or concept to which a term refers, or the set of objects of which a predicate is true.
+  %\item<4-> \textbf{Polymorphism} - the condition of occurring in several different forms.
+  \end{itemize}  
+\end{frame}
+
+\begin{frame}
+  \frametitle{A Few More}
+  \begin{itemize}
+  \item \textbf{Compiler} - a computer program that translates computer code written in one programming language (the source language) into another language (the target language).
+  \item<2-> \textbf{Computable Function} - A function that can be represented by a \emph{general recursive function}, a \textbf{lambda computable function}, or
+    a \textbf{Turing Machine}
+  \item<3-> \textbf{Programming Language} - a formal language, which comprises a set of instructions that produce various kinds of output. Programming languages are used in computer programming to implement algorithms.
+  \item<4->  I kind of dislike this definition.
+  \item<5-> My definition - A formal language that has a computable semantics specifying the denotation of a ``sentence'' written in the language. This denotation  can be given by compilation into some other formal language, or by a direct interpretation.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Some Important People}
+  \begin{center}
+    \includegraphics[width=0.7\textwidth]{images/godel-turing-church.png}\\
+    \pause
+    \includegraphics[width=0.2\textwidth]{images/carl-jung.jpeg}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Natural Interpretations?}
+  Here's a fun little experiment. Look at these two shapes:
+  \begin{center}
+    \includegraphics[width=0.7\textwidth]{images/bouba-kiki.png}
+  \end{center}
+  \begin{itemize}
+  \item<2-> Which of these shapes is named Bouba and which Kiki?
+  \item<3-> This is likely due to some physical attributes of sound, but
+    our strong preference for naming the round one Bouba and the
+    sharp one Kiki shows that humans have \textbf{innate preferences}
+    about the \emph{naming} and \emph{representation of things}.
+  \end{itemize}
+\end{frame}
+
 \defverbatim[colored]\BallInterp{
 \begin{minted}{racket}
     (define-struct ball [location velocity])
@@ -384,7 +431,7 @@ def first_name(tup):
   \begin{itemize}
   \item<2-> Consider the ball that can move in two dimensions.
   \item<3-> Since the ball relies on a vector struct, it is important
-    to make sure that the vector also has an interpretation
+    to make sure that the vector also has an interpretation.
   \item<4-> \NestedInterp
   \end{itemize}
 \end{frame}
@@ -714,20 +761,7 @@ def first_name(tup):
   \end{itemize}
 \end{frame}
 
-\begin{frame}
-  \frametitle{Data and the Universe}
-  Here's a fun little experiment. Look at these two shapes:
-  \begin{center}
-    \includegraphics[width=0.7\textwidth]{images/bouba-kiki.png}
-  \end{center}
-  \begin{itemize}
-  \item<2-> Which of these shapes is named Bouba and which Kiki?
-  \item<3-> This is likely due to some physical attributes of sound, but
-    our strong preference for naming the round one Bouba and the
-    sharp one Kiki shows that humans have \textbf{innate preferences}
-    about the \emph{naming} and \emph{representation of things}.
-  \end{itemize}
-\end{frame}
+
 
 \defverbatim[colored]\BSData{
 \begin{minted}{racket}
@@ -735,11 +769,11 @@ def first_name(tup):
     ; — "hello",
     ; — "world", or
     ; — pi.
-\end{minted}
+\end{minted}n
 }
 
 \begin{frame}
-  \frametitle{Data and the Universe}
+  \frametitle{Racket Data and the Universe}
   Racket chose certain extremely powerful data types as primitives
   that make up our initial \emph{data universe}.
   \begin{itemize}
@@ -788,15 +822,15 @@ With itemizations we specified subsets of the existing data universe.
   Data definitions are a critical part of programming.
   \begin{itemize}
   \item<2-> In Java
-  when you define a class, you are saying that this class is an example
-  of data that was important enough to need modeling. Making a data definition specifies that this kind of data is integral to understanding the program.
-\item<4-> So, when adding a definition provide an example of realistic
-  data for what is being defined:
-\item<5-> For a built-in collection of data (number, string, Boolean, images), choose your favorite examples. (E.G. 1)
-\item<6-> For an enumeration, use several of the items of the enumeration. (For NorF use \#f)
-\item<7-> For intervals, use the end points (if they are included) and at least one interior point.
-\item<8-> For itemizations, deal with each part separately
-\item<9-> For data definitions for structures, follow the natural language description; that is, use the constructor and pick an example from the data collection named for each field.
+    when you define a class, you are saying that this class is an example
+    of data that was important enough to need modeling. Making a data definition specifies that this kind of data is integral to understanding the program.  
+  \item<3-> So, when adding a definition provide an example of realistic
+    data for what is being defined:
+  \item<4-> For a built-in collection of data (number, string, Boolean, images), choose your favorite examples. (E.G. 1)
+  \item<5-> For an enumeration, use several of the items of the enumeration. (For NorF use \#f)
+  \item<6-> For intervals, use the end points (if they are included) and at least one interior point.
+  \item<7-> For itemizations, deal with each part separately
+  \item<8-> For data definitions for structures, follow the natural language description; that is, use the constructor and pick an example from the data collection named for each field.
   \end{itemize}
 \end{frame}
 
@@ -808,7 +842,154 @@ With itemizations we specified subsets of the existing data universe.
   \begin{itemize}
   \item<2-> \textbf{Sample Problem} Design a function that computes the distance of objects in a 3-dimensional space to the origin.
   \item<3-> The first step to our design process has a bigger change than was typical for previous revisions to our design process.
-  \item<4-> (1)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Step 1 and Structs}
+  \begin{itemize}
+  \item<2-> (1) When a problem calls for the representation of pieces of information that belong together or describe a natural whole, you need a structure type definition. It requires as many fields as there are relevant properties. An instance of this structure type corresponds to the whole, and the values in the fields correspond to its attributes.
+  \item<3-> (1) A data definition for a structure type introduces a name for the collection of instances that are legitimate. Furthermore, it must describe which kind of data goes with which field. Use only names of built-in data collections or previously defined data definitions.
+  \item<3-> (1) In the end, we (and others) must be able to use the data definition to create sample structure instances. Otherwise, something is wrong with our data definition. To ensure that we can create instances, our data definitions should come with data examples.
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\stepOneStructs{
+\begin{minted}[fontsize=\footnotesize]{racket}
+(define-struct r3 [x y z])
+; An R3 is a structure:
+;   (make-r3 Number Number Number)
+ 
+(define ex1 (make-r3 1 2 13))
+(define ex2 (make-r3 -1 0 3))
+\end{minted}
+}
+
+\defverbatim[colored]\ThreeDDistanceHeader{
+\begin{minted}[fontsize=\footnotesize]{racket}
+    ;;R3 -> Number
+    ;;Computes the distance of a R3 triple to the origin
+    (define (3D-distance triple) 0)
+\end{minted}
+}
+
+\defverbatim[colored]\ThreeDDistanceExamples{
+\begin{minted}[fontsize=\footnotesize]{racket}
+    (check/expect (r3-distance ex1) (sqrt 174))
+    (check/expect (r3-distance ex2) (sqrt 10))
+\end{minted}
+}
+
+\defverbatim[colored]\ThreeDDistanceSkeleton{
+\begin{minted}{racket}
+; R3 -> Number 
+; determines the distance of p to the origin 
+(define (r3-distance p)
+  (... (r3-x p) ... (r3-y p) ... (r3-z p) ...))
+\end{minted}
+}
+
+\defverbatim[colored]\ThreeDDistanceFinal{
+\begin{minted}{racket}
+    (define (r3-distance triple)
+      (let*
+        ([x-sqr (sqr (r3-x triple))]
+         [y-sqr (sqr (r3-y triple))]
+         [z-sqr (sqr (r3-z triple))]
+         [radicand (+ x-sqr y-sqr z-sqr)])
+        (sqrt radicand)))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Add Steps 2 and 3}
+  Here's how we apply our step 1 changes to our sample problem:
+  \stepOneStructs
+  \begin{itemize}
+  \item<2-> (2) You still need a signature, a purpose statement, and a function header but the process remains the same. 
+  \item<3-> (2) Consider:
+    \ThreeDDistanceHeader
+  \item<4-> (3) Your functional examples should use the examples generated by
+    step (1):
+    \ThreeDDistanceExamples    
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Finishing The Steps}
+  We've talked about changes to taking inventory previously:
+  \begin{itemize}
+  \item<2-> (4) A function that consumes structures usually--though not always--extracts the values from the various fields in the structure. To remind yourself of this possibility, add a selector for each field to the templates for such functions.
+    For nested structures, consider extracting a single field per nested structure.
+    If necessary comment next to a selector what kind of value it extracts.
+  \item<3-> (5) Use the selector expressions from the template when you define the function. Delete unneeded selections.
+  \item<4-> (6) As usual, except that your tests are based on examples from step
+    (1) and other examples.
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\SpaceGameData{
+\begin{minted}[fontsize=\footnotesize]{racket}
+    ; A SpaceGame is a structure:
+    ;   (make-space-game Posn Number). 
+    ; interpretation (make-space-game (make-posn ux uy) tx)
+    ; describes a configuration where the UFO is 
+    ; at (ux,uy) and the tank's x-coordinate is tx
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{The World is a Structure}
+  In a previous program, we used the \mintinline{racket}{Point} struct as the
+  state of the world.
+  \begin{itemize}
+  \item<2-> In general, for each piece of state that we need to
+    track in the world, we create a struct containing that piece of state
+  \item<3-> Let's say we have a Space Invaders style game, where a player
+    controls a tank that must shut down a UFO.
+  \item<4-> Our state becomes \mintinline{racket}{(struct space-game [ufo tank])}
+  \item<5-> Let's come up with a data interpretation. Let's assume the ufo
+    descends 2-dimensionally with random jumps to the left or right.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Space Game State}
+  The state for our space game is relatively straightforward:
+  \begin{itemize}
+  \item<2-> \SpaceGameData
+  \item<3-> What would we need if we wanted to store lots of enemies and not
+    just a single UFO?
+  \item<4-> Also think about how we would randomly add enemies to a scene in
+    a Geometry Wars style game.
+  \item<5-> Continue to think about other kinds of games and what kind of
+    state we need
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\EditorState{
+\begin{minted}[fontsize=\footnotesize]{racket}
+    (define-struct editor [pre post])
+    ; An Editor is a structure:
+    ;   (make-editor String String)
+    ; interpretation (make-editor s t) describes an editor
+    ; whose visible text is (string-append s t) with 
+    ; the cursor displayed between s and t
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Making a Text Editor}
+  We've been thinking about games and positions of game objects
+  too much, so let's not get hung up on these kinds of structures.
+  \begin{itemize}
+  \item<2-> Let's imagine a struct for the state of a text editor that looks
+    like the following:
+  \item<3-> \includegraphics[width=0.3\textwidth]{images/editor-start.png}
+  \item<4-> If we press space it updates to the following:
+  \item<5-> \includegraphics[width=0.3\textwidth]{images/editor-update.png}
+  \item<6-> Here is a start to our data interpretation:
+    \EditorState
   \end{itemize}
 \end{frame}
 \end{document}
