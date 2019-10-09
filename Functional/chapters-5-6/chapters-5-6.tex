@@ -138,7 +138,7 @@ def first_name(tup):
   \item<4-> We could obviously have the state of our our world be a pair
     \mintinline{racket}{'(x . y)} or a list \mintinline{racket}{'(x  y)}
   \item<5-> But it would be better if we had piece of compound data with two fields, one field named x to represent the x coordinate and similarly a y...
-  \item<6-> To define the struct: \mintinline{racket}{(struct point [x y])}
+  \item<6-> To define the struct: \mintinline{racket}{(struct point [x y] \#:transparent)}
   \item<7-> To make a new point: \mintinline{racket}{(define one-two (point 1 2))}
   \item<8-> To get the x-coordinate: \mintinline{racket}{(point-x one-two)}
   \end{itemize}
@@ -213,7 +213,7 @@ def first_name(tup):
   structs in general.
   \begin{itemize}
   \item<2-> You can define a struct in general with:
-    \mintinline{racket}{(struct s-name [field-name-1 ...field-name-n])}
+    \mintinline{racket}{(struct s-name [field-name-1 ...field-name-n] \#:transparent)}
   \item<3-> After creating a struct, 3 kinds of functions are automatically
     made for you.
     \begin{enumerate}
@@ -244,8 +244,8 @@ def first_name(tup):
   \frametitle{Examples of Structs}
   Here are some basic examples of structs:
   \begin{itemize}
-  \item<2-> \mintinline{racket}{(struct movie [title producer year])}
-  \item<3-> \mintinline{racket}{(struct person [name hair eyes phone])}
+  \item<2-> \mintinline{racket}{(struct movie [title producer year] \#:transparent)}
+  \item<3-> \mintinline{racket}{(struct person [name hair eyes phone] \#:transparent)}
   \item<4-> You guys should be able to think of many more examples.
     \item<5-> \textbf{Sample Problem} Develop a structure type definition for a program that deals with “bouncing balls,”. The ball’s location is a single number, namely the distance of pixels from the top. Its constant speed is the number of pixels it moves per clock tick. Its velocity is the speed plus the direction in which it moves.
   \end{itemize}
@@ -258,18 +258,18 @@ def first_name(tup):
   Since we are talking about a ball that bounces up and down, our structure definition is pretty simple. We need a single number for the y position and single
   number for the velocity in the y-axis.
   \begin{itemize}
-  \item<2-> \mintinline{racket}{(struct ball [location vec])}
+  \item<2-> \mintinline{racket}{(struct ball [location vec] \#:transparent)}
   \item<3-> This is simple because our ball is moving in a single direction. But if we had a Brick Breaker esque game then we would have a bouncing ball that
     travels along a 2D plane, then our definition is much more complicated.
-  \item<4-> Let's first consider defining a 2D vector struct as follows: \mintinline{racket}{(struct vector [delta-x delta-y])}
+  \item<4-> Let's first consider defining a 2D vector struct as follows: \mintinline{racket}{(struct vector [delta-x delta-y] \#:transparent)}
   \item<5-> Now, we can represent a ball as a point (which only has positive components) and a vector (which can have negative components):
-    \mintinline{racket}{(struct 2D-ball position vec)}
+    \mintinline{racket}{(struct 2D-ball [position vec] \#:transparent)}
   \end{itemize}
 \end{frame}
 
 \defverbatim[colored]\pointDefinition{
 \begin{minted}[fontsize=\footnotesize]{racket}
-    (define-struct point [x y])
+    (struct point [x y] \#:transparent)
     ; A Point is a structure: 
     ;   (point Number Number)
     ; interpretation a point x pixels from left, y from top
@@ -281,7 +281,7 @@ def first_name(tup):
   Our 2D Ball struct has nested occurrences of other structs. This is a natural thing, and even recursive descriptions of data are natural, i.e.
   linked lists and binary trees. But we can also consider using a \emph{flat representation} for our 2D Ball, which doesn't nest structs.
   \begin{itemize}
-  \item<2-> \mintinline{racket}{(struct 2D-ball [x y delta-x delta-y]}
+  \item<2-> \mintinline{racket}{(struct 2D-ball [x y delta-x delta-y] \#:transparent)}
   \item<3-> Although valid, I think it's better to keep representations natural and just nest things, barring performance concerns.
   \item<4-> Let's talk about defining data definitions for structs. We must specify the form of the struct and the types of its field and provide an interpretation of what
     each of the fields represents. Here's how we do this for our point struct:
@@ -317,7 +317,7 @@ def first_name(tup):
     field-names to select.
   \item<4-> Let us consider how to relate a struct description
     to a diagram that illustrates its ``structure''.
-  \item<5-> \mintinline{racket}{(struct centry [name home office cell])}
+  \item<5-> \mintinline{racket}{(struct centry [name home office cell] \#:transparent)}
   \end{itemize}
 \end{frame}
 
@@ -387,7 +387,7 @@ def first_name(tup):
 
 \defverbatim[colored]\BallInterp{
 \begin{minted}{racket}
-    (define-struct ball [location velocity])
+    (struct ball [location velocity] \#:transparent)
     ; A Ball-1d is a structure:  
     ;   (ball Number Number)
     ; interpretation 1 distance to top and velocity 
@@ -415,10 +415,10 @@ def first_name(tup):
     ;   (ball Point Vel)
     ; interpretation a 2-dimensional position and velocity
  
-    (define-struct vel [deltax deltay])
+    (struct vel [deltax deltay] \#:transparent)
     ; A Vel is a structure: 
     ;   (vel Number Number)
-    ; interpretation (make-vel dx dy) means a velocity of 
+    ; interpretation (vel dx dy) means a velocity of 
     ; dx pixels [per tick] along the horizontal and
     ; dy pixels [per tick] along the vertical direction
 \end{minted}
@@ -769,7 +769,7 @@ def first_name(tup):
     ; — "hello",
     ; — "world", or
     ; — pi.
-\end{minted}n
+\end{minted}
 }
 
 \begin{frame}
@@ -812,7 +812,7 @@ With itemizations we specified subsets of the existing data universe.
     field at compile time.
   \item<5-> Without that, it is up to us programmers to validate
     that points are only constructed with valid arguments.
-  \item<6-> This might mean creating a function \mintinline{racket}{(define (make-point x y) ...)} that checks
+  \item<6-> This might mean creating a function \mintinline{racket}{(define (point x y) ...)} that checks
     that both \mintinline{racket}{x} and \mintinline{racket}{y} actually receive integers before calling the \mintinline{racket}{point} constructor. More on this later.
   \end{itemize}
 \end{frame}
@@ -850,18 +850,18 @@ With itemizations we specified subsets of the existing data universe.
   \begin{itemize}
   \item<2-> (1) When a problem calls for the representation of pieces of information that belong together or describe a natural whole, you need a structure type definition. It requires as many fields as there are relevant properties. An instance of this structure type corresponds to the whole, and the values in the fields correspond to its attributes.
   \item<3-> (1) A data definition for a structure type introduces a name for the collection of instances that are legitimate. Furthermore, it must describe which kind of data goes with which field. Use only names of built-in data collections or previously defined data definitions.
-  \item<3-> (1) In the end, we (and others) must be able to use the data definition to create sample structure instances. Otherwise, something is wrong with our data definition. To ensure that we can create instances, our data definitions should come with data examples.
+  \item<4-> (1) In the end, we (and others) must be able to use the data definition to create sample structure instances. Otherwise, something is wrong with our data definition. To ensure that we can create instances, our data definitions should come with data examples.
   \end{itemize}
 \end{frame}
 
 \defverbatim[colored]\stepOneStructs{
 \begin{minted}[fontsize=\footnotesize]{racket}
-(define-struct r3 [x y z])
+(struct r3 [x y z] \#:transparent)
 ; An R3 is a structure:
-;   (make-r3 Number Number Number)
+;   (r3 Number Number Number)
  
-(define ex1 (make-r3 1 2 13))
-(define ex2 (make-r3 -1 0 3))
+(define ex1 (r3 1 2 13))
+(define ex2 (r3 -1 0 3))
 \end{minted}
 }
 
@@ -869,14 +869,14 @@ With itemizations we specified subsets of the existing data universe.
 \begin{minted}[fontsize=\footnotesize]{racket}
     ;;R3 -> Number
     ;;Computes the distance of a R3 triple to the origin
-    (define (3D-distance triple) 0)
+    (define (r3-distance triple) 0)
 \end{minted}
 }
 
 \defverbatim[colored]\ThreeDDistanceExamples{
 \begin{minted}[fontsize=\footnotesize]{racket}
-    (check/expect (r3-distance ex1) (sqrt 174))
-    (check/expect (r3-distance ex2) (sqrt 10))
+    (check-expect (r3-distance ex1) (sqrt 174))
+    (check-expect (r3-distance ex2) (sqrt 10))
 \end{minted}
 }
 
@@ -931,12 +931,45 @@ With itemizations we specified subsets of the existing data universe.
 \defverbatim[colored]\SpaceGameData{
 \begin{minted}[fontsize=\footnotesize]{racket}
     ; A SpaceGame is a structure:
-    ;   (make-space-game Posn Number). 
-    ; interpretation (make-space-game (make-posn ux uy) tx)
+    ;   (space-game Point Number). 
+    ; interpretation (space-game (point ux uy) tx)
     ; describes a configuration where the UFO is 
     ; at (ux,uy) and the tank's x-coordinate is tx
 \end{minted}
 }
+
+\begin{frame}
+  \frametitle{Language and Cognition}
+  \textbf{Disclaimer}: I'm neither a cognitive scientist, a linguist, a psychologist, nor a philosopher.
+  \begin{itemize}
+  \item<2-> There was a popular theory, the \emph{Sapir-Whorf Hypothesis},
+    that stated that language affected our thought processes
+    at a fundamental level. This is linguistic determinism.
+  \item<3-> The strong version says that language determines thought and that linguistic categories limit and \emph{determine} cognitive categories.
+  \item<4->The weak version says that linguistic categories and usage only \emph{influence} thought and decisions.
+  \item<5-> Do you find that plausible? What are the implications?
+  \item<6-> The strong version has been rejected, but the weaker version has been supported. Could something similar apply to the first programming language
+    you learn?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Language and Cognition (cont.)}
+  Noam Chomsky was a big opponent of linguistic determinism in the strong sense.
+  \begin{itemize}
+  \item<2-> There are other similar arguments in philosophy.
+  \item<3-> One interesting thing to think about is that our mathematical
+    theorems depend on what we accept as axioms.
+  \item<4-> Back to the main point, if you learned Racket before Java or Python,
+    would you bother to ask questions about inheritance, overloading, ...?
+  \item<5-> Our first programming language affects the questions about
+    the ones we learn later.
+  \item<6-> We tend to back translate new concepts into languages that we are
+    familiar with.
+  \item<7-> Now returning to Racket, let's think about how we design big-bang
+    applications around structs.
+  \end{itemize}
+\end{frame}
 
 \begin{frame}
   \frametitle{The World is a Structure}
@@ -947,7 +980,7 @@ With itemizations we specified subsets of the existing data universe.
     track in the world, we create a struct containing that piece of state
   \item<3-> Let's say we have a Space Invaders style game, where a player
     controls a tank that must shut down a UFO.
-  \item<4-> Our state becomes \mintinline{racket}{(struct space-game [ufo tank])}
+  \item<4-> Our state becomes \mintinline{racket}{(struct space-game [ufo tank] \#:transparent)}
   \item<5-> Let's come up with a data interpretation. Let's assume the ufo
     descends 2-dimensionally with random jumps to the left or right.
   \end{itemize}
@@ -963,16 +996,16 @@ With itemizations we specified subsets of the existing data universe.
   \item<4-> Also think about how we would randomly add enemies to a scene in
     a Geometry Wars style game.
   \item<5-> Continue to think about other kinds of games and what kind of
-    state we need
+    state we need.
   \end{itemize}
 \end{frame}
 
 \defverbatim[colored]\EditorState{
 \begin{minted}[fontsize=\footnotesize]{racket}
-    (define-struct editor [pre post])
+    (struct editor [pre post] \#:transparent)
     ; An Editor is a structure:
-    ;   (make-editor String String)
-    ; interpretation (make-editor s t) describes an editor
+    ;   (editor String String)
+    ; interpretation (editor s t) describes an editor
     ; whose visible text is (string-append s t) with 
     ; the cursor displayed between s and t
 \end{minted}
@@ -992,6 +1025,393 @@ With itemizations we specified subsets of the existing data universe.
     \EditorState
   \end{itemize}
 \end{frame}
+
+\begin{frame}
+  \frametitle{Making a Text Editor (cont.)}
+  So, we are creating an editor structure that tracks
+  the text before and after the cursor.
+  \begin{itemize}
+  \item<2-> Normal key input inserts characters in the ``pre'' string.
+  \item<3-> Backspace removes a character from the ``pre'' string.
+  \item<4-> How do we start writing code that manipulates the ``pre'' string?
+  \item<5-> \mintinline{racket}{(editor-pre ed)}
+  \item<6-> What kind of function have we been using to build new strings
+    from old ones?
+  \item<7-> \mintinline{racket}{string-append}
+  \item<8-> What kind of function have we been using to take apart strings?
+  \item<9-> \mintinline{racket}{substring}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{String Commandments}
+  Here are the first three commandments of functions that take in
+  strings and produce strings:
+  \begin{enumerate}
+  \item<2-> Building a new string from old ones? Thou shalt use \mintinline{racket}{string-append}.
+  \item<3-> Building a new string from certain parts of an old one? Thou shalt
+    isolate these parts with \mintinline{racket}{substring}.
+  \item<4-> Need to isolate a specific character form a string? Thou shalt use
+    \mintinline{racket}{string-ref} to extract this character?
+  \end{enumerate}
+\end{frame}
+
+\defverbatim[colored]\EditorNumberState{
+\begin{minted}[fontsize=\footnotesize]{racket}
+    (struct editor [text location] \#:transparent)
+    ; An Editor is a structure:
+    ;   (editor String Number)
+    ; interpretation (editor s t) describes an editor
+    ; whose visible text is inside of text
+    ; the cursor displayed between index location and location-1 in 
+    ; a zero-indexed string
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Changing Representations}
+  What happens if the state of the world for our editor programs takes on a
+  different shape?
+  \begin{itemize}
+  \item<2-> Consider representing our Editor like this:
+  \item<3-> \EditorNumberState
+  \item<4-> What changes does this give to how we reason about the program?
+  \item<5-> \textbf{Advantage}: the arrow key events become much simpler!
+  \item<6-> \textbf{Disadvantage}: For regular key presses, updating the
+    string and the cursor index becomes slightly more involved.    
+  \item<7-> How does this relate to Sapir-Whorf?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{World States and Temporary Objects}
+  What happens to programs where certain objects have a lifespan?
+  \begin{itemize}
+  \item<2-> Consider a space invaders like game where we can shoot
+    a \emph{single} bullet at a time at a \emph{single enemy}.
+  \item<3-> \includegraphics[width=0.3\textwidth]{images/space-invaders.png}
+  \item<4-> At its most complicated our program only has three objects.
+  \item<5-> It has the player vehicle, an enemy space ship, and a
+    bullet.
+  \item<6-> When the player doesn't shoot there are only two things,
+    the enemy ship and the player ship.
+  \item<7-> We can consider the state where a bullet destroys the enemy ship
+    as the exit condition and so our world state doesn't have to worry about
+    a state where the enemy ship isn't present.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Scalability?}
+  Our state of the world became an itemization of different structs.
+  As we consider adding a score, levels, etc. how must our
+  data definition for the state of the world change?
+  \begin{itemize}
+  \item<2-> What happens to our code?
+  \item<3-> We have to cond on different massive structs.
+  \item<4-> Is having multiple god-structs really a nice way to structure our code?
+  \item<5-> Even in object oriented programs, it's typical to have god objects
+    and it's better than having hidden state across many different modules.
+  \item<6-> Just ensure that the god object defers functionality to other modules. And similarly, our god struct is separated from event handling code
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\GameState{
+\begin{minted}{racket}
+    ; A SIGS is one of: 
+    ; – (aim UFO Tank)
+    ; – (fired UFO Tank Missile)
+    ; interpretation represents the complete state of a 
+    ; space invader game. Either aiming or fired a shot.
+\end{minted}
+}
+
+\defverbatim[colored]\AimState{
+\begin{minted}{racket}
+    (struct aim [ufo tank] #:transparent)
+    ; aim is a structure
+    ; (aim UFO Tank)
+    ; Interpretation, UFO represents the UFO position
+    ; Tank represents the Tank position.
+    (define ex1 (aim ...))
+\end{minted}
+}
+
+\defverbatim[colored]\FiredState{
+\begin{minted}{racket}
+    (struct fired [ufo tank missile] #:transparent)
+    ; fired is a structure
+    ; (aim UFO Tank Missile)
+    ; Interpretation, UFO represents the UFO position
+    ; Tank represents the Tank position.
+    ; Missile represents the missile's position
+    (define ex2 (fired ...))
+\end{minted}
+}
+
+\defverbatim[colored]\UFOData{
+\begin{minted}{racket}
+    ; A UFO is a Point
+    ; interpretation (point x y) is the UFO's location 
+    ; (using the top-down, left-to-right convention)
+\end{minted}
+}
+
+\defverbatim[colored]\TankStruct{
+\begin{minted}{racket}
+    (struct tank [loc vel] #:transparent)
+    ; A Tank is a structure:
+    ;   (tank Number Number). 
+    ; interpretation (tank x dx) specifies the position:
+    ; (x, HEIGHT) and the tank's speed: dx pixels/tick 
+\end{minted}
+}
+
+\defverbatim[colored]\MissileData{
+\begin{minted}{racket}
+    ; A Missile is a Point. 
+    ; interpretation (point x y) is the missile's place
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Back To Our Space Invaders Game}
+  Let's return to the start of designing our Space Invaders style game.
+  \begin{itemize}
+  \item<2-> We mentioned that we needed an Itemization for whether or not
+    a bullet is fired, so let's provide a data interpretation.
+  \item<3-> \GameState
+  \item<4-> Now we need to design structs representing our individual objects
+    and also the alternatives of our itemization. Let's start with
+    \mintinline{racket}{aim} and \mintinline{racket}{fired}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Game Structs}
+  The data interpretation for aim is a bit simple, after looking at our itemization.
+  \begin{itemize}
+  \item<2-> \AimState
+  \item<3-> Similarly, for our design for our fired state
+  \item<4-> \FiredState
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Game Structs (cont.)}
+  Is there something a bit strange about our fired state?
+  \begin{itemize}
+  \item<2-> There is a single Missile struct, what does that imply?
+  \item<3-> In other games like Galaga, we can fire more than one
+    bullet at a time. But this is actually true to how Space Invaders plays.
+  \item<4-> So, this means that in the fired state, we can't initiate a new
+    fired state, and so there's a \emph{cooldown} period.
+  \item<5-> Think about how this affects our on-tick event.
+  \item<6-> Let's return to designing the rest of our structs for data
+    representation.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Game Structs (cont.)}
+  Does anyone have a natural description for how our UFO data should look?  
+  \begin{itemize}
+  \item<2-> \UFOData
+  \item<3-> How does a missile struct look?
+  \item<4-> \MissileData
+  \item<5-> Is our player vehicle (tank) more complicated than the UFO,
+    what does its data description look like?
+  \item<6-> \TankStruct
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\DataExamples{
+\begin{minted}[fontsize=\footnotesize]{racket}
+;;Aiming and moving left
+(define ex1 (aim (point 20 10) (tank 28 -3)))
+
+;;Just fired
+(define ex2 (fired (point 20 10)
+            (tank 28 -3)
+            (point 28 (- HEIGHT TANK-HEIGHT))))
+
+;;Missile is about to collide with UFO
+(define ex3 (fired (point 20 100)
+            (tank 100 3)
+            (point 22 103)))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Game Structs (cont.)}
+  Can anyone explain why we defined a new Tank struct, while we
+  left the UFO and Missile data interpretations as being aliases
+  for points?
+  \begin{itemize}
+  \item<2-> Our tank had a movement vector (which can contain negative values) associated with it, while the other two just have a position that is updated.
+  \item<3-> This returns to our discussion of making sure our data lives
+    in the correct domain with a clear interpretation.
+  \item<4-> Now that we are done with specifying data interpretations,
+    what kind data examples can we give for our SIGS itemization?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Game Struct (cont.)}
+  \DataExamples
+  \begin{itemize}
+  \item<2-> We only had two states for our itemization, why did we need three
+    examples?
+  \item<3-> We had an \emph{implicit} state arising from the fired state.
+  \item<4-> Can we think of another implicit state?
+  \item<5-> Yes, when the bullet goes off screen.
+  \item<6-> Certain states shouldn't require new data definitions but must
+    be handled!
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Design Process 3.0}
+  Now that we are considering modeling pieces of related state with structs
+  and our overall possible event structures with itemizations, let's
+  discuss the last changes to our design process for this section of the book.
+  \begin{itemize}
+  \item<2-> (1) An itemization of different forms of data—including collections of structures—is required when your problem statement distinguishes different kinds of information and when at least some of these pieces of information consist of several different pieces.
+  \item<3-> Steps (2) and (3) remain the same.
+  \item<4-> (4) Write a cond for dealing with itemization input and have a predicate
+    for each data from in the itemization. If one of the items in the itemization
+    is a struct, add selectors. With a separate data definition, for items,
+    instead of writing selectors, write a separate function.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Design Process 3.0 (cont.)}
+  \begin{itemize}
+  \item<1-> (5) Fill out the code, starting with the easy parts. If dealing
+    with an itemization and you're stuck, analyze the functional examples
+    dealing with this item. If your template calls another templated function,
+    assume this function works as expected and continue.
+    \item<2-> (6) Same as before.
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\CheckedArea{
+\begin{minted}{racket}
+    ; Any -> Number
+    ; computes the area of a disk with radius v, 
+    ; if v is a number
+    (define (checked-area-of-disk v)
+      (cond
+        [(number? v) (area-of-disk v)]
+        [else (error "area-of-disk: number expected")]))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Checking the Input Types}
+  Although we can usually trust that internally used functions
+  receive input values of the proper type, we occasionally have to
+  input values for API style functions.
+  \begin{itemize}
+  \item<2-> Consider writing a function that computes the area of a disk
+    when given numbers and errors for other input types.
+  \item<3-> \CheckedArea
+  \item<4-> For simplicity, we won't write functions that explicitly check
+    against invalid inputs often. And moreover, we will eventually consider
+    rewriting programs in Typed Racket so that such checks are unnecessary.
+  \item<5-> However, checking world states should be something that is done.
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\CheckNumber{
+\begin{minted}{racket}
+(define (main s0)
+  (big-bang s0 ... [check-with number?] ...))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Checking the World}
+  The world can get wrong too quickly.
+  \begin{itemize}
+  \item<2-> Although we agreed that internally used functions get data
+    of the right form, we will check world states since the interplay of handling
+    different events can easily lead to errors.
+  \item<3-> And sometimes an event can produce invalid data that isn't caught
+    until several events later, so it can be confusing to debug.
+  \item<4-> To help with this kind of problem, big-bang comes with an optional check-with clause that accepts a predicate for world states.
+  \item<5-> If, for example, we chose to represent all world states with Number, we could express this fact easily like this: \CheckNumber
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\ZeroOne{
+\begin{minted}{racket}
+    (define (zero-to-one? num)
+      (and (number? num) (<= 0 num 1)))
+\end{minted}
+}
+
+\defverbatim[colored]\CheckWith{
+\begin{minted}{racket}
+    (define (main s0)
+      (big-bang s0
+                ...
+                [check-with between-0-and-1?]
+                ...))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{More Complex Checks}
+  This comes in handy when we have more rich restrictions on data, like
+  that our world state should be in some interval.
+  \begin{itemize}
+  \item<2-> Consider if the world state should be a real number between zero and 1.
+  \item<3-> We can write a predicate that checks this: \ZeroOne
+  \item<4-> Now we can add a check-with clause that uses a predicate
+    to check the output of all world producing events:
+    \CheckWith
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Equality Predicates}
+  Let's talk about equality again...at least in programming languages.
+  \begin{itemize}
+  \item<2-> There are certain equalities that a programmer might want to write
+    that errors when applied to values of the correct type that are not
+    in some subset of these values.
+  \item<3-> For example, key events and mouse events are itemizations over strings,
+    but \mintinline{racket}{string=?} does not error on strings that are not
+    key events or mouse events
+  \item<4-> Instead, in the future we can use \mintinline{racket}{key=?}
+    and \mintinline{racket}{mouse=?}
+  \item<5-> We can also define our own equality predicates like
+    \mintinline{racket}{light=?} so that an error is thrown if a string
+    is given that isn't a traffic light.
+  \item<6-> Let me design something similar 
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{End of Part 1}
+  We have now finished the first part of this book. To summarize what was
+  covered:
+  \begin{itemize}
+  \item<2-> Basic Racket syntax and constructs. Defining functions and using
+    conditional expressions.
+  \item<3-> Designing basic functions in Racket with a design process.
+  \item<4-> Using different design processes for scripts and event driven programs.
+  \item<5-> Using itemizations to specify different kind of values to handle
+    from other existing data types
+  \item<6-> Using structs to group related data and altering our design process
+    for world programs with itemizations and structs
+  \item<7-> We now move on to talking about specifying infinite data and writing
+    programs over arbitrarily large data.
+  \end{itemize}
+\end{frame}
+
 \end{document}
 
 
