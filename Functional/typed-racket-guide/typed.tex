@@ -1,0 +1,63 @@
+%%% Local Variables:
+%%% TeX-command-extra-options: "-shell-escape"
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
+\documentclass{beamer}
+\usepackage{caption}
+\usepackage{minted}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usetikzlibrary{shapes.geometric, arrows}
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=1.5cm, minimum height=0.6cm, text centered, draw=black, fill=blue!30]
+\tikzstyle{process} = [rectangle, minimum width=1.5cm, minimum height=0.5cm, text centered, draw=black, fill=orange!30]
+\tikzstyle{decision} = [circle, radius=2.5cm, text centered, draw=black, fill=green!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+\usepackage[labelformat=simple]{subcaption}
+
+\usetheme{Singapore}
+\title{Typed Racket Guide}
+\begin{document}
+\begin{frame}
+\titlepage
+\end{frame}
+\section{Typed Racket}
+
+\begin{frame}
+  \frametitle{Why Add a Type-checker to a Dynamically Typed Language?}
+  Racket is a dynamically typed language like Python.
+  \begin{itemize}
+  \item<2-> So why add a type-checker to the language?
+  \item<3-> We still design programs with type-like ideas in mind (thinking about sets of values).
+  \item<4-> Types are good for documentation. When learning a new codebase
+    in a dynamically typed language, we mentally reconstruct the type structure
+    of the code.
+  \item<5-> Typechecking can help catch errors before unit tests when code changes.
+  \item<6-> Types help IDEs provide useful services.
+  \end{itemize}
+\end{frame}
+
+
+
+\begin{frame}
+  \frametitle{Making a Basic Typed Racket File}
+  To start making a typed racket file, you  must add \mintinline{python}{\#lang typed/racket}
+  \begin{itemize}
+  \item<2-> If you require some module with \mintinline{python}{(require mod)} change it to
+    \mintinline{python}{(require typed/mod)}
+  \item<3-> Let's use an example of a program to migrate to using static types:
+    %\UntypedExample
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Adding The Static Types}
+  
+\end{frame}
+\end{document}
+%%% Local Variables:
+%%% TeX-command-extra-options: "-shell-escape"
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
