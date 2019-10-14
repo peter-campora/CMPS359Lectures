@@ -1,9 +1,8 @@
-\beamer@endinputifotherversion {3.36pt}
 \headcommand {\slideentry {0}{0}{1}{1/1}{}{0}}
 \headcommand {\beamer@framepages {1}{1}}
-\headcommand {\sectionentry {1}{Compound Data}{2}{Compound Data}{0}}
 \headcommand {\beamer@sectionpages {1}{1}}
 \headcommand {\beamer@subsectionpages {1}{1}}
+\headcommand {\sectionentry {1}{Compound Data}{2}{Compound Data}{0}}
 \headcommand {\slideentry {1}{0}{1}{2/2}{}{0}}
 \headcommand {\beamer@framepages {2}{2}}
 \headcommand {\slideentry {1}{0}{2}{3/8}{}{0}}
@@ -136,10 +135,10 @@
 \headcommand {\beamer@framepages {320}{323}}
 \headcommand {\slideentry {1}{0}{66}{324/329}{}{0}}
 \headcommand {\beamer@framepages {324}{329}}
-\headcommand {\slideentry {1}{0}{67}{330/335}{}{0}}
-\headcommand {\beamer@framepages {330}{335}}
-\headcommand {\beamer@partpages {1}{335}}
-\headcommand {\beamer@subsectionpages {2}{335}}
-\headcommand {\beamer@sectionpages {2}{335}}
-\headcommand {\beamer@documentpages {335}}
-\headcommand {\def \inserttotalframenumber {68}}
+\headcommand {\slideentry {1}{0}{67}{330/336}{}{0}}
+\headcommand {\beamer@framepages {330}{336}}
+\headcommand {\beamer@partpages {1}{336}}
+\headcommand {\beamer@subsectionpages {2}{336}}
+\headcommand {\beamer@sectionpages {2}{336}}
+\headcommand {\beamer@documentpages {336}}
+\headcommand {\gdef \inserttotalframenumber {68}}
