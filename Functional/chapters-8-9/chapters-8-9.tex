@@ -57,6 +57,16 @@
 \end{frame}
 
 \begin{frame}
+  \frametitle{Stacking Dolls and Us}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{images/matryoshka.jpg}
+  \end{center}
+  Hello me, meet the previous me.\\
+  -Dave Mustaine\\
+  --Me
+\end{frame}
+
+\begin{frame}
   \frametitle{Self Referential Data and Racket}
   So far, we have only written programs with fixed size data (well numbers and strings aren't truly fixed size but they are primitive).
   \begin{itemize}
@@ -207,7 +217,196 @@
 \section{Atoms and Constructors}
 \begin{frame}
   \frametitle{Empty Lists and Cons}
-  ...
+  So, we've mentioned that \mintinline{racket}{'()} is a value, but what
+  is special about it?
+  \begin{itemize}
+  \item<2-> Well, like numbers, booleans, and strings it is a new kind of \emph{atomic} value in our language.
+    Struct values, the last new value form we introduced are compound values--i.e. they are composed
+    of many other values.
+  \item<3-> It is a unique value in that there is a built-in predicate to recognize it, \mintinline{racket}{empty?}
+  \item<4-> \mintinline{racket}{(empty? '())} returns true and \mintinline{racket}{(empty? v)} returns false for any other
+    value, v.
+  \item<5-> And of course, we can start building lists containing elements by using \mintinline{racket}{cons} with it.
+  \item<6-> So, what's the deal with \mintinline{racket}{cons}?
+  \item<7-> Recall, when we defined a struct, how did we create new values for a struct type?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Dissecting Cons}
+  So, let's assume that we can define a struct for \mintinline{racket}{cons} as follows:
+  \begin{itemize}
+  \item<2-> \mintinline{racket}{(struct cons [first rest])}
+  \item<3-> \mintinline{racket}{(cons 1 '())} seems to work as expected.
+  \item<4-> We can also use a value that isn't a list as the ``rest'': \mintinline{racket}{(cons 1 2)}.
+  \item<5-> For simplicity in the book, they don't allow this because they want you to think of cons cells as \emph{lists}.
+  \item<6-> But in reality, a list is a series of cons pairs whose final ``rest'' is \mintinline{racket}{'()}.
+  \item<7-> So, I recommend mostly using \mintinline{racket}{cons} for constructing lists, but you can also construct pairs.
+  \item<8-> If you need to specify a larger list quickly, use
+    something like \mintinline{racket}{'(1 2 3)} or \mintinline{racket}{(list 1 2 3)} instead of \mintinline{racket}{(cons 1 (cons 2 (cons 3 '())))}
+  
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\ContainsHeader{
+\begin{minted}{racket}
+    ; List-of-names -> Boolean
+    ; determines whether "Smith" is on a-list-of-names
+    (define (contains-smith? a-list-of-names)
+      \#f)
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{List Programs}
+  We can get the first element of a list with \mintinline{racket}{first} and the
+  rest of the list with \mintinline{racket}{list}.
+  \begin{itemize}
+  \item<2-> With this, we can now start to write programs using lists.
+  \item<3-> \textbf{Sample Problem} - You're the most popular person in town. You have lots of friends. So many in fact that you can't remember all of your friends' names. Assume that your friends are stored in a list. Write a program to check that you have a friend named ``Smith''.
+  \item<4-> \ContainsHeader
+  \item<5-> Ok, so now we need functional examples.
+  \item<6-> What should \mintinline{racket}{(contains-smith? '())} return?
+  \item<7-> It should return \#f of course!
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Recurring in the Lists}
+  Ok, so we know that searching for Smith in the empty list returns false.
+  \begin{itemize}
+  \item<2-> What should \mintinline{racket}{(contains-smith? (cons "Trufant" '()))} return?
+  \item<3-> It should return \#f since ``Trufant'' isn't ``Smith'' and
+    the empty list doesn't contain any strings.
+  \item<4-> What should \mintinline{racket}{(contains-smith? (cons "Smith" '()))} return?
+  \item<5-> It should return \#t of course!
+  \item<6-> What should \mintinline{racket}{(contains-smith? (cons "Junpei" (cons "Smith" '())))} return?
+  \item<7-> Still \#t!
+  \item<8-> What about \mintinline[fontsize=\footnotesize]{racket}{(contains-smith? (cons "Junpei" (cons "Smith" (cons "Trufant" '()))))}?
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\ContainsSkeleton{
+\begin{minted}[fontsize=\footnotesize]{racket}
+    ; List-of-names -> Boolean
+    ; determines whether "Smith" is on a-list-of-names
+    (define (contains-smith? a-list-of-names)
+      (cond
+         [(empty? a-list-of-names) ...]
+         [(cons? a-list-of-names) ...]))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Recurring in the Lists}
+  Ok, so let's come up with one last general example.
+  \begin{itemize}
+  \item<2-> What about \mintinline[fontsize=\footnotesize]{racket}{(contains-smith? (cons "Junpei" (cons "Trufant" '())))}?
+  \item<3-> This returns \#f.
+  \item<4-> Ok, so now I have some functional examples and can create tests from them.
+  \item<5-> Turning to step 4 of our design process, how I start writing a
+    skeleton? Recall that we are taking an itemization as input.
+  \item<6-> \ContainsSkeleton
+  \item<7-> Ok, so this part was not so bad. But now we have to start coding
+    for one of those conditions. Which is easier to start with?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Recurring in the Lists}
+  \textbf{Always start with handling the empty list!}
+  \begin{itemize}
+  \item<2-> Why?
+  \item<3-> It is the base case, and almost every recursion will hit
+    this in order to return some value from the function. This is necessary
+    for recursion to terminate.
+  \item<4-> So, based on our functional examples, what should the return value
+    be when we hit the empty list?
+  \item<5-> That's right, it should be false!
+  \item<6-> Now how do we start finishing the skeleton for the case when
+    we have a cons cell?
+  \item<7-> Well each cons cell is a string being stacked onto another list. Shouldn't we check whether that string is ``Smith''?
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\CheckSmith{
+\begin{minted}[fontsize=\footnotesize]{racket}
+    ; List-of-names -> Boolean
+    ; determines whether "Smith" is on a-list-of-names
+    (define (contains-smith? a-list-of-names)
+      (cond
+         [(empty? a-list-of-names) \#f]
+         [(cons? a-list-of-names) 
+             ... (string=? "Smith" (first a-list-of-names)) ...]))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Recurring in the Lists}
+  Let's write some code to check the outermost cons cell.
+  \begin{itemize}
+  \item<2-> \CheckSmith
+  \item<3-> Assume a-list-of-names is \mintinline{racket}{'("Smith" "Trufant")}
+  \item<4-> What does \mintinline{racket}{(string=? "Smith" (first a-list-of-names))} return?
+  \item<5-> it returns \#t
+  \item<6-> But what if a-list-of-names is \mintinline{racket}{'("Junpei" "Smith" "Trufant")}
+  \item<7-> It returns \#f
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\SearchRest{
+\begin{minted}[fontsize=\footnotesize]{racket}
+    ... (string=? "Smith" (first a-list-of-names)) 
+      ... (contains-smith? (rest a-list-of-names)) ...
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Recurring in the Lists}
+  This latter case is very important. What do we need to if the current head of the list  isn't ``Smith''?
+  \begin{itemize}
+  \item<2-> We must search the rest of the list of course.
+  \item<3-> How do we search the rest of the list?
+  \item<4-> \textbf{With a recursive call on the rest of the list!}
+  \item<5-> So, let's update our skeleton to:
+    \SearchRest
+  \item<6-> \includegraphics[width=0.4\textwidth]{images/dory.jpg}
+    Err well recursing, rather...
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Recurring in the Lists}
+  So what is \mintinline{racket}{(rest '("Junpei" "Smith" "Trufant"))}?
+  \begin{itemize}
+  \item<2-> It's \mintinline{racket}{'("Smith" "Trufant")}
+  \item<3-> So, now in the recursive call, a-list-of-names is:
+    \mintinline{racket}{'("Smith" "Trufant")}
+  \item<4-> Is this empty?
+  \item<5-> No, it's a cons cell.
+  \item<6-> What is \mintinline{racket}{(first a-list-of-names)}?
+  \item<7-> "Smith"
+  \item<8-> So, what does: \mintinline{racket}{(string=? "Smith" (first a-list-of-names))} return?
+  \item<9-> \#t
+  \item<10-> But what happens when we return from this recursive call?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  We were previously in a state where the head of the list wasn't "Smith".
+  \begin{itemize}
+  \item<2-> So, how do we put together that we had \#f from checking
+    that the head of the list wasn't "Smith", with finding "Smith" in the recursive call (which returned \#t)?
+  \item<3-> Think about how you would write the program
+    with a loop in Java or Python first.
+  \item<4-> Our friend \mintinline{racket}{or} comes to the rescue.
+  \item<5-> Recall that the evaluation of \mintinline{racket}{(or bool-1 bool-2)}
+    does not need to evaluate bool-2 if bool-1 is \#t, but does when bool-1 is \#f
+  \item<6-> Recall that we \textbf{only} need to search the rest of the list
+    when the head is not "Smith"
+  \item<7-> Finally, if we search the entire list and do not find "Smith" (i.e. we hit the empty list), we return \#f.
+  \item<8-> So, how do we finish our code?
+  \end{itemize}
 \end{frame}
 \end{document}
 %%% Local Variables:

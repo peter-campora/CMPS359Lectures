@@ -2,50 +2,26 @@
 \usepackage[inline]{enumitem}
 \usepackage{hyperref}
 \begin{document}
-\title{CMPS 359: Introduction to Functional Programming with Racket}
-\author{Peter Campora}
-%
-\maketitle
-
-\noindent Book: \href{https://htdp.org/2019-02-24/index.html}{How to Design Programs (2nd edition)}\\
-
-\noindent The four main objectives of this course are to:
-%
-\begin{enumerate}
-\item Learn systematic program design and problem classification.
-\item Spend a nontrivial amount of time programming in a functional programming language.
-\item Understand the features of functional programming languages and how the design of a functional
-  program differs from an imperative program.
-\item Think differently about what programming is.
-\end{enumerate}
-
-\noindent Along the way you will also learn about the following concepts:
+The grading for projects will be done in the following way:
 \begin{itemize}
-%\item 
-\item How data and program type influences the design of programs
-\item Higher Order Functions
-\item Recursion
-\item Immutable Data
-\item and more...
-%\item Employ program design as a team
+\item Code that \emph{always} results in a runtime error when run, regardless of
+  user interaction, will result in a 60 \emph{at best}. 
+\item Code that passes all tests, including my interactions and unit tests will
+  receive a 90 \emph{at worst}.
+\item If your code is incomplete but does not always error when run, you will receive a 40 \emph{at worst}. But you must have \emph{some} code that looks meaningful to the assignment.
+\item Code that works for some input and not others will start at a 50 and
+  receive points based on the following.
+\item 15 points will be assigned based on how well ``render'' works.
+\item 25 points will be assigned based on how well ``edit'' works.
+\item 5 points will be awarded if the design process is reflected in the code.
+\item An additional 5 points will be given based on the cleanliness of the code. I.E. your code should be well commented and variable names should be meaningful.
+\item This means that if edit breaks on a couple of cases, but the design process
+  is clean, you can still get an A on the project.
+\item This also means that a slightly erroneous submission can theoretically get a higher grade than a poorly documented and structured working submission.
+\item A 100 is reserved for working programs who get all  10  aforementioned points based on the design  process and code quality.
+\item Good luck! Similar criteria will be used on future projects.
 \end{itemize}
 
-\noindent Grades will come from the following sources and are weighted as follows (subject to change):
-\begin{itemize}
-\item Smaller Programming Assignments: 15\%
-\item Projects: 50\%
-\item Midterm: 15\%
-\item Final Project: 20\%
-\end{itemize}
-
-\noindent Office Hours: MWF 2-4\\\\
-Web Page: peter-campora.github.io
-% \noindent Ideally, by the end of this course you all will pick up skills
-% that are used in whatever job you get when you graduate. A secondary skill I hope
-% you pick up is how to discuss the differences between programming languages
-% and be able to argue about how different features affect program design.
-% Finally, I hope you all become comfortable engaging in technical discussions,
-% and I'd like for the class to be slightly Socratic.
 \end{document}
 
 %%% Local Variables:
