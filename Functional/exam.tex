@@ -203,6 +203,9 @@ The overall points are 100 plus 5 bonus points.
 
 For each of the following expressions, (1) intuitively describe what
 it does and (2) give the evaluation result.
+For a sequence of expressions across multiple lines,
+the result you should write is the result of
+evaluating the final expression.
 
 
 \begin{enumerate}[label=(\alph*)]
@@ -243,9 +246,8 @@ it does and (2) give the evaluation result.
 \item
 
 \begin{program}
-  (struct point [x y])
-  (point 1 2)
-  (point-x 1)
+  (struct point [x y])  
+  (point-x (point 1 2))
 \end{program}
 
 \sol
@@ -313,7 +315,7 @@ it does and (2) give the evaluation result.
  \vspace{12mm}
 \fi
 
-\item \prog{(image-height (rectangle 10 10 "black" "outline"))}
+\item \prog{(image-height (rectangle 10 15 "black" "outline"))}
 
 \sol
 \begin{program}
@@ -436,26 +438,25 @@ that correspond to that step of the design process. If no lines correspond, writ
 
   \item Let us say that we then add the following test on line (8):
     \prog{(check-expect (C-to-F 5) 41)}. Does this test succeed or fail?
-    If it fails, explain why it fails. Is the test incorrect or is
-    the function definition incorrect?
+     If it fails, explain why it fails and indicate whether the test or the function definition is incorrect.
 
   \item Let us say that we then add the following test on line (9):
-    \prog{(check-expect (C-to-F 10) 60)}. Does this test succeed or fail?
-    If it fails, explain why it fails. Is the test incorrect or is
-    the function definition incorrect?
+    \prog{(check-expect (C-to-F 10) 59)}. Does this test succeed or fail?
+    If it fails, explain why it fails and indicate whether the test  or 
+    the function definition is incorrect.
 
   \item Let us say we are tasked with designing a function and have finished
     steps 1-3 in our design process. The function takes in a key-event and
-    returns \#t when the key that was pressed was the space bar (" "). Otherwise
-    it returns \#f. Write a skeleton for the following code after line (5)
+    returns 1 when the key that was pressed was the space bar (" "). Otherwise
+    it returns 0. Write a skeleton for the following code after line (5)
     of the top definiton. Then complete step 5 on the bottom definition and
     turn the skeleton into final code.
 
     \begin{program}
       (1) ;; KeyEvent -> Boolean
-      (2) ;; If the spacebar was pressed return #t else return #f
-      (3) ;; Given: " " Expect: #t
-      (4) ;; Given: "f" Expect: #f
+      (2) ;; If the spacebar was pressed return 1 else return 0
+      (3) ;; Given: " " Expect: 1
+      (4) ;; Given: "f" Expect: 0
       (5) (define (space-press? ke)
 
 
@@ -467,9 +468,9 @@ that correspond to that step of the design process. If no lines correspond, writ
 
     \begin{program}
       (1) ;; KeyEvent -> Boolean
-      (2) ;; If the spacebar was pressed return #t else return #f
-      (3) ;; Given: " " Expect: #t
-      (4) ;; Given: "f" Expect: #f
+      (2) ;; If the spacebar was pressed return 1 else return 0
+      (3) ;; Given: " " Expect: 1
+      (4) ;; Given: "f" Expect: 0
       (5) (define (space-press? ke)
 
 
@@ -513,7 +514,7 @@ that correspond to that step of the design process. If no lines correspond, writ
   new editor's pre string is the same as the editor parameter's pre string.
   \begin{program}
     ;; Editor -> Editor
-    ;; Given: (editor "hello" "world") " " Expect: (editor "hello " "world")
+    ;; Given: (editor "hello" "world") Expect: (editor "hello" "orld")    
     (define (delete-key ed)
 
 
@@ -530,7 +531,7 @@ that correspond to that step of the design process. If no lines correspond, writ
 \end{enumerate}
 \clearpage
 
-\question[3+2=5points]
+\question[3+2=5points]{Bonus}
   There are two bonus point questions.
 
   \begin{enumerate}
