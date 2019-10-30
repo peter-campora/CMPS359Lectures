@@ -251,7 +251,7 @@
 \defverbatim[colored]\ContainsHeader{
 \begin{minted}{racket}
     ; List-of-names -> Boolean
-    ; determines whether "Smith" is on a-list-of-names
+    ; determines whether "Smith" is in a-list-of-names
     (define (contains-smith? a-list-of-names)
       \#f)
 \end{minted}
@@ -289,7 +289,7 @@
 \defverbatim[colored]\ContainsSkeleton{
 \begin{minted}[fontsize=\footnotesize]{racket}
     ; List-of-names -> Boolean
-    ; determines whether "Smith" is on a-list-of-names
+    ; determines whether "Smith" is in a-list-of-names
     (define (contains-smith? a-list-of-names)
       (cond
          [(empty? a-list-of-names) ...]
@@ -332,7 +332,7 @@
 \defverbatim[colored]\CheckSmith{
 \begin{minted}[fontsize=\footnotesize]{racket}
     ; List-of-names -> Boolean
-    ; determines whether "Smith" is on a-list-of-names
+    ; determines whether "Smith" is in a-list-of-names
     (define (contains-smith? a-list-of-names)
       (cond
          [(empty? a-list-of-names) \#f]
@@ -393,6 +393,7 @@
 \end{frame}
 
 \begin{frame}
+  \frametitle{Recurring in the Lists}
   We were previously in a state where the head of the list wasn't "Smith".
   \begin{itemize}
   \item<2-> So, how do we put together that we had \#f from checking
@@ -408,6 +409,294 @@
   \item<8-> So, how do we finish our code?
   \end{itemize}
 \end{frame}
+
+\defverbatim[colored]\CheckSmithFinal{
+\begin{minted}[fontsize=\footnotesize]{racket}
+    ;; List-of-names -> Boolean
+    ;; determines whether "Smith" is in a-list-of-names
+    (define (contains-smith? a-list-of-names)
+      (cond
+         [(empty? a-list-of-names) \#f]
+         [(cons? a-list-of-names) 
+             (or (string=? "Smith" (first a-list-of-names)) 
+                 (contains-smith? (rest a-list-of-names)))]))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Recurring in the Lists}
+  The final version of our function looks like the following:
+  \CheckSmithFinal
+
+  \begin{itemize}
+  \item<2-> Let me walk through how the recursion works on this code now.
+  \item<3-> We start with a call: \mintinline{racket}{(contains-smith? '("Junpei" "Smith" "Trufant"))}
+  \item<4-> Now we can replace the parameter \mintinline{racket}{alist-of-names} with \mintinline{racket}{'("Junpei" "Smith" "Trufant")}  
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\CheckSmithSubOne{
+\begin{minted}[fontsize=\footnotesize]{racket}
+(cond
+   [(empty? '("Junpei" "Smith" "Trufant")) \#f]
+   [(cons? '("Junpei" "Smith" "Trufant")) 
+       (or (string=? "Smith" (first '("Junpei" "Smith" "Trufant"))) 
+           (contains-smith? (rest '("Junpei" "Smith" "Trufant"))))])
+\end{minted}
+}
+
+\defverbatim[colored]\ContainsElse{
+\begin{minted}[fontsize=\footnotesize]{racket}
+    (or (string=? "Smith" (first '("Junpei" "Smith" "Trufant"))) 
+        (contains-smith? (rest '("Junpei" "Smith" "Trufant"))))
+\end{minted}
+}
+
+
+\begin{frame}
+  \frametitle{Recurring in the Lists}
+  We now have the following code after this replacement:
+  \CheckSmithSubOne
+
+  \begin{itemize}
+  \item<2-> What does \mintinline{racket}{(empty? '("Junpei" "Smith" "Trufant"))} return?
+  \item<3-> \#f
+  \item<4-> So, we go to the next cond branch to check the condition. What does \mintinline{racket}{(cons? '("Junpei" "Smith" "Trufant"))} return?
+  \item<5-> \#t
+  \item<6-> So, we need to evaluate:
+    \ContainsElse
+    
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\ContainsElseEvalOne{
+\begin{minted}[fontsize=\footnotesize]{racket}
+        (or \#f
+            (contains-smith? (rest '("Junpei" "Smith" "Trufant"))))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Recurring in the Lists}
+  How do we start evaluating an or-expression?
+  \begin{itemize}
+  \item<2-> We start with the first expression to check in the or:
+   \mintinline[fontsize=\footnotesize]{racket}{(string=? "Smith" (first '("Junpei" "Smith" "Trufant"))}
+  \item<4-> What does \mintinline[fontsize=\footnotesize]{racket}{(first '("Junpei" "Smith" "Trufant")} return?
+  \item<5-> "Junpei"
+  \item<6-> What does \mintinline[fontsize=\footnotesize]{racket}{(string=? "Smith" "Junpei")} evaluate to?
+  \item<7-> \#f
+  \item<8-> So, how do we evaluate:
+    \ContainsElseEvalOne 
+  \item<9-> We must check if the following evaluates to \#t: \mintinline[fontsize=\footnotesize]{racket}{(contains-smith? (rest '("Junpei" "Smith" "Trufant")))}
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\CheckSmithSubTwo{
+\begin{minted}[fontsize=\footnotesize]{racket}
+    (cond
+       [(empty? '("Smith" "Trufant")) \#f]
+       [(cons? '("Smith" "Trufant")) 
+           (or (string=? "Smith" (first '("Smith" "Trufant"))) 
+               (contains-smith? (rest '("Smith" "Trufant"))))])
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Recurring in the Lists}
+  How do we evaluate:
+  \mintinline[fontsize=\footnotesize]{racket}{(contains-smith? (rest '("Junpei" "Smith" "Trufant")))}?
+  \begin{itemize}
+  \item<2-> We first evaluate: \mintinline[fontsize=\footnotesize]{racket}{(rest '("Junpei" "Smith" "Trufant"))}
+  \item<3-> This returns \mintinline[fontsize=\footnotesize]{racket}{'("Smith" "Trufant")}
+  \item<4-> Now, how do we evaluate:
+    \mintinline[fontsize=\footnotesize]{racket}{(contains-smith?  '("Smith" "Trufant"))}?
+  \item<5-> We must replace \mintinline[fontsize=\footnotesize]{racket}{a-list-of-names} in the body of the function with \mintinline[fontsize=\footnotesize]{racket}{'("Smith" "Trufant")}.
+  \item<6-> This leads to the following code:
+    \CheckSmithSubTwo
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\ContainsElseRecur{
+\begin{minted}[fontsize=\footnotesize]{racket}
+        (or (string=? "Smith" (first '("Smith" "Trufant"))) 
+            (contains-smith? (rest '("Smith" "Trufant"))))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Recurring in the Lists}
+  Let's start by evaluating the first branch of the cond.
+  \begin{itemize}
+  \item<2-> What does \mintinline[fontsize=\footnotesize]{racket}{(empty? '("Smith" "Trufant"))} return?
+  \item<3-> \#f
+  \item<4-> What does \mintinline[fontsize=\footnotesize]{racket}{(cons? '("Smith" "Trufant"))}
+  \item<5-> \#t
+  \item<6-> We need to evaluate:
+    \ContainsElseRecur
+  \item<7-> What does \mintinline[fontsize=\footnotesize]{racket}{(first '("Smith" "Trufant"))} return?
+  \item<8-> "Smith"
+  \item<9-> So, what does \mintinline[fontsize=\footnotesize]{racket}{(string=? "Smith" "Smith")} return?
+  \item<10-> \#t
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Recurring in the Lists}
+  So, how does: \mintinline[fontsize=\footnotesize]{racket}{(or \#t (contains-smith? (rest '("Smith" "Trufant"))))} evaluate?
+  \begin{itemize}
+  \item<2-> Namely, do I need to evaluate: \mintinline[fontsize=\footnotesize]{racket}{(contains-smith? (rest '("Smith" "Trufant")))}?
+  \item<3-> No, because or can short circuit and return \#t as soon
+    as it sees a single \#t
+  \item<4-> So, \mintinline[fontsize=\footnotesize]{racket}{(or \#t (contains-smith? (rest '("Smith" "Trufant"))))} evaluates to
+    \#t without recursing anymore.
+  \item<5-> So, the result of this expression is \#t.
+  \item<6-> But how did we get here?
+  \item<7-> We got here by replacing \mintinline{racket}{a-list-of-names} with \mintinline[fontsize=\footnotesize]{racket}{'("Smith" "Trufant")}.
+  \item<8-> But why did we do that?
+  \item<9-> Because we called:
+    \mintinline[fontsize=\footnotesize]{racket}{(contains-smith? (rest '("Smith" "Trufant"))}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Recurring in the Lists}
+  In what context did we call \mintinline[fontsize=\footnotesize]{racket}{(contains-smith? (rest '("Smith" "Trufant"))}?
+  \begin{itemize}
+  \item<2-> It was called in:
+    \ContainsElseEvalOne
+  \item<3-> Ok, so now we know the return value of the recursive
+    call and have:
+    \mintinline[fontsize=\footnotesize]{racket}{(or \#f \#t)}
+  \item<4-> This returns \#t:
+  \item<5-> This means that the overall result of:
+    \mintinline[fontsize=\footnotesize]{racket}{(contains-smith? '("Junpei" "Smith" "Trufant"))} is \#t.
+  \item<6-> 
+    \includegraphics[width=0.25\textwidth]{images/relief.jpg}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Recurring in the Lists}
+  So, what would happen if we instead called:
+  \mintinline[fontsize=\footnotesize]{racket}{(contains-smith? '("Junpei" "Smith" "Trufant"))}?
+  \begin{itemize}
+  \item<2-> The basic intuition is that we have an extra recursive call. I'll draw a simplified evaluation on the board.
+  \item<3-> But what about: \mintinline[fontsize=\footnotesize]{racket}{(contains-smith? '("Junpei" "Trufant"))}?
+  \item<4-> The inuition is that we hit the empty list and return \#f. A \#t is never produced. I'll draw a simplified evaluation.
+  \item<5-> How do I write a more general function called
+    \mintinline{racket}{contains?} where \mintinline[fontsize=\footnotesize]{racket}{(contains? 1 '("Smith" 1 \#f))} returns \#t
+  \item<6-> Let me pull up Dr. Racket and we can design it live.
+  \item<7-> A useful built-in function is \mintinline{racket}{member}, which
+    essentially works like \mintinline[fontsize=\footnotesize]{racket}{(contains?}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Designing with Self Referential Data}
+  As usual, new forms of data change our design process.
+  \begin{itemize}
+  \item<2-> (1) If a problem statement is about information of arbitrary size, you need a self-referential data definition to represent it. For a self-referential data definition to be valid, it must satisfy two conditions.
+    \begin{enumerate}
+    \item<3-> It must contain at least two clauses.
+    \item<4-> At least one of the clauses must not refer back to the class of data that is being defined (and refers to other well-defined data).
+    \end{enumerate}
+  \item<5-> (1) You must check the validity of self-referential data definitions with the creation of data examples. Start with the clause that does not refer to the data definition; continue with the other one, using the first example where the clause refers to the definition itself.  With name lists, you would \mintinline{racket}{'()} and
+    \mintinline{racket}{(cons "a" '())}.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Designing with Self Referential Data (cont.)}
+  If it is impossible to design data examples in step (1), your definition probably needs to be reworked.
+  \begin{itemize}
+  \item<2-> (2) Nothing changes here, since we want a general description of how the function works without technical details. Obviously, self referential data can now appear in signatures
+  \item<3-> (3) When it comes to functional examples, be sure to work through inputs that use the self-referential clause of the data definition several times. The non self-referential clauses should also be used. This is the best way to formulate tests that cover the entire function definition later. For lists of strings, you want examples involving things like \mintinline{racket}{'()}, \mintinline{racket}{(cons "a" '())}, \mintinline{racket}{'("b" "a")} etc. 
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\naturalRecursion{
+\begin{minted}[fontsize=\footnotesize]{racket}
+(define (fun-for-los alos)
+  (cond
+    [(empty? alos) ...]
+    [else
+      (... (first alos) ...
+       ... (fun-for-los (rest alos)) ...)]))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Designing with Self Referential Data (cont.)}
+  (4) Overall, self referential data looks similar to our previous work with itemizations and mixed data. We can think about it with the
+  following table:
+  \begin{center}
+    \includegraphics[width=0.7\textwidth]{images/template-development.png}
+  \end{center}
+\end{frame}
+
+
+
+\begin{frame}
+  \frametitle{Designing with Self Referential Data (cont.)}
+   (4) In order to start skeletoning out some function, we must put a cond clause per each part of our data definition. In the areas where a cond
+   deals with a self referential clause, we must put a recursive call, for the corresponding cond clause.
+   \begin{itemize}
+   \item<2-> \naturalRecursion.
+   \item<3-> This is known as the natural recursion over these kinds of data (as upposed to \emph{unnatural} recursion).
+   \item<4-> (5) When programming our function we also start with the cases for data clauses that don't contain self reference.
+   \item<5-> (5) After this, we move on to self referential clauses by assuming that our recursive call works and designing the rest of our
+     code based on that assumption.
+   \item<6-> (5) Why is this assumption valid?
+   \item<7-> (5) Proof by induction!
+   \end{itemize}
+ \end{frame}
+
+ \begin{frame}
+   \frametitle{Designing with Self Referential Data (cont.)}
+   (5) Finishing the code for recursive calls can be tricky. Try using the following approaches:
+   \begin{center}
+     \includegraphics[width=0.7\textwidth]{images/finish-recursion.png}
+
+   \end{center}
+   Often our combinators are things like +, and, cons etc.
+ \end{frame}
+ 
+ \begin{frame}
+   \frametitle{Designing with Self Referential Data (cont.)}
+   (5) If an existing combinator does not work, and you're not clear how to proceed then use the tabular method:
+   \begin{center}
+     \includegraphics[width=0.7\textwidth]{images/table-method.png}
+   \end{center}
+   
+ \end{frame}
+
+  \begin{frame}
+   \frametitle{Designing with Self Referential Data (cont.)}
+   (5) When designing your table, start small and work outwards to larger examples
+   \begin{center}
+     \includegraphics[width=0.7\textwidth]{images/table-example.png}
+   \end{center}
+   
+ \end{frame}
+
+ \begin{frame}
+   \frametitle{Designing with Self Referential Data (cont.)}
+   (6) There are a couple of changes to testing.
+   \begin{itemize}
+   \item<2-> First, make sure that the function that combines the result of a recursive call works.
+   \item<3-> If you use the tabular method, convert such examples into tests. 
+   \end{itemize}
+ \end{frame}
+
+ \begin{frame}
+   \frametitle{Designing with Self Referential Data (cont.)}
+   Here's an overview of how our design  process works for self referential data.
+   \begin{center}
+     \includegraphics[width=0.7\textwidth]{images/self-design.png}
+   \end{center}
+ \end{frame}
+
 \end{document}
 %%% Local Variables:
 %%% TeX-command-extra-options: "-shell-escape"

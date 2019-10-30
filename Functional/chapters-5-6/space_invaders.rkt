@@ -12,6 +12,7 @@
 (define TANK-START-X (/ GAME-WIDTH 2))
 (define UFO-START-HEIGHT 30)
 (define UFO-START-X (/ GAME-WIDTH 2))
+(define UFO-SPEED 2)
 (define UFO-IMAGE (rectangle 30 30 "solid" "black"))
 (define TANK-IMAGE (rectangle 20 20 "solid" "green"))
 (define MISSILE-IMAGE (rectangle 5 10 "solid" "green"))
@@ -107,7 +108,6 @@
 ;;SIGS -> Image
 ;;Renders the game by drawing either a tank and a ufo
 ;;or a tank, ufo, and missile
-;;(check-expect (render AIM-EX1) ...)
 (define (render game-state)
   (cond
     [(aim? game-state)
@@ -140,7 +140,7 @@
 ;; UFO -> UFO
 (define (move-ufo ufo-data)
   (ufo-x-set
-   (ufo-y-set ufo-data (+ 2 (point-y ufo-data)))
+   (ufo-y-set ufo-data (+ UFO-SPEED (point-y ufo-data)))
    (+ (random-jump) (point-x ufo-data))))
 
 ;; Tank -> Tank
