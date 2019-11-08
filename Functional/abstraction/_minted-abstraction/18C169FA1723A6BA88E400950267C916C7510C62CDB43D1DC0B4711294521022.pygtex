@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{Predicate}\PYG{o}{\PYGZlt{}}\PYG{n}{String}\PYG{o}{\PYGZgt{}} \PYG{n}{isSmith} \PYG{o}{=} \PYG{n}{str} \PYG{o}{\PYGZhy{}\PYGZgt{}} \PYG{n}{str} \PYG{o}{==} \PYG{l+s}{\PYGZdq{}Smith\PYGZdq{}}\PYG{o}{;}
+\end{Verbatim}

@@ -1,0 +1,91 @@
+%%% Local Variables:
+%%% TeX-command-extra-options: "-shell-escape"
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
+\documentclass{beamer}
+\usepackage{caption}
+\usepackage{minted}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usetikzlibrary{shapes.geometric, arrows}
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=1.5cm, minimum height=0.6cm, text centered, draw=black, fill=blue!30]
+\tikzstyle{process} = [rectangle, minimum width=1.5cm, minimum height=0.5cm, text centered, draw=black, fill=orange!30]
+\tikzstyle{decision} = [circle, radius=2.5cm, text centered, draw=black, fill=green!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+\usepackage[labelformat=simple]{subcaption}
+
+\usetheme{Singapore}
+\title{Abstraction}
+
+\begin{document}
+\begin{frame}
+\titlepage
+\end{frame}
+\section{Abstract Nonsense}
+
+\begin{frame}
+  \huge \centering \url{https://en.wikipedia.org/wiki/Abstract_nonsense}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Theories of Abstraction}
+  Let's talk about abstraction.
+  \begin{itemize}
+  \item<2-> \includegraphics[width=0.3\textwidth]{images/abstract-art.jpg}
+  \item<3-> Abstraction in visual
+    art is about avoiding concrete subjects. It attempts
+    to convey something (often an emotion) without appealing to sentiment.
+  \item<4-> Oddly enough there's a bit of a stigma against it, despite the
+    fact that music without lyrics has far less stigma.
+  \item<5-> Abstraction in mathematics and computer science is about
+    \emph{generalization}. Take away the concrete details of certain objects
+    and see how they are similar.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Why Abstract?}
+  This can lead us to \emph{classify} different objects into
+    related groups.
+  \begin{itemize}
+  \item<2-> Category theory has been influential in programming language theory
+    because it is a powerful language for communicating abstractions in ways
+    that are largely \emph{constructive}.
+  \item<3-> This is important to computing because the point of programs
+    are to construct some form of answer.
+  \item<4-> Although categorical abstractions are powerful, I will not discuss them much (and most of the really powerful abstractions go over my head).
+  \item<5-> But we will study abstraction from a less mathematical viewpoint.
+  \item<6-> I will show instances of \emph{almost identical} code and how a programming language feature allows the two pieces of code to be generalized. 
+  \end{itemize}    
+\end{frame}
+
+\begin{minted}[fontsize=\footnotesize]{Java}
+  public static boolean HasSmith(List<String> names) {
+    for (String name : names) {
+      if (name == "Smith")
+        return true;
+    }
+    return false;
+  }
+
+  public static boolean HasBob(List<String> names) {
+    for (String name : names) {
+      if (name == "Bob")
+        return true;
+    }
+    return false;
+  }
+\end{minted}
+
+\begin{frame}
+  \frametitle{Buddy Functions}
+\end{frame}
+
+\end{document}
+%%% Local Variables:
+%%% TeX-command-extra-options: "-shell-escape"
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

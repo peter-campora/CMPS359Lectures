@@ -639,63 +639,646 @@
 
 \begin{frame}
   \frametitle{Designing with Self Referential Data (cont.)}
-   (4) In order to start skeletoning out some function, we must put a cond clause per each part of our data definition. In the areas where a cond
-   deals with a self referential clause, we must put a recursive call, for the corresponding cond clause.
-   \begin{itemize}
-   \item<2-> \naturalRecursion.
-   \item<3-> This is known as the natural recursion over these kinds of data (as upposed to \emph{unnatural} recursion).
-   \item<4-> (5) When programming our function we also start with the cases for data clauses that don't contain self reference.
-   \item<5-> (5) After this, we move on to self referential clauses by assuming that our recursive call works and designing the rest of our
-     code based on that assumption.
-   \item<6-> (5) Why is this assumption valid?
-   \item<7-> (5) Proof by induction!
-   \end{itemize}
- \end{frame}
+  (4) In order to start skeletoning out some function, we must put a cond clause per each part of our data definition. In the areas where a cond deals with a self referential clause, we must put a recursive call, for the corresponding cond clause.
+  \begin{itemize}
+  \item<2-> \naturalRecursion.
+  \item<3-> This is known as the natural recursion over these kinds of data (as upposed to \emph{unnatural} recursion).
+  \item<4-> (5) When programming our function we also start with the cases for data clauses that don't contain self reference.
+  \item<5-> (5) After this, we move on to self referential clauses by assuming that our recursive call works and designing the rest of our code based on that assumption.
+  \item<6-> (5) Why is this assumption valid?
+  \item<7-> (5) Proof by induction!
+  \end{itemize}
+\end{frame}
 
- \begin{frame}
-   \frametitle{Designing with Self Referential Data (cont.)}
-   (5) Finishing the code for recursive calls can be tricky. Try using the following approaches:
-   \begin{center}
-     \includegraphics[width=0.7\textwidth]{images/finish-recursion.png}
+\begin{frame}
+  \frametitle{Designing with Self Referential Data (cont.)}
+  (5) Finishing the code for recursive calls can be tricky. Try using the following approaches:
+  \begin{center}
+    \includegraphics[width=0.7\textwidth]{images/finish-recursion.png}
 
-   \end{center}
-   Often our combinators are things like +, and, cons etc.
- \end{frame}
+  \end{center}
+  Often our combinators are things like +, and, cons etc.
+\end{frame}
  
- \begin{frame}
-   \frametitle{Designing with Self Referential Data (cont.)}
-   (5) If an existing combinator does not work, and you're not clear how to proceed then use the tabular method:
-   \begin{center}
-     \includegraphics[width=0.7\textwidth]{images/table-method.png}
-   \end{center}
+\begin{frame}
+  \frametitle{Designing with Self Referential Data (cont.)}
+  (5) If an existing combinator does not work, and you're not clear how to proceed then use the tabular method:
+  \begin{center}
+    \includegraphics[width=0.7\textwidth]{images/table-method.png}
+  \end{center}
    
- \end{frame}
+\end{frame}
 
-  \begin{frame}
-   \frametitle{Designing with Self Referential Data (cont.)}
-   (5) When designing your table, start small and work outwards to larger examples
-   \begin{center}
-     \includegraphics[width=0.7\textwidth]{images/table-example.png}
-   \end{center}
+\begin{frame}
+  \frametitle{Designing with Self Referential Data (cont.)}
+  (5) When designing your table, start small and work outwards to larger examples
+  \begin{center}
+    \includegraphics[width=0.7\textwidth]{images/table-example.png}
+  \end{center}
    
- \end{frame}
+\end{frame}
 
- \begin{frame}
-   \frametitle{Designing with Self Referential Data (cont.)}
-   (6) There are a couple of changes to testing.
-   \begin{itemize}
-   \item<2-> First, make sure that the function that combines the result of a recursive call works.
-   \item<3-> If you use the tabular method, convert such examples into tests. 
-   \end{itemize}
- \end{frame}
+\begin{frame}
+  \frametitle{Designing with Self Referential Data (cont.)}
+  (6) There are a couple of changes to testing.
+  \begin{itemize}
+  \item<2-> First, make sure that the function that combines the result of a recursive call works.
+  \item<3-> If you use the tabular method, convert such examples into tests. 
+  \end{itemize}
+\end{frame}
 
- \begin{frame}
-   \frametitle{Designing with Self Referential Data (cont.)}
-   Here's an overview of how our design  process works for self referential data.
-   \begin{center}
-     \includegraphics[width=0.7\textwidth]{images/self-design.png}
-   \end{center}
- \end{frame}
+\begin{frame}
+  \frametitle{Designing with Self Referential Data (cont.)}
+  Here's an overview of how our design  process works for self referential data.
+  \begin{center}
+    \includegraphics[width=0.7\textwidth]{images/self-design.png}
+  \end{center}
+\end{frame}
+
+\defverbatim[colored]\ALoA{
+\begin{minted}{racket}
+;; A List-of-amounts is one of: 
+;; – '()
+;; – (cons PositiveNumber List-of-amounts)
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Summing Lists}
+  Consider the following data definition:
+  \ALoA
+  \begin{itemize}
+  \item<2-> How do we write a function that sums a list of amounts?
+  \item<3-> Let's start our design process. To finish step 1 of
+    our data interpretation, we need some examples.
+  \item<4-> \mintinline{racket}{'()} is always a good example
+  \item<5-> Now for data of size one, we might want
+    \mintinline{racket}{(cons 1 '())}
+  \item<6-> For data of size two, we might want
+    \mintinline{racket}{(cons 7 (cons 1 '()))}
+  \item<7-> Let's turn to step 2 of our design process now.
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\SumHeader{
+\begin{minted}{racket}
+    ;; A-list-of-amounts -> PositiveNumber
+    ;; Simply sums a collection of positive numbers
+    (define (sum list-a) 0)
+\end{minted}
+}
+
+\defverbatim[colored]\SumTests{
+\begin{minted}{racket}
+    (check-expect (sum '()) 0)
+    (check-expect (sum '(1)) 1)
+    (check-expect (sum '(7 1)) 8)
+\end{minted}
+}
+
+\defverbatim[colored]\SumSkeleton{
+\begin{minted}[fontsize=\footnotesize]{racket}
+    (define (sum list-a)
+      (cond
+        [(empty? list-a) ...]
+        [(cons? list-a) 
+          ... (first list-a) ... (sum (rest list-a)) ...]))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Summing Lists}
+  Let's start by providing our signature and statement of purpose:
+  \begin{itemize}
+  \item<2-> \SumHeader
+  \item<3-> We can now use our data examples to formulate tests
+    as functional examples.
+  \item<4-> \SumTests
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Summing Lists}
+  Let's turn to providing our skeleton for sum.
+  \begin{itemize}
+  \item<2-> \SumSkeleton
+  \item<3-> Notice that we have a natrual recursion here, where
+    sum is called on the rest of the list.
+  \item<4-> Let us assume inductively that this call correctly sums
+    the rest of the list.
+  \item<5-> How do we design our combinator for combining this sum
+    with the first element of the list?
+  \item<6-> We simply add the first element of the list to the sum
+    of the sublist!
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Summing Lists}
+  Let's use concrete examples to illustrate this.
+  \begin{itemize}
+  \item<2-> Assume \mintinline{racket}{(sum '())} works. What should
+    its value be?
+  \item<3-> 0! So now if we have the case where we are considiering
+    \mintinline{racket}{(cons 1 '())} we assume that the recursive
+    call to \mintinline{racket}{(sum '())} works.
+  \item<4-> Now let's add 1 to it. We get
+    \mintinline{racket}{(+ 1 (sum '()))} where we know that
+    the recursive sum returns 0. So the result is 1.
+  \item<5-> Now we can consider our biggest data example:
+    \mintinline{racket}{(cons 7 (cons 1 '()))}
+  \item<6-> We know that \mintinline{racket}{(sum (cons 1 '())}
+    returns 1. So,  \mintinline{racket}{(+ 7 (sum (cons 1 '()))}
+    returns 8. Intuitively, this result is correct.
+  \item<7-> So, how do we go from the specific cases to the general? Note that 1 and 7 were the heads of the sublists at some point in the recursion. 
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Summing Lists}
+  What do we use to get the head of the list?
+  \begin{itemize}
+  \item<2-> \mintinline{racket}{(first list-a)}
+  \item<3-> How did we sum the sublist?
+  \item<4-> \mintinline{racket}{(sum (rest list-a))}
+  \item<5-> So, how do we add the running sum to the list head?
+  \item<6->  \mintinline{racket}{(+ (first list-a) (sum (rest list-a)))}
+  \item<7-> Why is this correct?
+  \item<8-> Because we inductively assume that the recursion over
+    the sublist is correct. (And our examples verified this!)
+  \item<9-> So, let me walk through this intuition by hand.
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\SumFinal{
+\begin{minted}[fontsize=\footnotesize]{racket}
+;;A-list-of-amounts -> PositiveNumber
+(define (sum list-a)
+  (cond
+    [(empty? list-a) 0]
+    [(cons? list-a) 
+      (+ (first list-a) (sum (rest list-a)))]))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Summing Lists}
+  Here is the final version of the function:
+  \SumFinal
+  \begin{itemize}
+  \item<2-> Now, we should go through and run our tests.
+  \item<3-> In general, we can write similar functions by
+    producing the skeleton and thinking of the correct combinator
+    for combining the head of the list to the result of recursing
+    over the tail of the list.
+  \item<4-> But what happens if we needed to do computation after
+    the recursion ends?
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\average{
+\begin{minted}[fontsize=\footnotesize]{racket}
+    ;;A-list-of-amounts -> PositiveNumber
+    (define (average list-a)
+      (/ (sum list-a) (length list-a)))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Averaging Lists}
+  So, we have a nice function to sum lists. How would I got about
+  taking the average of a list?
+  \begin{itemize}
+  \item<2-> How is a sum related to an average?
+  \item<3-> Well an average is a sum divided by a count.
+  \item<4-> How do we count the number of elements in a list?
+  \item<5-> With \mintinline{racket}{length} of course!
+  \item<6-> So, what does our average function look like?
+  \item<7-> \average
+  \item<8-> But what happens if we call:
+    \mintinline{racket}{(average '())}?
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\NonEmpty{
+\begin{minted}[fontsize=\footnotesize]{racket}
+    ;; NE-list-amounts is one of
+    ;; (cons PositiveNumber '())
+    ;; (cons PositiveNumber NE-list-amounts
+    (define NE-EX1 (cons 2 '()))
+\end{minted}
+}
+
+\defverbatim[colored]\averageNE{
+\begin{minted}[fontsize=\footnotesize]{racket}
+    ;;NE-list-amounts -> PositiveNumber
+    (define (average list-a)
+      (/ (sum list-a) (length list-a)))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Averaging Lists}
+  Uh oh! We have designed a partial function.
+  \begin{itemize}
+  \item<2-> There are two ways to rectify this.
+    \begin{enumerate}
+    \item<3-> We add an explicit check and give a meaningful
+      error message
+    \item<4-> We change the data interpretation and signature so that our function explicitly
+      says that it expects non-empty lists.
+    \end{enumerate}
+  \item<5-> Let's consider option 2 where we reformulate our
+    data interpretation and expect only input data that conforms to the signature.
+  \item<6-> \NonEmpty
+  \item<7-> \averageNE  
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Averaging Lists}
+  Wait, sum expected values of a A-list-of-amounts
+  and we provided a value from NE-list-amounts. Is this valid?
+  \begin{itemize}
+  \item<2-> Think about subtyping in Java.
+  \item<3-> What does it mean for code to \emph{inherit} other code?
+  \item<4-> Notice that all values of NE-list-amounts are values
+    of A-list-of-amounts too.
+  \item<5-> So there's a nice subset relationship here.
+  \item<6-> The subtyping relationship we usually think of
+    in terms of inheritance can't describe this relationship though.
+    This is more of an instance of a \emph{type refinement}
+  \item<7-> The moral of the story is that indeed because non-empty
+    lists are a strict subset of empty and non-empty lists, there
+    is not problem with the interaction of signatures.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Natural Numbers}
+  We have talked about functions that consume and produce lists.
+  \begin{itemize}
+  \item<2-> one function that produces lists is \mintinline{racket}{make-list} which takes in a natural number n and an object and produces a list of length n which contains n copies of the given object.
+  \item<3-> For example, \mintinline{racket}{(make-list 4 "weewoo")} produces  \mintinline{racket}{'("weewoo" "weewoo" "weewoo" "weewoo")}
+  \item<4-> \includegraphics[width=0.4\textwidth]{images/weewoo.jpg}
+  \item<5-> Okay, so I've previously spoiled this, but even though we
+    think of numbers as atomic data, natural numbers are really an
+    instance of arbitrarily sized data.
+  \end{itemize}
+\end{frame}
+
+\begin{minted}{racket}
+
+\end{minted}
+
+\defverbatim[colored]\natDef{
+\begin{minted}{racket}
+    ;; a Nat is one of:
+    ;; 0
+    ;; (add1 Nat)
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Natural Numbers}
+  Well we obviously know that numbers can grow arbitrarily large.
+  \begin{itemize}
+  \item<2-> Previously, we've been able to specify lists of arbitrary size.
+  \item<3-> How do we do something similar for numbers?
+  \item<4-> Well, in a certain sense, we can think of numbers like
+    lists where the underlying element didn't matter.
+  \item<5-> So, for a number n, we can think of the next number
+    as consing on nothing to this number \mintinline{racket}{(cons _ n)}.
+  \item<6-> To actually finish providing a data definition,
+    we propose the following:
+    \natDef
+  \item<7-> Notice that unlike lists, our atomic element is not
+    the empty list but instead 0.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Natural Numbers}
+  Also, instead of having an explict element to add to our data, we simply add another wrapper that acts as a way to \emph{count}
+  \begin{itemize}
+  \item<2-> This means that the number one is represented as well...
+    \emph{one} wrapper around zero...
+  \item<3-> But this is just the basic idea of \emph{tallying}
+  \item<4-> But anyways, 1 is \mintinline{racket}{(add1 0)},
+    2 is \mintinline{racket}{(add1 (add1 0))}, etc.
+  \item<5-> Along these lines, \mintinline{racket}{add1} is a constructor, like
+    \mintinline{racket}{cons} and \mintinline{racket}{sub1} is a selector like \mintinline{racket}{first} or \mintinline{racket}{rest}.
+  \item<6-> Before with lists we used \mintinline{racket}{empty?} and \mintinline{racket}{cons?} to check for empty and non-empty lists.
+  \item<7-> The corresponding predicates for numbers become: \mintinline{racket}{zero?} and \mintinline{racket}{positive?}.
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\copierHeader{
+\begin{minted}[fontsize=\footnotesize]{racket}
+    ;; N T -> List<T>
+    ;; Copies an element of type T, n times, to form
+    ;; a list
+    (define (copier n item) '())
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Functions of Natural Numbers}
+  Let's consider designing functions whose input is natural numbers?
+  \begin{itemize}
+  \item<2-> What happens if we want to make a function like \mintinline{racket}{make-list} that makes n copies of a given item.
+  \item<3-> Why, we will need a recursive function over subnumbers.
+  \item<4-> We will call this function \mintinline{racket}{copier} and it will have the same functionality as \mintinline{racket}{make-list}.
+  \item<5-> Let's start designing it with a header.
+  \item<6-> \copierHeader
+  \item<7-> Wouldn't it be nice to say that we return a list of
+    type \mintinline{racket}{List<T, n>} where n indicates that
+    we have a list of length n?
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\CopierExamples{
+\begin{minted}[fontsize=\footnotesize]{racket}
+(check-expect (copier 0 "w") '())
+(check-expect (copier 1 "w") '("w"))
+(check-expect (copier 2 "w") '("w" "w"))
+\end{minted}
+}
+
+\defverbatim[colored]\CopierSkeleton{
+\begin{minted}[fontsize=\footnotesize]{racket}
+    (define (copier n item)
+      (cond
+        [(zero? n) ...]
+        [(positive? n) n ... (copier (sub1 n) item) ...]
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Copy That}
+  Back on to writing our copy function, let's provide some functional
+  examples as tests:
+  \CopierExamples
+  \begin{itemize}
+  \item<2-> Recall that for providing our skeleton for natural recursion over lists, we had a template. The template for natural numbers is the same except that we replace \mintinline{racket}{empty?} with \mintinline{racket}{zero?} and \mintinline{racket}{(rest param)} with \mintinline{racket}{(sub1 param)}
+  \item<3-> Thus, concretely for this program we have:
+    \CopierSkeleton
+  \item<4-> One thing different about this program from previous ones
+    is that we have to remember the extra argument that does not change.  
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Copy That}
+  Later we will discuss ways to where you don't have to worry about putting unchanging arguments in recursive calls.
+  \begin{itemize}
+  \item<2-> From our functional example, what should the result be
+    when n is 0?
+  \item<3-> It should be the empty list, so we can  fill in the first ... with '()
+  \item<4-> How do we build lists?
+  \item<5-> We use \mintinline{racket}{cons}.
+  \item<6-> What are we putting into the list?
+  \item<7-> Whatever is in \mintinline{racket}{item}.
+  \item<8-> So, should we do something like
+    \mintinline{racket}{(cons item ...)}.
+  \item<9-> What goes in the ...?
+  \item<10-> Well some sublist should be being built there.
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\CopierFinal{
+\begin{minted}[fontsize=\footnotesize]{racket}
+    (define (copier n s)
+      (cond
+        [(zero? n) '()]
+        [(positive? n) (cons s (copier (sub1 n) s))]))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Copy That}
+  How did we build sublists in previous recursive functions?
+  \begin{itemize}
+  \item<2-> With the recursive call of course!
+  \item<3-> We already had code for the recursive call, so we just
+    place it where the ... was:
+    \mintinline[fontsize=\footnotesize]{racket}{(cons item (copier (sub1 n) item))}
+  \item<4-> This completes the cond for whole numbers and completes
+    the function:
+    \CopierFinal
+  \item<5-> So, previously we had a function that took in lists and
+    produced numbers and now we have a function that took in a number and produced lists.
+  \item<6-> Let's consider an example without cross cutting between data types. How do we implement an addition function recursively without using +, and only using \mintinline{racket}{add1}?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Defining Addition}
+  So, we can either build our result by destructuring
+  x or destructuring y.
+  \begin{itemize}
+  \item<2-> If we recall grade school we can think of putting
+    tallies together.
+  \item<3-> But we need to decide whether we move tallies from x to
+    y or y to x.
+  \item<4-> Let's move from x to y.
+  \item<5-> Let x = 3 and y = 2, then we have !!! + !!
+  \item<6-> We remove a tally from x and go to !! + !!!
+  \item<7-> Then ! + !!!!
+  \item<8-> Then  we finally have !!!!! as our answer.
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\addSkeleton{
+\begin{minted}[fontsize=\footnotesize]{racket}
+(define (add x y)
+  (cond
+    [(zero? x) ...]
+    [(positive? x) ... (add (sub1 x) y) ...)])
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Defining Addition}
+  We have the following skeleton:
+  \addSkeleton
+  \begin{itemize}
+  \item<2-> Think about left identities. What is 0+y?
+  \item<3-> Ok, so our recursion terminates by giving us y:
+    \mintinline{racket}{[(zero? x) y]}
+  \item<4-> For our recursive case, our intution is that we
+    ``break off'' a tally from x and ``add it on'' to y.
+  \item<5-> We can think of breaking off a tally from x as:
+    \mintinline{racket}{(sub1 x)}
+  \item<6-> Thankfully this is already in our skeleton. Now how do I
+    add a tally on to y?
+  \item<7-> \mintinline{racket}{(add1 y)}
+  \item<8-> We can write:
+    \mintinline{racket}{[(positive? x) (add (sub1 x) (add1 y))]}  
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\addNatural{
+\begin{minted}[fontsize=\footnotesize]{racket}
+(define (add x y)
+  (cond
+    [(zero? x) y]
+    [(positive? x) (add1 (add (sub1 x) y))])
+\end{minted}
+}
+
+\defverbatim[colored]\addTail{
+\begin{minted}[fontsize=\footnotesize]{racket}
+(define (add x y)
+  (cond
+    [(zero? x) y]
+    [(positive? x) (add (sub1 x) (add1 y)))])
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Defining Addition}
+ Is this correct?
+ \textbf{Yes, but it's a bit unnatural.} Why?
+  Previously we would combine the result of the recursive call with
+  something outside of the recursive call. Here a result is being
+  produced inside the recursive call, as an argument.
+  \begin{itemize}
+  \item<2-> The natural version of our add function is:
+    \addNatural
+  \item<3-> Here was our original unnatural version:
+    \addTail
+  \item<4-> Which of these is preferred?
+  \item<5-> Suprisingly, the unnatural version.  
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Addition Performance}
+  The natural version is probably the better definition
+  to start with, but you actually want to refactor to the unnatural
+  version after you're confident that the natural version is
+  correct.
+  \begin{itemize}
+  \item<2-> Why?
+  \item<3-> \textbf{Performance!}
+  \item<4-> Why is it more performant?
+  \item<5-> Recall what you know about stack frames and recursion.
+  \item<6-> The natural version must hold onto stack frames so that
+    as the recursion unwinds we can return to earlier stack frames
+    that held different copies of the parameters.
+  \item<7-> In our unnatural version we do not need to remember old copies
+    of our parameter value.
+  \item<8-> By updating the parameter at each call, we can ``throw away''
+    the old stack frame and just repeatedly create one new stack frame
+    for each recursive call. In reality we can compile this into a loop.
+  \item<9-> A general version of this is called \emph{tail recursion}
+  \end{itemize}      
+\end{frame}
+
+\begin{frame}
+  \frametitle{On Tail-Recursion}
+  A tail-recursive call is one in which we do not need to combine
+  the recursive call with some result.
+  \begin{itemize}
+  \item<2-> Consider: \mintinline{racket}{(add1 (add (sub1 x) y))}
+  \item<3-> We must increment the result of each recursive call. This
+    becomes (add1 (add1 (add1 ...)))
+  \item<4-> We must keep storing stack frames and returning the result
+    outwards.
+  \item<5-> With: \mintinline{racket}{(add (sub1 x) (add1 y))}
+  \item<6-> We get (add x1 y1) goes to (add x2 y2) goes to (add x3 y3)
+    until (add 0 yn) at which we return yn as the answer directly.
+  \item<7-> Hence we do not need to repeatedly remember the result of
+    each recursive call for later computation.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Moving to Tail Recursion}
+  In general we can move a function to being tail recursive with the
+  following pattern:
+  \begin{enumerate}
+  \item<2-> Define an inner function that can only be called in an outer
+    funciton
+  \item<3-> Let this inner function take in the same parameters as the outer
+    function \emph{plus} an addition parameter called \mintinline{racket}{accum}
+  \item<4-> Move your combinator function from working on the outside of the recursive call to combining accum with some other value
+  \item<5-> Define the body of the function with the normal skeleton except
+    that you replace the base case value with \mintinline{racket}{accum}
+  \item<6-> After this function is defined, call the inner function with
+    your normal arguments and your base case value is the argument to
+    \mintinline{racket}{accum}  
+  \end{enumerate}
+  \begin{itemize}
+  \item<7-> This is rather abstract so let's consider our \mintinline{racket}{total} function
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\totalReg{
+\begin{minted}[fontsize=\footnotesize]{racket}
+(define (total a-list)
+  (cond
+    [(empty? a-list) 0]
+    [(cons? a-list) (+ (first a-list) (total (rest a-list)))]))
+\end{minted}
+}
+
+\defverbatim[colored]\totalTail{
+\begin{minted}[fontsize=\footnotesize]{racket}
+(define (total-tail a-list)
+  (define (total-inner a-list accum)
+    (cond
+      [(empty? a-list) accum]
+      [(total-inner (rest a-list) (+ (first a-list) accum))]))
+  (total-inner a-list 0))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Making Total Tail Recursive}
+  Here is the regular version of total:
+  \totalReg \\
+  \pause
+  Here is the tail-recursive version:
+  \totalTail \\
+  \pause
+  Let me point out the differences.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Tail Recursion in General}
+  My recommendation is not to worry about tail recursion until it becomes a bottlenceck in your application:
+  \begin{itemize}
+  \item<2-> Remember that premature optimization is the root of all evil.
+  \item<3-> So, if you see that you have a serious bottleneck, try to follow the recipe I laid out.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Lists of Structs}
+  Let's consider writing a program dealing with file IO for the first time in a long time. Assume we have a file with employee data on each line, separated by spaces. We have the
+  employee's name, the number of hours they worked, and then finally their hourly pay rate. They can only work between 0 and 80 hours. If they work more than 40 hours, they make 1.5 times as much per hour per each hour past 40. Write to another
+  file the employee name and how much they're owed. Then finally return the total
+  amount the company must pay. Give an error message if hours or pay rate are negative. Give a separate error if someone worked more than 80 hours. Assume the input file is formatted correctly. 
+  \begin{itemize}
+  \item<2-> Woo we are back in 150/260!
+  \item<3-> But we are only just now getting all the tools we need to write
+    such programs from scratch (assuming there weren't already library functions for things like summing, etc.)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Scripts Revisited}
+  Assume we can put employee data into a struct:
+  \mintinline{racket}{(struct employee-data [name hours rate] #:transparent)}.
+  \begin{itemize}
+  \item<2-> Assume that we also have another struct for wage data:
+    \mintinline{racket}{(struct wage-data [name wage] #:transparent)}
+  \item<3-> In order to do the file IO part we will play around with the following functions: read-lines, read-words, and read-words/line
+  \item<4-> But to start writing this program we can instead start with the pure core and just assume that we start off with a list of employee data.
+  \end{itemize}
+\end{frame}
 
 \end{document}
 %%% Local Variables:
