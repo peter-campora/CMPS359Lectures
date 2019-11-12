@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{c+c1}{;; List\PYGZlt{}person\PYGZgt{} \PYGZhy{}\PYGZgt{} List\PYGZlt{}person\PYGZgt{}}
+    \PYG{c+c1}{;; Add a person to the patron list as}
+    \PYG{c+c1}{;; long as they are over 18.}
+    \PYG{p}{(}\PYG{k}{define} \PYG{p}{(}\PYG{n}{cons\PYGZhy{}over\PYGZhy{}18} \PYG{n}{possible\PYGZhy{}patron} \PYG{n}{patrons}\PYG{p}{)}
+      \PYG{p}{(}\PYG{k}{if} \PYG{p}{(}\PYG{n+nb}{\PYGZgt{}=} \PYG{p}{(}\PYG{n}{person\PYGZhy{}age} \PYG{n}{possible\PYGZhy{}patron}\PYG{p}{)} \PYG{l+m+mi}{18}\PYG{p}{)}
+          \PYG{p}{(}\PYG{n+nb}{cons} \PYG{n}{possible\PYGZhy{}patron} \PYG{n}{patrons}\PYG{p}{)}
+          \PYG{n}{patrons}\PYG{p}{))}
+\end{Verbatim}

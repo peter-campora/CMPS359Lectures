@@ -1,0 +1,4 @@
+#lang racket
+(require deriv_typed)
+(define (fun y)
+  (if (> y 0) (- (exp y 3) y 1) void)

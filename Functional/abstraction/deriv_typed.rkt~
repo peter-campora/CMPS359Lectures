@@ -1,0 +1,3 @@
+#lang typed/racket
+(: deriv (-> (-> Number Number) Number Number))
+(define deriv (f x) 0)

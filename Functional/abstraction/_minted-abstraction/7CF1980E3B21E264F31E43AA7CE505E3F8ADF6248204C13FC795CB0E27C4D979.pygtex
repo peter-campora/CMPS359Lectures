@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+  \PYG{c+c1}{;; List\PYGZlt{}Person\PYGZgt{} \PYGZhy{}\PYGZgt{} List\PYGZlt{}Person\PYGZgt{}}
+  \PYG{c+c1}{;; Only allows patrons over 18 to enter the bar}
+  \PYG{p}{(}\PYG{k}{define} \PYG{p}{(}\PYG{n}{bar\PYGZhy{}entry} \PYG{n}{patrons}\PYG{p}{)}
+    \PYG{p}{(}\PYG{k}{cond}
+      \PYG{p}{[}\PYG{p}{(}\PYG{n+nb}{empty?} \PYG{n}{patrons}\PYG{p}{)} \PYG{n}{patrons}\PYG{p}{]}
+      \PYG{p}{[}\PYG{p}{(}\PYG{n+nb}{cons?} \PYG{n}{patrons}\PYG{p}{)}
+         \PYG{p}{(}\PYG{k}{...} \PYG{p}{(}\PYG{n+nb}{first} \PYG{n}{patrons}\PYG{p}{))} \PYG{k}{...} \PYG{p}{(}\PYG{n}{bar\PYGZhy{}entry} \PYG{p}{(}\PYG{n+nb}{rest} \PYG{n}{patrons}\PYG{p}{))]))}
+\end{Verbatim}

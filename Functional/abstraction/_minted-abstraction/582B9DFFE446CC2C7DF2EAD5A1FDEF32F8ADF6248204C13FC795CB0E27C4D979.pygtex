@@ -1,0 +1,22 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{p}{(}\PYG{k}{define} \PYG{p}{(}\PYG{n}{cons\PYGZhy{}over\PYGZhy{}18} \PYG{n}{possible\PYGZhy{}patron} \PYG{n}{patrons}\PYG{p}{)}
+      \PYG{p}{(}\PYG{k}{if} \PYG{p}{(}\PYG{n+nb}{\PYGZgt{}=} \PYG{p}{(}\PYG{n}{person\PYGZhy{}age} \PYG{n}{possible\PYGZhy{}patron}\PYG{p}{)} \PYG{l+m+mi}{18}\PYG{p}{)}
+          \PYG{p}{(}\PYG{n+nb}{cons} \PYG{n}{possible\PYGZhy{}patron} \PYG{n}{patrons}\PYG{p}{)}
+          \PYG{n}{patrons}\PYG{p}{))}
+    \PYG{p}{(}\PYG{k}{define} \PYG{p}{(}\PYG{n}{bar\PYGZhy{}entry\PYGZhy{}18} \PYG{n}{patrons}\PYG{p}{)}
+      \PYG{p}{(}\PYG{k}{cond}
+        \PYG{p}{[}\PYG{p}{(}\PYG{n+nb}{empty?} \PYG{n}{patrons}\PYG{p}{)} \PYG{n}{patrons}\PYG{p}{]}
+        \PYG{p}{[}\PYG{p}{(}\PYG{n+nb}{cons?} \PYG{n}{patrons}\PYG{p}{)} \PYG{p}{(}\PYG{n}{cons\PYGZhy{}over\PYGZhy{}18}
+                           \PYG{p}{(}\PYG{n+nb}{first} \PYG{n}{patrons}\PYG{p}{)}
+                           \PYG{p}{(}\PYG{n}{bar\PYGZhy{}entry\PYGZhy{}18} \PYG{p}{(}\PYG{n+nb}{rest} \PYG{n}{patrons}\PYG{p}{)))]))}
+    \PYG{p}{(}\PYG{k}{define} \PYG{p}{(}\PYG{n}{cons\PYGZhy{}over\PYGZhy{}21} \PYG{n}{possible\PYGZhy{}patron} \PYG{n}{patrons}\PYG{p}{)}
+      \PYG{p}{(}\PYG{k}{if} \PYG{p}{(}\PYG{n+nb}{\PYGZgt{}=} \PYG{p}{(}\PYG{n}{person\PYGZhy{}age} \PYG{n}{possible\PYGZhy{}patron}\PYG{p}{)} \PYG{l+m+mi}{21}\PYG{p}{)}
+           \PYG{p}{(}\PYG{n+nb}{cons} \PYG{n}{possible\PYGZhy{}patron} \PYG{n}{patrons}\PYG{p}{)}
+           \PYG{n}{patrons}\PYG{p}{))}
+    \PYG{p}{(}\PYG{k}{define} \PYG{p}{(}\PYG{n}{bar\PYGZhy{}entry\PYGZhy{}21} \PYG{n}{patrons}\PYG{p}{)}
+      \PYG{p}{(}\PYG{k}{cond}
+        \PYG{p}{[}\PYG{p}{(}\PYG{n+nb}{empty?} \PYG{n}{patrons}\PYG{p}{)} \PYG{n}{patrons}\PYG{p}{]}
+        \PYG{p}{[}\PYG{p}{(}\PYG{n+nb}{cons?} \PYG{n}{patrons}\PYG{p}{)} \PYG{p}{(}\PYG{n}{cons\PYGZhy{}over\PYGZhy{}21}
+                          \PYG{p}{(}\PYG{n+nb}{first} \PYG{n}{patrons}\PYG{p}{)}
+                          \PYG{p}{(}\PYG{n}{bar\PYGZhy{}entry\PYGZhy{}21} \PYG{p}{(}\PYG{n+nb}{rest} \PYG{n}{patrons}\PYG{p}{)))]))}
+\end{Verbatim}

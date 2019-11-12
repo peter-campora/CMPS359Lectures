@@ -137,6 +137,7 @@
 (define (ufo-y-set ufo-data new-y) (point (point-x ufo-data) new-y))
 (check-expect (ufo-y-set (point 0 0) 1) (point 0 1))
 
+
 ;; UFO -> UFO
 (define (move-ufo ufo-data)
   (ufo-x-set
@@ -162,7 +163,15 @@
 ;; Missile -> Missile
 (define (move-missile missile-data) (missile-y-set missile-data (- (point-y missile-data) MISSILE-SPEED)))
 
-;; GameState KeyEvent -> GameState
+;; Aim -> Fired
+;; Fire a missile when the space bar is hit and none is on screen
+(define (aim-space game-state)
+  (define ufo-data (aim-ufo game-state))
+  (define tank-data (aim-tank game-state))
+  (define missile-data (point 0 0)) ;; just using a temp value for the missile
+  (fired ufo-data tank-data missile-data))
+
+;; SIGS KeyEvent -> SIGS
 ;; update the tanks velocity or shoot a missile
 (define (key-handler game-state ke)
   (match* (game-state ke)

@@ -1,0 +1,28 @@
+\begin{document}
+The design process so far is:
+\begin{enumerate}
+\item Formulate a data definition and
+  interpretation for the kinds of values flowing in
+  and out of the functions in your program. Formulate data examples for use in
+  testing. For itemizations, you want data examples for each item. For intervals,
+  you want data examples on the boundaries of the interval, as well as in the middle. For arbitrarily large data, ensure that your specification has an item
+  that contains atomic data.
+\item Provide a signature, a statement of purpose, and a function header
+\item Provide functional examples to say what your functions expect as output
+  when given a certain input. Use the data examples as input to your function.
+  You can start by writing examples as comments, but eventually format them as
+  tests.
+\item Provide a skeleton for your code. Functions that accept itemizations should
+  cond over the different items. For arbitrarily large data, you should skeleton
+  out the natural recursion over the different structures.
+\item Code out your definition. When dealing with structs, select out relevant
+  fields. If you have a template function in your code, assume it does what you
+  think and keep filling out the code in the current definition. When dealing
+  with itemizations, let the functional examples drive the coding of the
+  different branches in your cond. For recursive functions, design your combinator
+  function from concrete examples and use the tabular method.
+\item Test your code. If a test fails, determine if the test or code is wrong.
+  Fix the faulty party by returning to step 3 or step 5 in the design process.
+  Re-test, afterwards.
+\end{enumrete}
+\end{document}

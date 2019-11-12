@@ -1,0 +1,12 @@
+#lang racket
+(struct person [name age] #:transparent)
+(define SARA (person "Sara" 26))
+(define DUSTIN (person "Dustin" 16))
+(define PATRONS (list SARA DUSTIN))
+
+(define (bar-entry patrons)
+  (cond
+    [(empty? patrons) patrons]
+    [(cons? patrons) (cons-over-18
+                      (first patrons)
+                      (bar-entry (rest patrons)))]))
