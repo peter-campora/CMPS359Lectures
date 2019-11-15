@@ -77,7 +77,7 @@
 
 \defverbatim[colored]\buddies{
 \begin{minted}[fontsize=\footnotesize]{Java}
-  public boolean HasSmith(List<String> names) {
+  public boolean hasSmith(List<String> names) {
     for (String name : names) {
       if (name == "Smith")
         return true;
@@ -85,7 +85,7 @@
     return false;
   }
 
-  public  boolean HasBob(List<String> names) {
+  public  boolean hasBob(List<String> names) {
     for (String name : names) {
       if (name == "Bob")
         return true;
@@ -105,7 +105,7 @@
 
 \defverbatim[colored]\abstractOne{
 \begin{minted}[fontsize=\footnotesize]{Java}
-  public boolean HasName(String searchName, List<String> names) {
+  public boolean hasName(String searchName, List<String> names) {
     for (String name : names) {
       if (name == searchName)
         return true;
@@ -136,7 +136,7 @@
 \defverbatim[colored]\abstractTwo{
 \begin{minted}[fontsize=\footnotesize]{Java}
   public <T extends Comparable<T>>
-    boolean HasItem(T searchItem, List<T> items) {
+    boolean hasItem(T searchItem, List<T> items) {
     for (T item : items) {
       if (item.equals(searchItem))
         return true;
@@ -171,7 +171,7 @@
 \defverbatim[colored]\abstractThree{
 \begin{minted}[fontsize=\footnotesize]{Java}
   public <T extends Comparable<T>>
-    boolean TestItems(Predicate<T> pred, List<T> items) {
+    boolean testItems(Predicate<T> pred, List<T> items) {
     for (T item : items) {
       if (pred.test(searchItem))
         return true;
@@ -199,7 +199,7 @@
 \defverbatim[colored]\abstractFour{
 \begin{minted}[fontsize=\footnotesize]{Java}
   public <T extends Comparable<T>>
-    boolean TestItems(Predicate<T> pred, Iterable<T> items) {
+    boolean testItems(Predicate<T> pred, Iterable<T> items) {
       for (T item : items) {
         if (pred.test(searchItem))
           return true;
@@ -389,7 +389,7 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{How to Eliminate Redundant Code}
+  \frametitle{How to Eliminate Redundant Code?}
   So, we can see we have a lot of redundant code in the program.
   \begin{itemize}
   \item<2-> Redundant code should cause developers an itch.
@@ -401,6 +401,202 @@
   \item<6-> So, how do we get started?
   \end{itemize}
 \end{frame}
+
+\defverbatim[colored]\BarAbstracted{
+  \begin{minted}[fontsize=\footnotesize]{racket}
+    (define (cons-over age possible-patron patrons)
+      (if (>= (person-age possible-patron) age)
+          (cons possible-patron patrons)
+          patrons))
+    (define (bar-entry age patrons)
+      (cond
+        [(empty? patrons) patrons]
+        [(cons? patrons) (cons-over age
+                           (first patrons)
+                           (bar-entry (rest patrons)))]))
+  \end{minted}
+}
+
+\begin{frame}
+  \frametitle{Adding Parameters}
+  A rule of thumb when abstracting code is that either you need
+  another parameter or you need another function.
+  \begin{itemize}
+  \item<2-> Let's consider adding another parameter. We can add a boolean parameter that is a flag indicating
+    whether to check if patrons are over 18 if the flag is false and over
+    21 if it is true.
+  \item<4-> But wouldn't it be more elegant to just have a numeric parameter
+    that is used as the threshold for our checks?
+  \item<5-> 
+    \BarAbstracted
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{What if We Need More Restrictions?}
+  Now, let's say that we need to check that patrons have a valid id that
+  hasn't expired. Assume that our persons struct has been updated with id
+  information.
+  \begin{itemize}
+  \item<2-> How do we have to change to our program to account for this new
+    restriction?
+  \item<3-> We need to change \mintinline{racket}{cons-over} to add an additional
+    check.
+  \item<4-> Luckily, this restriction applies to all bars, so we don't have to
+    add an additional parameter.
+  \item<5-> But in general, as we add restrictions, we have to keep modifying
+    \mintinline{racket}{cons-over}.
+  \item<6-> Is there any way we can abstract over these changes?
+  \item<7-> Just like the abstraction I provided at the beginning of this material
+    in Java, we can add a predicate as a parameter!
+  \item<8-> We then only cons items that meet this predicate!
+  \item<9-> This is the power of having first class functions in your
+    language!
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\BarFilter{
+  \begin{minted}[fontsize=\footnotesize]{racket}
+    (define (over-18? patron) (>= (person-age patron) 18))
+    (define (over-21? patron) (>= (person-age patron) 21))
+    
+    (define (cons-over-p pred possible-patron patrons)
+      (if (pred possible-patron)
+          (cons possible-patron patrons)
+          patrons))
+          
+    (define (bar-entry pred patrons)
+      (cond
+        [(empty? patrons) patrons]
+        [(cons? patrons) (cons-over-p
+                           pred
+                           (first patrons)
+                           (bar-entry (rest patrons)))]))    
+  \end{minted}
+}
+
+\begin{frame}
+  \frametitle{Filtering Functions}
+  You must be thinking ``show me the code!'' by now, so here it is:
+  \BarFilter
+\end{frame}
+
+\begin{frame}
+  \frametitle{Accidental Derivations}
+  \begin{itemize}
+  \item<2-> We can now have our separate bars filter out by different ages
+    with: \mintinline{racket}{(bar-entry over-18? PATRONS)}
+    and \mintinline{racket}{(bar-entry over-21? PATRONS)}
+  \item<3-> It turns out however that our functions have become general to
+    the point of being badly named.
+  \item<4-> For example, I can call \mintinline{racket}{(bar-entry? string? '(1 "foo" (point 1 2) "bar"))} and the function call returns
+    \mintinline{racket}{'("foo" "bar")}
+  \item<5-> It turns out our bouncer function ended up being able to get all of
+    the lists out of a heterogeneous list.
+  \item<6-> It turns out that we have derived a famous function and called it
+    bar-entry!
+  \item<7-> The name of this function is \mintinline{racket}{filter}
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\FilterString{
+  \begin{minted}[fontsize=\footnotesize]{racket}
+    (filter
+      (lambda (s) (>= (string-length s) 1))
+      '("Smith" "Jenkins" "Brown" "Z"))
+  \end{minted}
+}
+
+\begin{frame}
+  \frametitle{Hey Man Nice Shot}
+  Ah Filter, everyone's favorite 90's 2 hit wonder!
+  \begin{itemize}
+  \item<2-> But anyway, filter takes in a predicate as its first argument
+    and a list to collect items out of (when the predicate returns true on a list item, it is collected).
+  \item<3-> For example, we can call \mintinline{racket}{(filter even? '(1 2 3 4 5 6))}
+  \item<4-> The result is \mintinline{racket}{'(2 4 6)}
+  \item<5-> We can call: \FilterString
+  \item<6-> And this returns \mintinline{racket}{'("Smith" "Jenkins" "Brown")}
+  \item<7-> You might be wondering what \mintinline{racket}{(lambda (s) (>= (string-length s) 1))} is.
+  \item<8-> It is an anonymous function, just like the one I previously
+    showed in Java.
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\CurryAdd{
+\begin{minted}[fontsize=\footnotesize]{racket}
+    (define (add x)
+      (lambda (y)
+        (+ x y)))
+\end{minted}
+}
+
+\defverbatim[colored]\SubTwo{
+\begin{minted}[fontsize=\footnotesize]{racket}  
+      (lambda (y)
+        (+ 2 y))
+\end{minted}
+}
+
+\defverbatim[colored]\SubThree{
+\begin{minted}[fontsize=\footnotesize]{racket}  
+      (lambda (y)
+        (+ 3 y))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Anonymity}
+  Anonymous functions, functions as arguments, and functions as return values
+  are powerful features in functional programming languages that have made
+  their way into most mainstream languages.
+  \begin{itemize}
+  \item<2-> In Racket, we introduce an anonymous function with
+    \mintinline{racket}{lambda}
+  \item<3-> \mintinline{racket}{(lambda (x) (add1 x))} is an anonymous function
+    with one parameter \mintinline{racket}{x} that increments the number.
+  \item<4-> We can also take functions as arguments to functions.
+  \item<5-> \mintinline{racket}{(filter (lambda (x) (< x 5)) '(1 2 4 8 16))}
+    provides an anonymous function (that is a predicate) as an argument to
+    \mintinline{racket}{filter}
+  \item<6-> We can also write functions that return functions.
+  \item<7-> Here is a small example:
+    \CurryAdd
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\Factory{
+  \begin{minted}[fontsize=\footnotesize]{racket}
+  (define add-two (add 2))
+  (define add-three (add 3))
+  \end{minted}
+}
+
+\begin{frame}
+  \frametitle{Returning Functions}
+  What do you think the following code is doing?
+  \begin{itemize}
+  \item<2-> \Factory
+  \item<3-> Well, let's substitute 2 for x and then look at the body
+    of the original function:
+    \SubTwo
+  \item<4-> And when we apply 3 in defining add-three we substitute 3
+    and have:
+    \SubThree
+  \item<5-> So, in the first case we are returning an anonymous function
+    that adds 2 to y, and in the latter case we are returning an anonymous
+    function that adds 3 to y.
+  \item<6-> So, in a sense we are deanonymizing these two functions by
+    using define with add-two and add-three.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Famous Higher Order Functions}
+  There are a couple of famous higher order functions that you learn
+  about in math. Namely derivation, integration, and composition.
+\end{frame}
+
 \end{document}
 %%% Local Variables:
 %%% TeX-command-extra-options: "-shell-escape"

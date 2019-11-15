@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.11)  12 NOV 2019 12:47
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.11)  13 NOV 2019 12:00
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1099,7 +1099,7 @@ thkerncmss.
 [2
 
 ]
-<images/architecture.jpg, id=154, 2890.8pt x 1626.075pt>
+<images/architecture.jpg, id=188, 2890.8pt x 1626.075pt>
 File: images/architecture.jpg Graphic file (type jpg)
 <use images/architecture.jpg>
 Package pdftex.def Info: images/architecture.jpg  used on input line 44.
@@ -1142,7 +1142,7 @@ Package pdftex.def Info: images/architecture.jpg  used on input line 44.
  [8
 
 ]
-<images/abstract-art.jpg, id=430, 433.62pt x 437.2335pt>
+<images/abstract-art.jpg, id=512, 433.62pt x 437.2335pt>
 File: images/abstract-art.jpg Graphic file (type jpg)
 <use images/abstract-art.jpg>
 Package pdftex.def Info: images/abstract-art.jpg  used on input line 60.
@@ -1196,7 +1196,12 @@ Package pdftex.def Info: images/abstract-art.jpg  used on input line 60.
 
 (./_minted-abstraction/default-pyg-prefix.pygstyle)
 (./_minted-abstraction/default.pygstyle)
-(./_minted-abstraction/ADE1A1DF78F1842F5C5BC2A699902F33C7510C62CDB43D1DC0B47112
+runsystem(pygmentize -l Java -f latex -P commandprefix=PYG -F tokenmerge -o _mi
+nted-abstraction/85D7FC22BD08092FE1F6E56D99F2E36EC7510C62CDB43D1DC0B47112945210
+22.pygtex abstraction.pyg)...executed.
+
+
+(./_minted-abstraction/85D7FC22BD08092FE1F6E56D99F2E36EC7510C62CDB43D1DC0B47112
 94521022.pygtex
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <9> not available
 (Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 2.
@@ -1208,8 +1213,12 @@ LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <9> not available
 \@verb\abstractOne=\box70
 \openout5 = `abstraction.pyg'.
 
+runsystem(pygmentize -l Java -f latex -P commandprefix=PYG -F tokenmerge -o _mi
+nted-abstraction/0AF049153748840DF1F445EC525B9DB0C7510C62CDB43D1DC0B47112945210
+22.pygtex abstraction.pyg)...executed.
 
-(./_minted-abstraction/E1AC1AD687D3268D163DE03FD7912A81C7510C62CDB43D1DC0B47112
+
+(./_minted-abstraction/0AF049153748840DF1F445EC525B9DB0C7510C62CDB43D1DC0B47112
 94521022.pygtex) [22
 
 ] [23
@@ -1222,8 +1231,12 @@ LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <9> not available
 \@verb\abstractTwo=\box71
 \openout5 = `abstraction.pyg'.
 
+runsystem(pygmentize -l Java -f latex -P commandprefix=PYG -F tokenmerge -o _mi
+nted-abstraction/6C2C6A4FEA0ADC20E4474C2E13972A07C7510C62CDB43D1DC0B47112945210
+22.pygtex abstraction.pyg)...executed.
 
-(./_minted-abstraction/CB6355C44E437F98B102A170E2AD16DEC7510C62CDB43D1DC0B47112
+
+(./_minted-abstraction/6C2C6A4FEA0ADC20E4474C2E13972A07C7510C62CDB43D1DC0B47112
 94521022.pygtex) [26
 
 ] [27
@@ -1235,7 +1248,7 @@ LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <9> not available
 ] [30
 
 ]
-<images/two-abstractions.jpg, id=1430, 299.1978pt x 217.2918pt>
+<images/two-abstractions.jpg, id=1689, 299.1978pt x 217.2918pt>
 File: images/two-abstractions.jpg Graphic file (type jpg)
 <use images/two-abstractions.jpg>
 Package pdftex.def Info: images/two-abstractions.jpg  used on input line 164.
@@ -1243,7 +1256,7 @@ Package pdftex.def Info: images/two-abstractions.jpg  used on input line 164.
  [31
 
  <./images/two-abstractions.jpg>]
-<images/unnecessary.png, id=1476, 803.0pt x 584.1825pt>
+<images/unnecessary.png, id=1744, 803.0pt x 584.1825pt>
 File: images/unnecessary.png Graphic file (type png)
 <use images/unnecessary.png>
 Package pdftex.def Info: images/unnecessary.png  used on input line 169.
@@ -1255,10 +1268,14 @@ Package pdftex.def Info: images/unnecessary.png  used on input line 169.
 \@verb\abstractThree=\box72
 \openout5 = `abstraction.pyg'.
 
+runsystem(pygmentize -l Java -f latex -P commandprefix=PYG -F tokenmerge -o _mi
+nted-abstraction/0A359649B66515C0F2A33BC55B9A92A3C7510C62CDB43D1DC0B47112945210
+22.pygtex abstraction.pyg)...executed.
 
-(./_minted-abstraction/BD5FB10A2F819E124B130BCC0C646312C7510C62CDB43D1DC0B47112
+
+(./_minted-abstraction/0A359649B66515C0F2A33BC55B9A92A3C7510C62CDB43D1DC0B47112
 94521022.pygtex)
-<images/business.png, id=1524, 301.125pt x 250.9375pt>
+<images/business.png, id=1799, 301.125pt x 250.9375pt>
 File: images/business.png Graphic file (type png)
 <use images/business.png>
 Package pdftex.def Info: images/business.png  used on input line 197.
@@ -1362,8 +1379,12 @@ Overfull \hbox (2.04457pt too wide) in paragraph at lines 197--197
 \@verb\abstractFour=\box73
 \openout5 = `abstraction.pyg'.
 
+runsystem(pygmentize -l Java -f latex -P commandprefix=PYG -F tokenmerge -o _mi
+nted-abstraction/6E581E81FD5C5504C639662A709C3723C7510C62CDB43D1DC0B47112945210
+22.pygtex abstraction.pyg)...executed.
 
-(./_minted-abstraction/A3FE78DFE8AEC99A988CCA4459B12371C7510C62CDB43D1DC0B47112
+
+(./_minted-abstraction/6E581E81FD5C5504C639662A709C3723C7510C62CDB43D1DC0B47112
 94521022.pygtex)
 Overfull \vbox (35.58652pt too high) detected at line 222
  []
@@ -2057,6 +2078,736 @@ LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10.95> not available
 ] [89
 
 ]
+\@verb\BarAbstracted=\box78
+\openout5 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/324AA92ED028254371CA332459A6561EF8ADF6248204C13FC795CB0E
+27C4D979.pygtex) [90
+
+] [91
+
+] [92
+
+] [93
+
+] [94
+
+]
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/533871846B7E65C38031BC3C57A8EB9BF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/533871846B7E65C38031BC3C57A8EB9BF8ADF6248204C13FC795CB0E
+27C4D979.pygtex) [95
+
+]
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/533871846B7E65C38031BC3C57A8EB9BF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/533871846B7E65C38031BC3C57A8EB9BF8ADF6248204C13FC795CB0E
+27C4D979.pygtex) [96
+
+]
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/533871846B7E65C38031BC3C57A8EB9BF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/533871846B7E65C38031BC3C57A8EB9BF8ADF6248204C13FC795CB0E
+27C4D979.pygtex) [97
+
+]
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/533871846B7E65C38031BC3C57A8EB9BF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/533871846B7E65C38031BC3C57A8EB9BF8ADF6248204C13FC795CB0E
+27C4D979.pygtex) [98
+
+]
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/533871846B7E65C38031BC3C57A8EB9BF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/533871846B7E65C38031BC3C57A8EB9BF8ADF6248204C13FC795CB0E
+27C4D979.pygtex) [99
+
+]
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/533871846B7E65C38031BC3C57A8EB9BF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/533871846B7E65C38031BC3C57A8EB9BF8ADF6248204C13FC795CB0E
+27C4D979.pygtex) [100
+
+]
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/533871846B7E65C38031BC3C57A8EB9BF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/533871846B7E65C38031BC3C57A8EB9BF8ADF6248204C13FC795CB0E
+27C4D979.pygtex) [101
+
+]
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/533871846B7E65C38031BC3C57A8EB9BF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/533871846B7E65C38031BC3C57A8EB9BF8ADF6248204C13FC795CB0E
+27C4D979.pygtex) [102
+
+]
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/533871846B7E65C38031BC3C57A8EB9BF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/533871846B7E65C38031BC3C57A8EB9BF8ADF6248204C13FC795CB0E
+27C4D979.pygtex) [103
+
+]
+\@verb\BarFilter=\box79
+\openout5 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/FA9F979D888C41F4BE4CE6CD01C54D8AF8ADF6248204C13FC795CB0E
+27C4D979.pygtex) [104
+
+]
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/E2A746D444001182A5F9D076BA955616F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/2E82CC6EF8FC019E24489977AAB14FBFF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/8EF6934804213B4CCEC45D3A76EE6DAEF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/3D906B5464C6AF77BBE31D362435CD03F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/329B16826F2420203A3EB5DBC0E52F5EF8ADF6248204C13FC795CB0E
+27C4D979.pygtex) [105
+
+]
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/E2A746D444001182A5F9D076BA955616F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/2E82CC6EF8FC019E24489977AAB14FBFF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/8EF6934804213B4CCEC45D3A76EE6DAEF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/3D906B5464C6AF77BBE31D362435CD03F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/329B16826F2420203A3EB5DBC0E52F5EF8ADF6248204C13FC795CB0E
+27C4D979.pygtex) [106
+
+]
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/E2A746D444001182A5F9D076BA955616F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/2E82CC6EF8FC019E24489977AAB14FBFF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/8EF6934804213B4CCEC45D3A76EE6DAEF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/3D906B5464C6AF77BBE31D362435CD03F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/329B16826F2420203A3EB5DBC0E52F5EF8ADF6248204C13FC795CB0E
+27C4D979.pygtex) [107
+
+]
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/E2A746D444001182A5F9D076BA955616F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/2E82CC6EF8FC019E24489977AAB14FBFF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/8EF6934804213B4CCEC45D3A76EE6DAEF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/3D906B5464C6AF77BBE31D362435CD03F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/329B16826F2420203A3EB5DBC0E52F5EF8ADF6248204C13FC795CB0E
+27C4D979.pygtex) [108
+
+]
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/E2A746D444001182A5F9D076BA955616F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/2E82CC6EF8FC019E24489977AAB14FBFF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/8EF6934804213B4CCEC45D3A76EE6DAEF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/3D906B5464C6AF77BBE31D362435CD03F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/329B16826F2420203A3EB5DBC0E52F5EF8ADF6248204C13FC795CB0E
+27C4D979.pygtex) [109
+
+]
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/E2A746D444001182A5F9D076BA955616F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/2E82CC6EF8FC019E24489977AAB14FBFF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/8EF6934804213B4CCEC45D3A76EE6DAEF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/3D906B5464C6AF77BBE31D362435CD03F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/329B16826F2420203A3EB5DBC0E52F5EF8ADF6248204C13FC795CB0E
+27C4D979.pygtex) [110
+
+]
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/E2A746D444001182A5F9D076BA955616F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/2E82CC6EF8FC019E24489977AAB14FBFF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/8EF6934804213B4CCEC45D3A76EE6DAEF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/3D906B5464C6AF77BBE31D362435CD03F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/329B16826F2420203A3EB5DBC0E52F5EF8ADF6248204C13FC795CB0E
+27C4D979.pygtex) [111
+
+]
+\@verb\FilterString=\box80
+\openout5 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/FAF220F2A6E9A313ED9A6D79DE224D49F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/5A5EE5A974CB9A2F16AF53CBF3CB0710F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/490CD8659E4126EE951B1D2A2A78497EF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/8E6A2531BC19DFF9B17373658F9F8BBCF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/B16CEA2CDEA81D098DE8682304211C99F8ADF6248204C13FC795CB0E
+27C4D979.pygtex) [112
+
+]
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/5A5EE5A974CB9A2F16AF53CBF3CB0710F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/490CD8659E4126EE951B1D2A2A78497EF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/8E6A2531BC19DFF9B17373658F9F8BBCF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/B16CEA2CDEA81D098DE8682304211C99F8ADF6248204C13FC795CB0E
+27C4D979.pygtex) [113
+
+]
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/5A5EE5A974CB9A2F16AF53CBF3CB0710F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/490CD8659E4126EE951B1D2A2A78497EF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/8E6A2531BC19DFF9B17373658F9F8BBCF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/B16CEA2CDEA81D098DE8682304211C99F8ADF6248204C13FC795CB0E
+27C4D979.pygtex) [114
+
+]
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/5A5EE5A974CB9A2F16AF53CBF3CB0710F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/490CD8659E4126EE951B1D2A2A78497EF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/8E6A2531BC19DFF9B17373658F9F8BBCF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/B16CEA2CDEA81D098DE8682304211C99F8ADF6248204C13FC795CB0E
+27C4D979.pygtex) [115
+
+]
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/5A5EE5A974CB9A2F16AF53CBF3CB0710F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/490CD8659E4126EE951B1D2A2A78497EF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/8E6A2531BC19DFF9B17373658F9F8BBCF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/B16CEA2CDEA81D098DE8682304211C99F8ADF6248204C13FC795CB0E
+27C4D979.pygtex) [116
+
+]
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/5A5EE5A974CB9A2F16AF53CBF3CB0710F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/490CD8659E4126EE951B1D2A2A78497EF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/8E6A2531BC19DFF9B17373658F9F8BBCF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/B16CEA2CDEA81D098DE8682304211C99F8ADF6248204C13FC795CB0E
+27C4D979.pygtex) [117
+
+]
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/5A5EE5A974CB9A2F16AF53CBF3CB0710F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/490CD8659E4126EE951B1D2A2A78497EF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/8E6A2531BC19DFF9B17373658F9F8BBCF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/B16CEA2CDEA81D098DE8682304211C99F8ADF6248204C13FC795CB0E
+27C4D979.pygtex) [118
+
+]
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/5A5EE5A974CB9A2F16AF53CBF3CB0710F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/490CD8659E4126EE951B1D2A2A78497EF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/8E6A2531BC19DFF9B17373658F9F8BBCF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/B16CEA2CDEA81D098DE8682304211C99F8ADF6248204C13FC795CB0E
+27C4D979.pygtex) [119
+
+]
+\@verb\CurryAdd=\box81
+\openout5 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/D5B3072EF4553FF1627D50A32C3631B3F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\@verb\SubTwo=\box82
+\openout5 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/6FC35486AD4BE1AFFD4437048B32416CF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\@verb\SubThree=\box83
+\openout5 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/39CCA29C1EF8C9F876823CA4796C156AF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/8C8A4646591EE0D9A43D3149320ED577F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/C15AA566867401DEADE62D500451754AF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/401B30E3B8B5D629635A5C613CDB7919F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/E845F70105588F167A9E26F196F429C6F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/329B16826F2420203A3EB5DBC0E52F5EF8ADF6248204C13FC795CB0E
+27C4D979.pygtex) [120
+
+]
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/8C8A4646591EE0D9A43D3149320ED577F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/C15AA566867401DEADE62D500451754AF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/401B30E3B8B5D629635A5C613CDB7919F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/E845F70105588F167A9E26F196F429C6F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/329B16826F2420203A3EB5DBC0E52F5EF8ADF6248204C13FC795CB0E
+27C4D979.pygtex) [121
+
+]
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/8C8A4646591EE0D9A43D3149320ED577F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/C15AA566867401DEADE62D500451754AF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/401B30E3B8B5D629635A5C613CDB7919F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/E845F70105588F167A9E26F196F429C6F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/329B16826F2420203A3EB5DBC0E52F5EF8ADF6248204C13FC795CB0E
+27C4D979.pygtex) [122
+
+]
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/8C8A4646591EE0D9A43D3149320ED577F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/C15AA566867401DEADE62D500451754AF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/401B30E3B8B5D629635A5C613CDB7919F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/E845F70105588F167A9E26F196F429C6F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/329B16826F2420203A3EB5DBC0E52F5EF8ADF6248204C13FC795CB0E
+27C4D979.pygtex) [123
+
+]
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/8C8A4646591EE0D9A43D3149320ED577F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/C15AA566867401DEADE62D500451754AF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/401B30E3B8B5D629635A5C613CDB7919F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/E845F70105588F167A9E26F196F429C6F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/329B16826F2420203A3EB5DBC0E52F5EF8ADF6248204C13FC795CB0E
+27C4D979.pygtex) [124
+
+]
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/8C8A4646591EE0D9A43D3149320ED577F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/C15AA566867401DEADE62D500451754AF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/401B30E3B8B5D629635A5C613CDB7919F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/E845F70105588F167A9E26F196F429C6F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/329B16826F2420203A3EB5DBC0E52F5EF8ADF6248204C13FC795CB0E
+27C4D979.pygtex) [125
+
+]
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/8C8A4646591EE0D9A43D3149320ED577F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/C15AA566867401DEADE62D500451754AF8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/401B30E3B8B5D629635A5C613CDB7919F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/E845F70105588F167A9E26F196F429C6F8ADF6248204C13FC795CB0E
+27C4D979.pygtex)
+\openout7 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/329B16826F2420203A3EB5DBC0E52F5EF8ADF6248204C13FC795CB0E
+27C4D979.pygtex) [126
+
+]
+\@verb\Factory=\box84
+\openout5 = `abstraction.pyg'.
+
+
+(./_minted-abstraction/8C07BD17E4BEF58081F1390F6D6C0564F8ADF6248204C13FC795CB0E
+27C4D979.pygtex) [127
+
+] [128
+
+] [129
+
+] [130
+
+] [131
+
+] [132
+
+] [133
+
+]
 \tf@nav=\write9
 \openout9 = `abstraction.nav'.
 
@@ -2066,21 +2817,36 @@ LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10.95> not available
 \tf@snm=\write11
 \openout11 = `abstraction.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 404.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 404.
+runsystem(rm _minted-abstraction/ADE1A1DF78F1842F5C5BC2A699902F33C7510C62CDB43D
+1DC0B4711294521022.pygtex)...executed.
+
+runsystem(rm _minted-abstraction/E1AC1AD687D3268D163DE03FD7912A81C7510C62CDB43D
+1DC0B4711294521022.pygtex)...executed.
+
+runsystem(rm _minted-abstraction/CB6355C44E437F98B102A170E2AD16DEC7510C62CDB43D
+1DC0B4711294521022.pygtex)...executed.
+
+runsystem(rm _minted-abstraction/BD5FB10A2F819E124B130BCC0C646312C7510C62CDB43D
+1DC0B4711294521022.pygtex)...executed.
+
+runsystem(rm _minted-abstraction/A3FE78DFE8AEC99A988CCA4459B12371C7510C62CDB43D
+1DC0B4711294521022.pygtex)...executed.
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 600.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 600.
  (./abstraction.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 404.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 404.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 600.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 600.
 Package rerunfilecheck Info: File `abstraction.out' has not changed.
 (rerunfilecheck)             Checksum: D90FE3FF3A39BBA854B9606893C5B010;52.
 runsystem(rm abstraction.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 25114 strings out of 492982
- 521942 string characters out of 6134895
- 669169 words of memory out of 5000000
- 27688 multiletter control sequences out of 15000+600000
+ 25533 strings out of 492982
+ 549959 string characters out of 6134895
+ 722192 words of memory out of 5000000
+ 27739 multiletter control sequences out of 15000+600000
  17645 words of font info for 65 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  56i,19n,59p,798b,778s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -2094,10 +2860,10 @@ onts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
 ublic/amsfonts/cm/cmtt12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
 amsfonts/cm/cmtt9.pfb>
-Output written on abstraction.pdf (89 pages, 2785782 bytes).
+Output written on abstraction.pdf (133 pages, 2949624 bytes).
 PDF statistics:
- 4193 PDF objects out of 4296 (max. 8388607)
- 4017 compressed objects within 41 object streams
- 180 named destinations out of 1000 (max. 500000)
+ 7304 PDF objects out of 7423 (max. 8388607)
+ 7046 compressed objects within 71 object streams
+ 268 named destinations out of 1000 (max. 500000)
  82 words of extra memory for PDF output out of 10000 (max. 10000000)
 
