@@ -201,7 +201,7 @@
   public <T extends Comparable<T>>
     boolean testItems(Predicate<T> pred, Iterable<T> items) {
       for (T item : items) {
-        if (pred.test(searchItem))
+        if (pred.test(item))
           return true;
       }
       return false;
@@ -591,10 +591,129 @@
   \end{itemize}
 \end{frame}
 
+\defverbatim[colored]\deriv{
+\begin{minted}[fontsize=\footnotesize]{racket}
+    (define delta-h 1/100000000000000)
+    (define (deriv f)
+      (lambda (x)
+        (exact->inexact
+         (/ (- (f (+ x delta-h)) (f x))     
+            delta-h))))
+\end{minted}
+}          
+
 \begin{frame}
   \frametitle{Famous Higher Order Functions}
   There are a couple of famous higher order functions that you learn
   about in math. Namely derivation, integration, and composition.
+  \begin{itemize}
+  \item<2-> Let's first think about derivation:
+  \item<3-> What is $\frac{d}{dx}~x^2$ ?
+  \item<4-> It is another function written in terms of $x$:
+    $2x$.
+  \item<5-> Similarly, we know that the integration of $2x$ is
+    $x^2 + C$ for some constant $C$.
+  \item<6-> In general, integration is uncomputable, so we'll focus
+    on programming an approximate derivative by aproximating the limit
+    rule with a ``small enough'' change.
+  \item<7-> \deriv
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Famous Higher Order Functions}
+  We can then use our derivative calculating function to
+  create new functions:
+  \begin{itemize}
+  \item<2-> \mintinline{racket}{(define double (deriv sqr))}
+  \item<3-> I have taking the derivative of the square function and defined
+    a new function \mintinline{racket}{double}, to be the result.
+  \item<4-> I can now call \mintinline{racket}{(double 3)} to get
+    6.00000000000001
+  \item<5-> If I now need to calculate numerical derivatives of functions
+    repeatedly in some program, I can use this \mintinline{racket}{deriv}
+    function.
+  \item<6-> For example, I can take \mintinline{racket}{(deriv double)} and
+    then get a constant function that always returns (approximately) 2 .
+  \item<7-> In general, the idea of treating functions as data that can be
+    manipulated is interesting and comprises entire areas of math and computer
+    science.
+  \item<8-> In particular, the idea of modern AI is to learn functions
+    from large sets of data or live input sources.
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\compose{
+\begin{minted}[fontsize=\footnotesize]{racket}
+    (define (compose f g)
+      (lambda (x) (f (g x))))
+\end{minted}
+}    
+
+\begin{frame}
+  \frametitle{Programs are Composition!}
+  In our math education, we are taught about composition rather abstractly.
+  \begin{itemize}
+  \item<2-> But in this class we learn that programs can be represented as compositions
+    of pure functions, and we designed (small but) real programs in this fashion.
+  \item<3-> But the composition function, $\circ$, is a function of type:
+    $(A \rightarrow B) \rightarrow (B \rightarrow C) \rightarrow (A \rightarrow C)$ that takes two functions as input and
+    returns a new function as output.
+  \item<5-> For example, $y^2 \circ 2x$, returns a function that first doubles
+    a number and then squares it: $(2x)^2$.
+  \item<6-> To define this in racket, we need a function that takes in two
+    arguments as input and returns an anonymous function as output.
+  \item<7-> \compose
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\bindings{
+\begin{minted}[fontsize=\footnotesize]{racket}
+  (define old-tank (aim-tank game-state))
+  (define old-loc (tank-loc old-tank))
+  (define new-loc (add1 old-loc))
+  (define new-tank (tank-set-loc old-tank new-loc)
+  (aim (aim-ufo game-state) new-tank)
+\end{minted}
+}
+
+\defverbatim[colored]\pointfree{
+\begin{minted}[fontsize=\footnotesize]{racket} 
+  (aim (aim-ufo game-state)
+     ((compose
+       (lambda (t l) tank-set-loc) add1 tank-loc aim-tank) game-state)
+       (tank-vel (aim-tank game-state)))
+\end{minted}
+}
+
+
+
+
+\begin{frame}
+  \frametitle{Composing Functions}
+  We can compose simple functions like inverses:
+  \begin{itemize}
+  \item<2-> Here's an unnecessarily complicated definition of the identity function: \mintinline{racket}{(define id (compose sqrt sqr))}
+  \item<3-> But in general, we can replace certain programming patterns with
+    composition.
+  \item<4-> For example, we can replace the many bindings in programs like:
+    \bindings
+  \item<5-> With a (nearly) \emph{pointfree} program that uses compose:
+  \item<6-> \pointfree  
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Back To Abstraction}
+  Still, it's interesting that we can represent a series of sequential
+  computations that involve assigning to local bindings, to a version that
+  uses pointfree functions and avoids adding variable names.
+  \begin{itemize}
+  \item<2-> Still, this lecture is about abstractions, and I need to illusrtate
+    why being able to define functions like the pointfree one above is
+    useful to abstracting away unnecessary details from programs.
+  \item<3->
+  \end{itemize}
 \end{frame}
 
 \end{document}

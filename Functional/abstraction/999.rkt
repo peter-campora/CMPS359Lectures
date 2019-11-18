@@ -1,15 +1,28 @@
 #lang racket
 (require 2htdp/universe 2htdp/batch-io test-engine/racket-tests racket/match 2htdp/image)
 
-;; List<Nonary> -> Nonary
+;; A Nonary is a natural number in [1, 9]
+;; data interpretation a nonary either represents
+;; a particpant in the Nonary Game's bracelet number
+;; or a door in the Nonary game for which
+;; entry requires 3-5 participants bracelets's digital root
+;; to line up with the door number
+
+;; (List Nonary) -> Nonary
+;; Calculates the digital root for the participants'
+;; bracelet numbers
 (define (digital-root bracelets)
   (let ([sum (apply + bracelets)])
   (+ (quotient sum 10) (remainder sum 10))))
 
-;; Nonary List<Nonary> Nonary -> Nonary
+;; Nonary (List Nonary) Nonary -> Boolean
 (define (could-kill? victim possible-killers door)
   (= (digital-root (cons victim possible-killers)) door))
 
+
+;; Nonary Nonary -> (List Nonary)
+;; Determine what combinations of two people could have
+;; pushed a victim through the door
 (define (2-killers victim door)
   (define (two-k-help bracelet-1 bracelet-2 answers)
     (cond
@@ -27,6 +40,9 @@
       [else (two-k-help bracelet-1 (sub1 bracelet-2) answers)]))
   (two-k-help 9 9 '()))
 
+;; Nonary Nonary -> (List Nonary)
+;; Determine what combination of three people could have
+;; pushed a victim through the door
 (define (3-killers victim door)
   (define (k-help killers-list answers)
     (match killers-list
@@ -46,6 +62,9 @@
       [(vector x y z) (k-help (vector x y (sub1 z)) answers)]))
   (k-help (vector 9 9 9) '()))
 
+;; Nonary Nonary -> (List Nonary)
+;; Determine what combination of four people could have
+;; pushed a victim through the door
 (define (4-killers victim door)
   (define (k-help killers-list answers)
     (match killers-list
@@ -70,12 +89,17 @@
   (k-help (vector 9 9 9 9) '()))
 
 (define (list< lst1 lst2)
-    (or (< (length lst1) (length lst2))
-        (and (empty? lst1) (empty? lst2))
-        (and (and
-              (= (length lst1) (length lst2))
-              (or (<= (first lst1) (first lst2)) (list< (rest lst1) (rest lst2)))))))
+  (cond
+    [(< (length lst1) (length lst2)) #t]
+    [(> (length lst1) (length lst2)) #f]
+    [(and (empty? lst1) (empty? lst2)) #t]
+    [(< (first lst1) (first lst2)) #t]
+    [(= (first lst1) (first lst2)) (list< (rest lst1) (rest lst2))]
+    [else #f]))
+        
+                  
 
+;; 
 (define (possible-killers victim door)
   (sort (append (2-killers victim door) (3-killers victim door) (4-killers victim door)) list<))
 
@@ -99,8 +123,14 @@
   (if (equal?
        (map (lambda (l) (map string->number l)) parsed-answer)
        expected-output)
-      (process "xdg-open good-end.png")
-      (process "xdg-open axe-end.png")))
+      (match (system-type 'os) 
+         ['windows (process "explorer.exe good-end.png")]
+         ['unix (process "xdg-open good-end.png")]
+         ['macosx (process "open good-end.png")])
+      (match (system-type 'os) 
+         ['windows (process "explorer.exe axe-end.png")]
+         ['unix (process "xdg-open axe-end.png")]
+         ['macosx (process "open axe-end.png")])))
 
 (main)
 
