@@ -1,0 +1,412 @@
+%%% Local Variables:
+%%% TeX-command-extra-options: "-shell-escape"
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
+\documentclass{beamer}
+\usepackage{caption}
+\usepackage{minted}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usetikzlibrary{shapes.geometric, arrows}
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=1.5cm, minimum height=0.6cm, text centered, draw=black, fill=blue!30]
+\tikzstyle{process} = [rectangle, minimum width=1.5cm, minimum height=0.5cm, text centered, draw=black, fill=orange!30]
+\tikzstyle{decision} = [circle, radius=2.5cm, text centered, draw=black, fill=green!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+\usepackage[labelformat=simple]{subcaption}
+
+\usetheme{Singapore}
+\title{Expressive Power}
+
+\begin{document}
+\begin{frame}
+\titlepage
+\end{frame}
+\section{Expressive Power}
+\begin{frame}
+  There are many more topics in abstraction we could go over in this last week.
+  \begin{itemize}
+  \item<2-> There are many other classic functional programming functions like \mintinline{racket}{zip}, \mintinline{racket}{zipWith}, \mintinline{racket}{take},
+    \mintinline{racket}{drop}, ... that we could discuss.
+  \item<3-> We could also discuss how things like generics provide useful abstractions in statically typed languages.
+  \item<4-> But for now, we will focus on \emph{powerful} features of programming languages.
+  \item<5-> \includegraphics[width=0.4\textwidth]{images/palpatine.jpg}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Palpatine's Love Language}
+  Let's begin with a discussion of what makes a programming language more or less powerful than another.
+  \begin{itemize}
+  \item<2-> When you guys had 341 you may have seen things like the following:
+  \item<3-> \includegraphics[width=0.4\textwidth]{images/dfa.png}
+  \item<4-> And then you might say that this DFA recognizes binary numbers that are multiples of 3.
+  \item<5-> And then you might say learn that DFA's recognize exactly the class of regular languages.  
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Nobody Wants This}
+  Then you might see this good ole gal:
+  \begin{itemize}
+  \item<2-> \includegraphics[width=0.5\textwidth]{images/turing-machine.png}
+  \item<3-> Apparently the internet says that this turing machine computes multiplication.
+  \item<4-> Without seriously examining this, I wouldn't have been able to figure that out
+    in any reasonable amount of time.
+  \item<5-> This means that there is a \emph{big} disconnect from the idealized models of
+    computation we are taught about in a theory of computation course and how we \emph{actually}
+    think about programs and programming languages.
+  \end{itemize}
+
+\end{frame}
+
+\defverbatim[colored]\miniPython{
+\begin{minted}[fontsize=\footnotesize]{python}
+  def double(x):
+    return 2*x
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Intuitive Notions of Power}
+  So, let's start with a small programming language and add features to it. Let's say
+  that we have a simple programming langauge called \emph{Mini Python} that has function
+  definitions (but no higher order functions or recursion), can assign to a local variable (without mutation), can do basic math (including equality checking), and
+  lacks loops or conditional logic. Also, assume I can only return at the end of functions.
+  \begin{itemize}
+  \item<2-> \miniPython
+  \item<3-> Could I write a function to do a DFS or BFS over a graph?
+  \item<4-> Ok, so we can see that we can't currently write either of those algorithms.
+  \item<5-> What about something similar. Let's say that Mini Python has built in multiplication
+    but not built in exponentiation. Can I write a function: $f(n) = 2^n$ in Mini Python?
+  \item<6-> Ok, let's go even simpler. Can I write the sign function?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Intuitive Notions of Power}
+  So, what if we add conditional statements as a primitive to the language?
+  \begin{itemize}
+  \item<2-> Can I write the sign function now?
+  \item<3-> How about writing an exponentiation function?
+  \item<4-> \emph{No}, I still can't write that.
+  \item<5-> What do I need to add?
+  \item<6-> What if I just add a \mintinline{python}{range} statement and
+    for loops but don't add mutable memory?
+  \item<7-> I still can't repeatedly multiply without mutable memory.
+  \item<8-> So, what if I add mutable memory?
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\twoN{
+\begin{minted}{python}
+def two_n(n):
+    total = 1    
+    for i in range(n):
+        total *= 2
+    return total
+\end{minted}
+}
+
+\defverbatim[colored]\fib{
+\begin{minted}{python}
+def fib(n):
+    lower = 0
+    upper = 1
+    for i in range(n):
+        temp = lower
+        lower = upper
+        upper += temp
+    return upper
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Intuitive Notions of Power}
+  \twoN
+  \begin{itemize}
+  \item<2-> So now I can write an exponentiation function. Can I write a fibonacci function?
+  \item<3-> \fib
+  \item<4-> So, it looks like we can write many functions now.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Intuitive Notions of Power}
+  Can I write the DFS or BFS over an arbitrary graph now (assuming we have some representation for graphs)?
+  \begin{itemize}
+  \item<2-> \emph{No}. Why?
+  \item<3-> We only have loops that can iterate a \emph{fixed} number of times.
+  \item<4-> What are some different things that I can now add to the language to get our language
+    capable of writing these functions?
+    \begin{enumerate}
+    \item<2-> while loops
+    \item<3-> recursion
+    \item<4-> labels and jumps
+    \end{enumerate}
+  \item<5-> Let's add one of these to the language. Which one?
+  \item<6-> Are there any computable functions that I can't write without one of the other features?
+  \item<7-> \emph{No}! We have entered the turing tarpit by adding any one of these features. 
+  \end{itemize}  
+\end{frame}
+
+\defverbatim[colored]\jumps{
+\begin{minted}{python}
+   loop_label:
+     # do some computation here
+     if cond:
+       goto break_label
+     # more computation
+     if loop_cond:
+       goto loop_label
+   break_label:
+     # rest of the program     
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Expressive Power}
+  But let's say I wanted to be able to add a \mintinline{python}{break} or \mintinline{python}{continue}
+  like feature in my language.
+  \begin{itemize}
+  \item<2-> Do any of these features more naturally express the idioms of providing iteration with
+    arbitrary control flow \emph{jumps}?
+  \item<3-> Yes! Supporting jumps and labels.
+  \item<4-> \jumps
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Expressive Power}
+  Hmm, so it seems that even though these languages are equivalent in computational power, certain features
+  more naturally support adding other features in the language as \emph{syntactic sugar}.
+  \begin{itemize}
+  \item<2-> What I mean by this, is that if my language supports jumps, then I can add a break statement
+    or a continue statement to the language available to programmers, and behind the scenes I can just
+    rewrite the program to use jumps and labels.
+  \item<3-> This is the \emph{essence} of compilation!
+  \item<4-> We have things like jumps in assembly, and we implement more advanced programming language features
+    by compiling them to things like jumps.
+  \item<5-> This means that we can compile languages with \emph{tons} of advanced features and abstractions to a
+    simple language like assembly.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Problems With Turing Completeness}
+  But is there anything we \emph{lose} when we add features to a programming language?
+  \begin{itemize}
+  \item<2-> Let's consider our mini Python before we added while loops, gotos, or recursion.
+  \item<3-> Was there anything nice about it?
+  \item<4-> \emph{Every program terminated.}
+  \item<5-> We lived in a great world where we never had to worry about our program running indefinitely.
+  \item<6-> But we lost out on the ability to write certain algorithms.
+  \item<7-> But for many domains, this ok.
+  \item<8-> \textbf{Rice's Theorem} - Every non trivial semantic analysis of a turing complete language is undecidable.
+  \end{itemize}  
+\end{frame}
+
+\defverbatim[colored]\gameLoop{
+\begin{minted}{python}
+    while True:
+      game_logic()
+      physics()
+      render()
+      if exit_cond:
+        return
+\end{minted}
+}
+
+\defverbatim[colored]\finiteLoop{
+\begin{minted}{python}
+    for _ in range(10000000000000000000000000000000000000000000):
+      game_logic()
+      physics()
+      render()
+      if exit_cond:
+        return
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Nontrivial and Non-Turing}
+  The question becomes, "Can we write non-trivial programs in a non-turing complete programming language?"
+  \begin{itemize}
+  \item<2-> What do you guys think?
+  \item<3-> Let's consider writing a video game.
+  \item<4-> How does a game loop work?
+  \item<5-> It loops until some arbitrary exit condition emerges from the player's interactions with the game.
+  \item<6-> \gameLoop  
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Nontrivial and Non-Turing}
+  But what's the difference between looping indefinitely and looping a finite number of times, but where the number
+  is so large it is effectively infinite?
+  \begin{itemize}
+  \item<2-> \finiteLoop
+  \item<3-> This number was so large it didn't fit on the screen.
+  \item<4-> We can make a loop so long that it will compute until the heat death of the universe.
+  \item<5-> So, why not work in a programming language that prevents us from \emph{accidentally} writing
+    nonterminating programs?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Nontrivial and Non-Turing}
+  \begin{itemize}
+  \item<2-> Here we can still opt in to writing arbitrarily large loops but can't write a function that recurses
+    infinitely or uses a while loop.
+  \item<3-> There are useful non-turing complete programming languages. See Coq or Agda.
+  \item<4-> It just turns out that this makes writing some programs much harder, and many people feel it's not worth the hassle.
+  \item<5-> Also, historically we just decided to make turing complete languages and it wasn't till later that people wondered
+    if turing completeness was always needed.
+  \item<6-> The most widely used non-Turing complete programming language is Ansi SQL
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\miniRacket{
+\begin{minted}{racket}
+  (lambda (x) (+ x 1))
+\end{minted}
+}
+
+\defverbatim[colored]\curry{
+\begin{minted}{racket}
+    (lambda (x)
+      (lambda(y)
+        (+ x y)))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Smol and Powerful}
+  Here's a brain teaser. Let's say that we have a programming language with only anonymous functions of 1 argument, the ability to return functions, numbers and an
+  addition operator.
+  \begin{itemize}
+  \item<2-> Let's say that it looks like Racket and we'll call it mini Racket:
+    \miniRacket
+  \item<3-> Can I write a program that accepts two numbers as input and adds them?
+  \item<4-> I.E. can I simulate a function of two arguments with functions of one argument?
+  \item<5-> \curry
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\curryApp{
+\begin{minted}{racket}
+    (((lambda (x)
+       (lambda(y)
+        (+ x y)))
+       1)
+      2)
+\end{minted}
+}
+
+\defverbatim[colored]\curryAppOne{
+\begin{minted}{racket}
+    ((lambda(y)
+      (+ 1 y))
+    2)
+\end{minted}
+}
+
+
+\begin{frame}
+  \frametitle{Currying}
+  We can now call this addition function as follows:
+  \begin{itemize}
+  \item<2-> \curryApp
+  \item<3-> This is kind of hideous to look at.
+  \item<4-> But basically, the 1 is going into x and then it returns a function that takes in a y
+    and adds one to it.
+  \item<5-> \curryAppOne
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\curryAppTwo{
+\begin{minted}{racket}
+    (+ 1 2) ;;returns 3
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Currying}
+  We can then apply the two to produce the expression we want to add.
+  \curryAppTwo
+  \begin{itemize}
+  \item<2-> This idea that we can transform a function of n-arguments into n nested functions
+    of 1 argument (or vice versa) is called \emph{currying}.
+  \item<3-> \includegraphics[width=0.2\textwidth]{images/Curry.jpg}
+  \item<4-> Ok, but is this language Turing complete?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Church Complete}
+  It turns out the current language is not Turing Complete.
+  \begin{itemize}
+  \item<2-> But only one addition is needed to make it Turing Complete.
+  \item<3-> Any idea what that is?
+  \item<4-> In addition to being able to return functions, it must
+    be able to accept functions as arugments.
+  \item<5-> With this, we can define booleans, conditions, numbers, and
+    recursion.
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\ChurchCond{
+\begin{minted}{racket}
+  (lambda (x) (lambda (y) x)) ;;True
+  (lambda (x) (lambda (y) y)) ;;False
+  (lambda (p) (lambda (a) (lambda (b) (p a b))))
+  ;; If p then a else b
+\end{minted}
+}
+
+\defverbatim[colored]\ChurchNumeral{
+\begin{minted}{racket}
+    (lambda (f) (lambda (x) x)) ;;This is zero
+    (lambda (f) (lambda (x) (f x))) ;; This is one
+    (lambda (f) (lambda (x) (f (f x)))) ;; This is two
+\end{minted}
+}
+
+\begin{frame}
+  Here is how we define conditionals:
+  \ChurchCond
+  \begin{itemize}
+  \item<2-> Here are numbers:
+  \item<3-> \ChurchNumeral
+  \end{itemize}
+\end{frame}
+
+
+
+\defverbatim[colored]\YComb{
+\begin{minted}[fontsize=\footnotesize]{racket}
+ (define Y                 
+  (lambda (f)             
+    ((lambda (g) (g g))   
+     (lambda (g)       
+       (f  (lambda a (apply (g g) a))))))) 
+ 
+;; head-recursive factorial
+(define fac                
+  (Y (lambda (almost-fac)           
+       (lambda (x)         
+         (if (< x 2)       
+             1             
+             (* x (almost-fac (- x 1))))))))
+\end{minted}
+}
+
+
+
+\begin{frame}
+  Finally, here is how we add recursion:
+  \YComb
+\end{frame}
+
+\end{document}

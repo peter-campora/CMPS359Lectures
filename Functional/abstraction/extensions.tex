@@ -1,0 +1,379 @@
+%%% Local Variables:
+%%% TeX-command-extra-options: "-shell-escape"
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
+\documentclass{beamer}
+\usepackage{caption}
+\usepackage{minted}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usetikzlibrary{shapes.geometric, arrows}
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=1.5cm, minimum height=0.6cm, text centered, draw=black, fill=blue!30]
+\tikzstyle{process} = [rectangle, minimum width=1.5cm, minimum height=0.5cm, text centered, draw=black, fill=orange!30]
+\tikzstyle{decision} = [circle, radius=2.5cm, text centered, draw=black, fill=green!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+\usepackage[labelformat=simple]{subcaption}
+
+\usetheme{Singapore}
+\title{Extending Racket}
+
+\begin{document}
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}
+  \frametitle{A Programmable Programming Language}
+  \huge Why write a program when you could write a program that writes
+  programs?\\
+  \begin{center}
+    \includegraphics[width=0.4\textwidth]{images/fingerhead.jpg}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Designing a Language for Extensibility}
+  Racket was designed to be a \emph{programmable programming language}.
+  I.E. you can add new features to the programming language or design
+  entire new programming languages with seamless interoperation 
+  between them.
+  \begin{itemize}
+  \item<2-> Racket also has some non-functional features that allow
+    it to support programs from different paradigms being added on top.
+  \item<3-> These include mutation, continuations, and macros
+  \item<4-> Mutation is something that is common to most programming languages
+    that you use.
+  \item<5-> Continuations allow for the addition of things like break, continue,
+    generators or coroutines.
+  \item<6-> Macros allow for syntax extensions to be defined at compile time.
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\mutate{
+\begin{minted}{racket}
+    (define x 2)
+    (set! x 3)
+    x
+\end{minted}
+}
+
+\defverbatim[colored]\mutatePy{
+\begin{minted}{racket}
+    x = 2
+    x = 3
+    x
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Adding Objects}
+  I want to go over how we can simulate basic objects
+  in Racket.
+  \begin{itemize}
+  \item<2-> In order to do this, I want my objects to have internal state
+    that can be modified like in most OO languages.
+  \item<3-> We can mutate things in Racket with functions that end with a '!'
+  \item<4-> The most basic one is \mintinline{racket}{set!}
+  \item<5-> \mutate
+  \item<6-> This program returns 3.
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\productPy{
+  \begin{minted}{python}
+    total = 1
+    for x in range(1, 20):
+         total *= x
+    total
+  \end{minted}
+}
+
+\defverbatim[colored]\product{
+\begin{minted}{racket}
+  (define total 1)
+  (for ([x (range 1 20)])
+    (set! total (* total x)))
+  total
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Loops and State}
+  This is similar to the Python program below:
+  \mutatePy
+  \begin{itemize}
+  \item<2-> We can even write imperative programs in Racket. Consider
+    the following Python program:
+  \item<3-> \productPy
+  \item<4-> In Racket it is:
+    \product
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\mutateList{
+\begin{minted}{racket}
+  (define mut-list (mcons 1 (mcons 2 '())))
+  (set-mcar! mut-list 2) ;; mutate the head
+  (set-mcdr! mut-list '()) ;;muatate the tail
+  mut-list ;; contains '(2)
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Racket Has Your Favorite Things}
+  Now you can see that you can write the programs that you are used to writing
+  in Racket.
+  \begin{itemize}
+  \item<2-> But preferably, you'd write: \mintinline{racket}{(foldl * 1 (range 1 20))}
+  \item<3-> The program that uses mutation has \emph{benign} mutation if the
+    total variable isn't used in other contexts, but using a fold prevents
+    mutable state from making your program hard to parallelize or test.
+  \item<4-> We can also mutate things like lists and vectors.
+  \item<5-> \mutateList
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\defineVectors{
+\begin{minted}{racket}
+    (define vec1 #(1 2 3)) ;;immutable
+    (define vec2 (vector 1 2 3))
+    ;; same as vec1 but mutable
+    (define vec3 (vector-immutable 1 2 3))
+    ;; same as vec2 but immutable
+    (define vec4 (make-vector 3 0))
+    ;; same as (vector 0 0 0)
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Vectors in Racket}
+  One useful data structure for keeping things performant is a mutable vector.
+  Think of it as being analogous to an array in Java or Python.
+  \pause
+  \begin{center}
+    \includegraphics[width=0.4\textwidth]{images/Vector.png}
+  \end{center}  
+\end{frame}
+
+\defverbatim[colored]\vecSort{
+\begin{minted}{racket}
+  (define b-vec (vector 3 2 1))
+  (vector-sort! b-vec <)
+  b-vec ;;returns #(1 2 3)
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Vectors}
+  Let's start with the most basic vector operations
+  \begin{itemize}
+  \item<2-> You can make an immutable or mutable vector with the following:
+    \defineVectors
+  \item<3-> We can reference an element in constant time with:
+    \mintinline{racket}{(vector-ref vec1 0) ;; returns 1}
+  \item<4-> We can then mutate one of the mutable vectors with:
+    \mintinline{racket}{(vector-set! vec2 0 9) ;; inserts 9}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Vectors}
+  I want to cover a few more vector operations.
+  \begin{itemize}
+  \item<2-> You can think of this as the following python code:
+    \mintinline{python}{vec2[0] = 9}
+  \item<3-> There is also tuple assignment like the following Python code:
+    \mintinline{python}{a, b, c = (1, 2, 3)}
+  \item<4-> In Racket:
+    \mintinline{racket}{(define-values (a b c) (vector->values vec2))}
+  \item<5-> We can destructively sort mutable vectors:
+    \vecSort
+  \item<6-> We can destructively map with:
+    \mintinline{racket}{(vector-map! add1 vec2)}
+  \end{itemize}    
+\end{frame}
+
+\defverbatim[colored]\makehash{
+\begin{minted}[fontsize=\footnotesize]{racket}
+  (define hash1 (make-hash)) ;; empty hash
+  (define hash2 (make-hash '(["a" . 1] ["b" . 2] ["c" . 3])))
+  ;; this hash contains 3 keys and 3 values
+  ;; The ["a" . 1] defines a pair
+  ;; It is equivalent to (cons "a" 1)
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Vectors and Hashes}
+  So far I've focused on mutable operations on vectors, but there are
+  plenty of immutable operations. But typically I reach for vectors when
+  either fast access is needed or copying becomes a performance bottleneck.
+  \begin{itemize}
+  \item<2-> But there are other operations like
+    \mintinline{racket}{vector-map}, \mintinline{racket}{vector-filter},
+    \mintinline{racket}{vector-take}, \mintinline{racket}{vector-drop},
+    and \mintinline{racket}{vector-length} that are useful.
+  \item<3-> But for now, let's focus on a commonly used data structure,
+    the hash table.
+  \item<4-> \emph{Insert joke about hash here}
+  \item<5-> Here are some examples of making hash tables.
+  \item<6-> \makehash
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\hashref{
+\begin{minted}[fontsize=\footnotesize]{racket}
+  (define hash-ex (make-hash '(["a" . 1] ["b" . 2] ["c" . 3])))
+  (hash-ref hash-ex "a") ;; returns 1
+  (hash-ref hash-ex "d" -1) ;; returns -1
+\end{minted}
+}
+
+\defverbatim[colored]\hashset{
+\begin{minted}[fontsize=\footnotesize]{racket}
+  (hash-set! hash-ex "d" 4) ;; adds "d"->4 mapping
+  (hash-set! hash-ex "a" -5) ;; now "a"->5 in hash
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Hashing it Out}
+  So, let's go over the common operations on hash tables.
+  \begin{itemize}
+  \item<2-> We can reference a key in the hash with
+    \mintinline[fontsize=\footnotesize]{racket}{hash-ref} 
+  \item<3-> \hashref
+  \item<4-> In the second example I used a default value for when
+    the key was not present in the hash.
+  \item<5-> \hashset
+  \item<6-> You can get the keys and values from a hash with
+    \mintinline[fontsize=\footnotesize]{racket}{(hash-keys hash-ex)} and
+    \mintinline[fontsize=\footnotesize]{racket}{(hash-values hash-ex)}, respectively.
+  \item<7-> Finally, you can check if a key (say "a") is in the hash with:
+    \mintinline[fontsize=\footnotesize]{racket}{(hash-has-key? hash-ex "a")}
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\racketInterface{
+\begin{minted}{racket}
+  (define animal<%>
+    (interface ()
+      [speak (->m string?)]
+      [move (->m string?)]))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Racket is an Object Oriented Language}
+  Now I reveal the evil truth, that Racket is an object oriented language!
+  \begin{itemize}
+  \item<2-> \includegraphics[width=0.6\textwidth]{images/quirrell.jpg}
+  \item<3-> It has objects, classes, interfaces, inheritance, and overriding.
+  \item<4-> To start using object oriented features, we must include
+    \mintinline{racket}{(require racket/class)} at the top of our file.  
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Writing OO Racket}
+  Writing OO in Racket is syntactically heavy but doable. 
+  \begin{itemize}
+  \item<2-> We can define a simple interface as follows:
+    \racketInterface
+  \item<3-> This says that an animal is an interface that does not inherit
+    from any other interfaces (hence the ()) and has one method, speak
+    that returns a string.
+  \item<4-> In general an interface first specifies the other interfaces it
+    inherits from, followed by a list of methods that determine the structure
+    of the interface.
+  \item<5-> Using interfaces, we then want to have a class that implements them.
+    Typically we would then design more complex classes by having many fields
+    with interface types and a constructor that accepts classes that implement
+    these interfaces.
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\catClass{
+\begin{minted}[fontsize=\footnotesize]{racket}
+    (define cat%
+      (class* object% (animal<%>)
+        (super-new)
+        (init name)
+        (init appearance)
+        (define animal-name name)
+        (define animal-app appearance)
+        (define/public (speak)
+          (string-append "Hi, I'm " animal-name "! Meow!"))
+        (define/public (move) "Walks")
+        (define/public (show-off) animal-app)))
+\end{minted}
+}
+
+\defverbatim[colored]\speak{
+\begin{minted}{racket}
+    (define/public (speak)
+      (string-append "Hi, I'm " animal-name "! Meow!"))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Writing OO Racket}
+    This approach to OO is called \emph{design by composition} and
+    Racket is well suited for it, though you can also use a more classic
+    design by inheritance approach.
+    \begin{itemize}
+    \item<2-> Either way, let's have a class implement our interface.
+    \item<3-> \catClass
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Writing OO Racket}
+  There was a lot to unpack in that code.
+  \begin{itemize}
+  \item<2-> The first few lines say that the cat class inherits/implements
+    the animal interface, and its constructor starts by calling
+    \mintinline{racket}{(super-new)} to call the constructor of its
+    parent class, which is object.
+  \item<3-> The \mintinline{racket}{(init name)} and \mintinline{racket}{(init appearance)} lines state that the constructor takes in two keyword arguments, name and appearnce.
+  \item<4-> The \mintinline{racket}{(define animal-name name)}
+    and \mintinline{racket}{(define animal-app appearance)} lines
+    state that there are two local fields that are defined by the constructor
+    arguments.
+  \item<6-> A method definition implements the speak method from the animal
+    interface: \speak
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\account{
+\begin{minted}[fontsize=\footnotesize]{racket}
+  (define bank-account%
+  (class object%
+    (super-new)
+    (init init-balance)
+    (define balance init-balance)
+    (define/public (withdraw amount)
+      (cond
+        [(and (< amount balance) (> amount 0))
+         (println "Withdrawal accepted")
+         (set! balance (- balance amount))
+         amount]
+        [else
+         (println "Withdrawal rejected")
+         0]))
+    (define/public (deposit amount)
+      (cond
+        [(> amount 0)
+         (println "Depositing amount")
+         (set! balance (+ balance amount))]
+        [else (println "Can't deposit negative amounts")]))
+    (define/public (print-balance) (println balance))))
+\end{minted}
+}
+\begin{frame}
+  \frametitle{Bank Accounts and OO}
+  \account
+\end{frame}
+\end{document}

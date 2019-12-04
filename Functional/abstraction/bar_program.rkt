@@ -19,10 +19,6 @@
                       (first patrons)
                       (bar-entry-18 (rest patrons)))]))
 
-
-;; List<person> -> List<person>
-;; Add a person to the patron list as
-;; long as they are over 18.
 (define (cons-over-21 possible-patron patrons)
   (if (>= (person-age possible-patron) 21)
       (cons possible-patron patrons)
