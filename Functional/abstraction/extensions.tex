@@ -376,4 +376,170 @@
   \frametitle{Bank Accounts and OO}
   \account
 \end{frame}
+
+\defverbatim[colored]\newAcc{
+\begin{minted}[fontsize=\footnotesize]{racket}
+    (define account-ex (new bank-account% [init-balance 100]))
+\end{minted}
+}
+
+\defverbatim[colored]\deposit{
+\begin{minted}[fontsize=\footnotesize]{racket}
+    (send account-ex deposit 100)
+\end{minted}
+}
+
+\defverbatim[colored]\withdraw{
+\begin{minted}[fontsize=\footnotesize]{racket}
+    (send account-ex withdraw 50)
+\end{minted}
+}
+
+\defverbatim[colored]\balance{
+\begin{minted}[fontsize=\footnotesize]{racket}
+    (send account-ex print-balance)
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Bank Accounts and OO}
+  The interpretation of this is that we are defining
+  a class with two methods, one for withdrawing money and one for depositing
+  money. The logic is pretty straightforward. 
+  \begin{itemize}
+  \item<2-> I can make a new bank account with:
+    \newAcc
+  \item<3-> I can make a deposit with:
+    \deposit
+  \item<4-> I can make a withdrawal with:
+    \withdraw
+  \item<5-> I can check the balance with:
+    \balance
+  \item<6-> An interesting question is if I could still simulate something
+    similar without having classes or even structs.
+  \end{itemize}
+\end{frame}
+
+
+\defverbatim[colored]\stupid{
+\begin{minted}{racket}
+    (define (stupid-two)
+      (define x 1)
+      (lambda () (+ x 1)))
+\end{minted}
+}
+
+\defverbatim[colored]\closure{
+\begin{minted}{racket}
+  (define x 5)
+  ;; returns a lambda above
+  (define two-f (stupid-two)) 
+  (two-f) ;; returns 2
+  ;; The x's don't clash
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Closures and State}
+  Let's talk about higher order functions some more.
+  \begin{itemize}
+  \item<2-> Consider the following function which defines a local
+    variable and then returns an anonymous function
+  \item<3-> \stupid
+  \item<4-> The inner function that is returned has a way of remembering
+    the value inside of x inside of the scope of the function. This is called
+    a \emph{closure}
+  \item<5-> \closure
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\makeCounter{
+\begin{minted}{racket}
+    (define (make-counter)
+      (define c 0)
+      (lambda ()
+        (set! c (+ c 1))
+        c))
+\end{minted}
+}
+
+\defverbatim[colored]\counter{
+\begin{minted}{racket}
+    (count) ;; returns 1
+    (count) ;; returns 2
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Closures and State}
+  Ok, so saving the state of the outer variable isn't that interesting.
+  Let's make something more interesting, a function that counts the number
+  of times that it innns called.
+  \begin{itemize}
+  \item<2-> \makeCounter
+  \item<3-> We can then make a function that counts like this:
+    \mintinline{racket}{(define count (make-counter))}
+  \item<4-> We can then call it:
+    \counter
+  \end{itemize}
+\end{frame}
+
+\defverbatim[colored]\bankAccountClosure{
+\begin{minted}[fontsize=\footnotesize]{racket}
+(define (account-closure balance)
+  (define (deposit amount)
+    (cond
+      [(> amount 0)
+       (println "Depositing")
+       (set! balance (+ balance amount))]
+      [else
+       (println "Cannot deposit negative amounts")]))
+  (define (withdraw amount)
+    (cond
+      [(and (> amount 0) (< amount balance))
+       (println "Withdrawing")
+       (set! balance (- balance amount))
+       amount]
+      [else
+       (println "Cannot withdraw negative amounts")]))
+  (define (print-balance) balance)
+  (lambda (msg . args)
+    (case msg
+      [("deposit") (apply deposit args)]
+      [("withdraw") (apply withdraw args)]
+      [("print-balance") (print-balance)]
+      [else (println "invalid operation")])))
+\end{minted}
+}
+
+\begin{frame}
+  \frametitle{Closures and State}
+  \huge So now we see that a closure can encapsulate and modify state
+  in a similar manner to an object. Let's try to roll a bank account
+  object only using a closure. 
+\end{frame}
+
+\begin{frame}
+  \bankAccountClosure
+\end{frame}
+
+\begin{frame}
+  \frametitle{Closures are a Poor Man's Objects. Objects are a Poor Man's Closures.}
+  \begin{itemize}
+  \item<2-> There was some unintroduced magic in our bank account closure.
+  \item<3-> \mintinline{racket}{(lambda (msg . args)}
+  \item<4-> The . args means that we args will contain a list of a variable
+    number of optional arguments. The msg parameter must always  receiv
+    an argument, however.
+  \item<5-> \mintinline{racket}{(case msg} defines a case expression that
+    matches the value of the argument that was received in different branches.
+    It is less powerful than cond but more elegant when all you are doing
+    is equality checking on a variable.
+  \item<6-> The heart of the logic comes from the fact that we define hidden
+    nested functions that aren't available in global scope that act as our
+    methods.
+  \item<7-> The second pieced is that our anonymous function encapsulates
+    the balance parameter for modification.
+  \end{itemize}
+\end{frame}
 \end{document}
