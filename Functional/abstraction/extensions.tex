@@ -542,4 +542,20 @@
     the balance parameter for modification.
   \end{itemize}
 \end{frame}
+
+\begin{frame}
+  \frametitle{From Semantics to Syntax}
+  So, we see that semantically we can use closures to act like objects.
+  \begin{itemize}
+  \item<2-> But we have to treat method names as strings and that isn't
+    very nice.
+  \item<3-> How did Racket add nice(ish) support for objects, did they extend
+    the language grammer to support these features?
+  \item<4-> No, Racket is a programmable programming language, so they have a
+    compile time programming system for extending the syntax of the language
+    by introducing forms that can generate code.
+  \item<5-> This is called a \emph{macro system} and Racket has better support
+    for macros than pretty much any other programming language.
+  \end{itemize}
+\end{frame}
 \end{document}
